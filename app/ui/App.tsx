@@ -5,8 +5,9 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -16,6 +17,8 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+
+import SplashScreen from 'react-native-splash-screen';
 
 import {
   Colors,
@@ -62,8 +65,16 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  useEffect( () => {
+    console.log("entro");
+    SplashScreen.hide();
+    console.log("salio");
+  }, []);
+
+
   return (
     <SafeAreaView style={backgroundStyle}>
+      
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}

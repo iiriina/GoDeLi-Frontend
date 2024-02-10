@@ -29,6 +29,9 @@ import {
 
 import RootNavigator from './app/navigation/RootNavigator';
 
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider} from '@ui-kitten/components';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -71,7 +74,9 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <RootNavigator/>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <RootNavigator/>
+      </ApplicationProvider>
   );
 }
 

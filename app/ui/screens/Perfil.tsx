@@ -3,8 +3,10 @@ import { StyleSheet, View, Text, Image, ScrollView  } from "react-native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import  NotificationComponent  from '../components/NotificationComponent';
 {/*import  Carrousel  from '../components/Carrousel';*/}
+import { TextInput } from 'react-native-paper';
 
 const Perfil = () => {
+  const [text, setText] = React.useState("");
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
     <View style={styles.perfil}>
@@ -71,6 +73,7 @@ const Perfil = () => {
       />
     </View>
     <NotificationComponent/>
+    
     {/*<Carrousel/>*/}
     </ScrollView>
   );

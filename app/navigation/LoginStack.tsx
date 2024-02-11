@@ -6,6 +6,7 @@ import IniciarSesin from '../ui/screens/IniciarSesin';
 import Perfil from '../ui/screens/Perfil';
 import MisRecetasContainer from '../ui/screens/MisRecetasContainer';
 import Recetas from '../ui/screens/Recetas';
+import RecetaIndividual from '../ui/screens/RecetaIndividual';
 
 const Stack = createNativeStackNavigator();
 

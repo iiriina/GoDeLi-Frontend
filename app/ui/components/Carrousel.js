@@ -1,38 +1,57 @@
-/*
-import * as React from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import React from 'react';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import index from '../assets/icons/index';
 
-function Carrousel() {
+const images = [
+    index.CHEF,
+    index.CHEF,
+    index.CHEF,
+    index.CHEF,
+    index.CHEF,
+];
+
+const Carrousel = () => {
     const width = Dimensions.get('window').width;
+    const carouselHeight = width / 2;
+
     return (
-        <View style={{ flex: 1 }}>
+        
             <Carousel
                 loop
                 width={width}
-                height={width / 2}
+                height={carouselHeight}
                 autoPlay={true}
-                data={[...new Array(6).keys()]}
+                data={images}
                 scrollAnimationDuration={1000}
                 onSnapToItem={(index) => console.log('current index:', index)}
-                renderItem={({ index }) => (
-                    <View
-                        style={{
-                            flex: 1,
-                            borderWidth: 1,
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <Text style={{ textAlign: 'center', fontSize: 30 }}>
-                            {index}
-                        </Text>
+                renderItem={({ item, index }) => (
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={item}
+                            style={styles.image}
+                        />
                     </View>
                 )}
             />
-        </View>
+        
     );
 }
 
-export default Carrousel;
+const styles = StyleSheet.create({
+    container: {
+        position: 'relative',
+        zIndex: 1,
+    },
+    imageContainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
+});
 
-*/
+export default Carrousel;

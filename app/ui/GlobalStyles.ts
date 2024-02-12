@@ -6,6 +6,11 @@ export const FontFamily = {
   poppinsMedium: "Poppins-Medium",
   bodyNormalMedium: "Poppins-Medium",
   poppinsRegular: "Poppins-Regular",
+  headingH2: "Poppins-SemiBold",
+  poppinsBold: "Poppins-Bold",
+  bodyNormalRegular: "Poppins-Regular",
+  poppinsBlack: "Poppins-Black",
+  buttonNormalMedium: "Poppins-Medium",
 };
 
 /* font sizes */
@@ -19,6 +24,10 @@ export const FontSize = {
   size_base: 16,
   size_xs: 12,
   size_smi: 13,
+  bodyNormalRegular_size: 16,
+  headingH2_size: 18,
+  size_3xs: 10,
+
 };
 
 /* Colors */
@@ -46,6 +55,12 @@ export const Color = {
   borders2: "#d9d9d9",
   colorLightgray: "#cfcfcf",
   colorBlack: "#000",
+  gray1: "#333",
+  colorDarkgray_100: "#afafaf",
+  neutralGray3: "#9d9fa0",
+  lines: "#b8b8b8",
+
+  primaryRed: "#ec5f5f",
 };
 
 /* Paddings */
@@ -59,6 +74,12 @@ export const Padding = {
   p_11xs: 2,
   p_5xs: 8,
   p_4xs: 9,
+  p_mini: 15,
+  p_base: 16,
+  p_smi: 13,
+
+  p_lg: 18,
+
 };
 
 /* border radiuses */
@@ -71,4 +92,6 @@ export const Border = {
   br_9xs: 4,
   br_981xl: 1000,
   br_7xs: 6,
+
+  br_3xs: 10,
 };

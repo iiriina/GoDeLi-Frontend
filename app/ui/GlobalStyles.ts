@@ -11,6 +11,7 @@ export const FontFamily = {
   bodyNormalRegular: "Poppins-Regular",
   poppinsBlack: "Poppins-Black",
   buttonNormalMedium: "Poppins-Medium",
+
 };
 
 /* font sizes */
@@ -27,6 +28,7 @@ export const FontSize = {
   bodyNormalRegular_size: 16,
   headingH2_size: 18,
   size_3xs: 10,
+
 
 };
 
@@ -61,6 +63,7 @@ export const Color = {
   lines: "#b8b8b8",
 
   primaryRed: "#ec5f5f",
+
 };
 
 /* Paddings */
@@ -80,6 +83,7 @@ export const Padding = {
 
   p_lg: 18,
 
+
 };
 
 /* border radiuses */
@@ -92,6 +96,5 @@ export const Border = {
   br_9xs: 4,
   br_981xl: 1000,
   br_7xs: 6,
-
   br_3xs: 10,
 };

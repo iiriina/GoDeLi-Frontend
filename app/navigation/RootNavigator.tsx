@@ -17,11 +17,16 @@ const RootNavigator = () => {
             >
 
 
+
+
                 <Stack.Screen
                     name={Routes.LoginStack}
                     component={LoginStack}
                     options={{ header: () => <Header /> }}
                 />
+
+
+                
 
 
 

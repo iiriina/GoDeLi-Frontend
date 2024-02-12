@@ -1,9 +1,9 @@
 const ICONS = {
-    CUBIERTOS: require('./restaurant.svg'),
-    CHEF: require('./Chef Hat.svg'),
-    MAS: require('./add.svg'),
-    CORAZON: require('./favorite.svg'),
-    PERFIL: require('./Vector.svg'),
+    CUBIERTOS: require('./restaurant.png'),
+    CHEF: require('./Chef-Hat.png'),
+    MAS: require('./add.png'),
+    CORAZON: require('./favorite.png'),
+    PERFIL: require('./Vector.png'),
 };
 
 export default ICONS;

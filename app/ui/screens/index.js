@@ -8,3 +8,5 @@ const SCREENS = {
     G: 'Editar Receta',
     H: 'Mis Recetas',
 }
+
+export default SCREENS;

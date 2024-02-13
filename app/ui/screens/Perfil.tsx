@@ -1,12 +1,47 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Image, ScrollView  } from "react-native";
+import { StyleSheet, View, Text, Image, ScrollView,Alert,Button, Platform  } from "react-native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import  NotificationComponent  from '../components/NotificationComponent';
 {/*import  Carrousel  from '../components/Carrousel';*/}
 import { TextInput } from 'react-native-paper';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import Carrousel from "../components/Carrousel";
+import ImagePicker, { ImagePickerResponse, ImageLibraryOptions } from 'react-native-image-picker';
+
 
 const Perfil = () => {
+
+
+
+  // ENTRAR A LA GALERÍA Y SUBIR FOTOS - CAMARA
+
+
+  
+
+
+
+
+
+
+  // ------------------------------------------
+
+
+
   const [text, setText] = React.useState("");
+
+  const [playing, setPlaying] = React.useState(false);
+
+  const onStateChange = React.useCallback((state: string) => {
+    if (state === 'ended') {
+      setPlaying(false);
+      Alert.alert('video has finished playing!');
+    }
+  }, []);
+  
+  const togglePlaying = React.useCallback(() => {
+    setPlaying((prev: any) => !prev);
+  }, []);
+
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
     <View style={styles.perfil}>
@@ -74,7 +109,28 @@ const Perfil = () => {
     </View>
     <NotificationComponent/>
     
-    {/*<Carrousel/>*/}
+    <View>
+
+      <Carrousel/>
+
+    </View>
+
+    <View>
+          <YoutubePlayer
+            height={300}
+            play={playing}
+            videoId={'dQw4w9WgXcQ'}
+            onChangeState={onStateChange}
+          />
+          <Button title={playing ? 'pause' : 'play'} onPress={togglePlaying} />
+        </View>
+
+
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      
+    </View>
+
+
     </ScrollView>
   );
 };

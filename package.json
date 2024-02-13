@@ -27,6 +27,7 @@
     "react-native-event-listeners": "^1.0.7",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.15.0",
+    "react-native-image-crop-picker": "^0.40.2",
     "react-native-image-picker": "^7.1.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-paper": "^5.12.3",
@@ -40,6 +41,8 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^14.1.0",
     "react-native-vision-camera": "^3.8.2",
+    "react-native-webview": "^13.7.1",
+    "react-native-youtube-iframe": "^2.3.0",
     "redux-persist": "^6.0.0",
     "redux-persist-transform-encrypt": "^5.1.1"
   },

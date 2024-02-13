@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, StyleSheet, Text, View, ImageBackground,ScrollView } from "react-native";
+import { Image, StyleSheet, Text, View, ImageBackground,ScrollView, Alert,Button } from "react-native";
 import TagsComida from "../components/TagsComida";
 import BotoncitoInfo from "../components/BotoncitoInfo";
 import FruitSection from "../components/FruitSection";
@@ -9,22 +9,30 @@ import FormElementsAvatar from "../components/FormElementsAvatar";
 import Rating from "../components/Rating";
 import TypePrimarySmallTrueDisa from "../components/TypePrimarySmallTrueDisa";
 import { Border, Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
-
+import Carrousel from "../components/Carrousel";
+import YoutubePlayer from 'react-native-youtube-iframe';
 
 
 
 
 const Frame = () => {
+
+
+  
+
+
   
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
     <View style={styles.frameParent}>
       <View style={styles.frameGroup}>
+        
         <Image
           style={[styles.frameChild, styles.frameChildLayout]}
           resizeMode="cover"
           source={require("../assets/frame-1000003621.png")}
         />
+         
         <View style={[styles.frameContainer, styles.ratingParentSpaceBlock]}>
           <View style={[styles.frameView, styles.frameViewFlexBox]}>
             <View style={styles.titleWrapper}>
@@ -61,8 +69,10 @@ const Frame = () => {
               frameViewMarginLeft={9}
               vegetariana="Promueve la Flora Intestinal"
             />
+            
           </View>
         </View>
+        
         <View style={[styles.ratingParent, styles.ratingParentSpaceBlock]}>
           <View style={styles.rating}>
             <Image
@@ -211,13 +221,21 @@ Después hacer tal otra cosa. `}</Text>
             typePrimarySmallTrueDisaPosition="unset"
             typePrimarySmallTrueDisaMarginLeft={15}
           />
+          
         </View>
-       
+        
+
+        
+             
+
+
       </View>
 
-
-          
-
+      
+        
+                   
+      
+                      
     </View>
                       
     

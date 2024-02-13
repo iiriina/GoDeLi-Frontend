@@ -13,6 +13,7 @@ import FormDefault from '../ui/screens/FormDefault';
 import Prueba from '../ui/screens/Prueba';
 import ICONS from '../ui/assets/icons/index';
 import SCREENS from '../ui/screens/index';
+import EditProfileScreen from '../ui/screens/EditProfileScreen';
 
 
 const Stack = createNativeStackNavigator();

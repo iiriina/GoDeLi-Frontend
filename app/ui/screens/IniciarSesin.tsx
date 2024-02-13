@@ -1,6 +1,6 @@
-import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import { FontFamily, Border, Color, FontSize } from "../GlobalStyles";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const IniciarSesin = () => {
   return (
@@ -63,52 +63,44 @@ const styles = StyleSheet.create({
   },
   rectangleViewLayout: {
     borderRadius: Border.br_981xl,
-    left: 258,
-    height: 412,
-    width: 373,
-    position: "absolute",
+    left: wp('53.7%'), // Utilizando wp para el ancho de la pantalla
+    height: hp('57%'), // Utilizando hp para la altura de la pantalla
+    position: "relative",
   },
   iconLayout: {
-    width: 24,
-    height: 24,
-    overflow: "hidden",
+    width: wp('5%'), // Utilizando wp para el ancho de la pantalla
+    height: hp('3.5%'), // Utilizando hp para la altura de la pantalla
   },
   androidLayout: {
-    width: 412,
-    position: "absolute",
+    width: wp('57%'), // Utilizando wp para el ancho de la pantalla
   },
   loQueQuers: {
-    top: 434,
-    fontSize: 20,
+    top: hp('60%'), // Utilizando hp para la altura de la pantalla
+    fontSize: FontSize.bodyNormalMedium_size,
     fontFamily: FontFamily.poppinsRegular,
-    width: 354,
-    height: 71,
+    width: wp('73%'), // Utilizando wp para el ancho de la pantalla
     textAlign: "left",
     color: Color.primaryText,
-    left: 44,
-    position: "absolute",
+    left: wp('8.5%'), // Utilizando wp para el ancho de la pantalla
   },
   bienvenido: {
-    top: 373,
-    fontSize: 30,
-    width: 214,
-    height: 61,
+    top: hp('51.5%'), // Utilizando hp para la altura de la pantalla
+    fontSize: FontSize.bodyNormalMedium_size,
+    width: wp('28%'), // Utilizando wp para el ancho de la pantalla
     color: Color.primaryText,
-    left: 44,
+    left: wp('8.5%'), // Utilizando wp para el ancho de la pantalla
     fontWeight: "500",
-    position: "absolute",
   },
   iniciarSesinChild: {
-    top: 628,
-    left: -77,
-    borderRadius: 107,
+    top: hp('72%'), // Utilizando hp para la altura de la pantalla
+    left: wp('-17%'), // Utilizando wp para el ancho de la pantalla
+    borderRadius: Border.br_981xl,
     backgroundColor: Color.splashColor3,
-    height: 412,
-    width: 373,
-    position: "absolute",
+    height: hp('57%'), // Utilizando hp para la altura de la pantalla
+    width: wp('53%'), // Utilizando wp para el ancho de la pantalla
   },
   iniciarSesinItem: {
-    top: 577,
+    top: hp('67%'), // Utilizando hp para la altura de la pantalla
     backgroundColor: "#e84d43",
   },
   baseBackground: {
@@ -122,83 +114,78 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderColor: Color.colorWhitesmoke_100,
     borderWidth: 1,
-    position: "absolute",
     width: "100%",
   },
   iconFillFacebook: {
     display: "none",
-    height: 24,
+    height: hp('3.5%'), // Utilizando hp para la altura de la pantalla
   },
   iconFillGoogle: {
-    marginLeft: 16,
-    height: 24,
+    marginLeft: wp('2.5%'), // Utilizando wp para el ancho de la pantalla
+    height: hp('3.5%'), // Utilizando hp para la altura de la pantalla
   },
   logInWith: {
     fontSize: FontSize.bodyNormalMedium_size,
-    lineHeight: 24,
+    lineHeight: hp('3%'), // Utilizando hp para la altura de la pantalla
     color: Color.neutralGray1,
-    marginLeft: 16,
+    marginLeft: wp('2.5%'), // Utilizando wp para el ancho de la pantalla
   },
   iconFillFacebookParent: {
-    marginTop: -12,
-    marginLeft: -122,
+    marginTop: hp('-1.5%'), // Utilizando hp para la altura de la pantalla
+    marginLeft: wp('-26%'), // Utilizando wp para el ancho de la pantalla
     top: "50%",
     flexDirection: "row",
     alignItems: "center",
     left: "50%",
-    position: "absolute",
   },
   buttonCtaNormalIcon: {
-    top: 521,
-    left: 45,
-    borderRadius: 4,
+    top: hp('49%'), // Utilizando hp para la altura de la pantalla
+    left: wp('8.5%'), // Utilizando wp para el ancho de la pantalla
+    borderRadius: Border.br_5xs,
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: hp('0.55%'), // Utilizando hp para la altura de la pantalla
     },
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    width: 258,
-    height: 56,
-    position: "absolute",
+    width: wp('32%'), // Utilizando wp para el ancho de la pantalla
+    height: hp('7.8%'), // Utilizando hp para la altura de la pantalla
   },
   iniciarSesinInner: {
-    top: 104,
-    left: -9,
-    width: 72,
-    height: 102,
-    position: "absolute",
+    top: hp('14%'), // Utilizando hp para la altura de la pantalla
+    left: wp('-2%'), // Utilizando wp para el ancho de la pantalla
+    width: wp('17.4%'), // Utilizando wp para el ancho de la pantalla
+    height: hp('14.1%'), // Utilizando hp para la altura de la pantalla
   },
   rectangleView: {
-    top: -206,
+    top: hp('-28%'), // Utilizando hp para la altura de la pantalla
     backgroundColor: Color.splashColor2,
   },
   image391: {
-    top: 201,
-    left: 144,
-    borderRadius: 35,
-    width: 124,
-    height: 124,
-    position: "absolute",
+    top: hp('20%'), // Utilizando hp para la altura de la pantalla
+    left: wp('17.6%'), // Utilizando wp para el ancho de la pantalla
+    borderRadius: wp('8.5%'), // Utilizando wp para el ancho de la pantalla
+    width: wp('18.5%'), // Utilizando wp para el ancho de la pantalla
+    height: hp('17.1%'), // Utilizando hp para la altura de la pantalla
     overflow: "hidden",
   },
   androidIcon: {
     top: 0,
     left: 0,
-    height: 24,
+    height: hp('3.5%'), // Utilizando hp para la altura de la pantalla
   },
   androidNavigationBar: {
-    marginLeft: -206,
+    marginLeft: wp('-50%'), // Utilizando wp para el ancho de la pantalla
     bottom: 0,
-    height: 41,
+    height: hp('5.7%'), // Utilizando hp para la altura de la pantalla
     left: "50%",
   },
   iniciarSesin: {
     backgroundColor: "#ffeed9",
     flex: 1,
-    height: 721,
+    height: hp('100%'), // Utilizando hp para la altura de la pantalla
     overflow: "hidden",
     width: "100%",
   },

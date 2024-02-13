@@ -12,23 +12,15 @@ const RootNavigator = () => {
         <NavigationContainer>
             <Stack.Navigator
                 initialRouteName={Routes.LoginStack}
-                screenOptions={{ header: () => <Header /> }}
+                screenOptions={{ headerShown: false }}
  
             >
-
-
-
 
                 <Stack.Screen
                     name={Routes.LoginStack}
                     component={LoginStack}
-                    options={{ header: () => <Header /> }}
+                    
                 />
-
-
-                
-
-
 
 
             </Stack.Navigator>

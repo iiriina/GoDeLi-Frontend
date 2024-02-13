@@ -1,10 +1,16 @@
 import * as React from "react";
-import { Image, StyleSheet, View, Text, ScrollView} from "react-native";
+import { Image, StyleSheet, View, Text, ScrollView,Button} from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
 
-const Frame = () => {
+
+const Frame = ({ navigation }) => {
+  
+  const handleSignInWithGoogle = () => {
+      navigation.navigate('SignUp');
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+   
 
     <View style={styles.iniciarSesinParent}>
       <View style={styles.iniciarSesin}>
@@ -57,6 +63,9 @@ const Frame = () => {
                 >{`Lo que querés cocinar, 
 lo encontrás acá, en GoDeLi.`}</Text>
               </View>
+
+
+
               <View style={styles.buttonCtaNormalIcon}>
                 <View style={styles.iconFillFacebookParent}>
                   <Image
@@ -74,6 +83,18 @@ lo encontrás acá, en GoDeLi.`}</Text>
                   </Text>
                 </View>
               </View>
+
+
+              <View>
+                   <Button title="AVANZAR" onPress={handleSignInWithGoogle} />
+              </View>
+
+
+
+
+
+
+
             </View>
           </View>
         </View>
@@ -81,7 +102,7 @@ lo encontrás acá, en GoDeLi.`}</Text>
         <View style={[styles.iniciarSesinItem, styles.iniciarLayout]} />
       </View>
     </View>
-    </ScrollView>
+    
   );
 };
 
@@ -89,7 +110,7 @@ const styles = StyleSheet.create({
 
   scrollViewContent: {
     flexGrow: 1,
-    paddingVertical: Padding.p_mini,
+    
   },
   vectorIconLayout1: {
     width: 124,

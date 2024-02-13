@@ -27,15 +27,18 @@ const Tab = createBottomTabNavigator();
 
 const LoginStack = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        
+        >
             <Stack.Screen
                 name="Login"
-                component={TabNavigator}
-                options={{ title: 'Login',headerShown: false }}
+                component={Iniciov2}
+                options={{ title: 'Login' }}
             />
             <Stack.Screen
                 name="SignUp"
-                component={SignUpScreen}
+                component={TabNavigator}
                 options={{ title: 'Sign Up' }}
             />
         </Stack.Navigator>
@@ -73,7 +76,7 @@ const TabNavigator = () => {
 
         <Tab.Screen 
             name = {SCREENS.E} 
-            component={Iniciov2}
+            component={CrearReceta1}
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (

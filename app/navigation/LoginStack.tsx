@@ -13,7 +13,10 @@ import FormDefault from '../ui/screens/FormDefault';
 import Prueba from '../ui/screens/Prueba';
 import ICONS from '../ui/assets/icons/index';
 import SCREENS from '../ui/screens/index';
-
+import CrearReceta1 from '../ui/screens/CrearReceta1';
+import CrearReceta2 from '../ui/screens/CrearReceta2';
+import CrearReceta3 from '../ui/screens/CrearReceta3';
+import Iniciov2 from '../ui/screens/Iniciov2';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,7 +70,7 @@ const TabNavigator = () => {
 
         <Tab.Screen 
             name = {SCREENS.E} 
-            component={FormDefault}
+            component={Iniciov2}
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (

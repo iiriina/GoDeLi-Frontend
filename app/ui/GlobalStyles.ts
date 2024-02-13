@@ -66,6 +66,7 @@ export const Color = {
   colorDarkgray: "#afafaf",
   colorLavenderblush: "#ffefef",
   colorGray: "#8f8f8f",
+  neutralGray2: "#8c8c8c",
 
 };
 

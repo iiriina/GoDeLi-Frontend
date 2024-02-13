@@ -19,8 +19,9 @@ import CrearReceta1 from '../ui/screens/CrearReceta1';
 import CrearReceta2 from '../ui/screens/CrearReceta2';
 import CrearReceta3 from '../ui/screens/CrearReceta3';
 import Iniciov2 from '../ui/screens/Iniciov2';
-
-
+import RecetasFavoritas from '../ui/screens/RecetasFavoritas';
+import ProbarModal from '../ui/screens/ProbarModal'
+import Modal from '../ui/screens/Modal'
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -73,7 +74,7 @@ const TabNavigator = () => {
 
         <Tab.Screen 
             name = {SCREENS.E} 
-            component={Iniciov2}
+            component={Modal}
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (

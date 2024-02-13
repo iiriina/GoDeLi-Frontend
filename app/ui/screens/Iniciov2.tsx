@@ -87,10 +87,11 @@ lo encontrás acá, en GoDeLi.`}</Text>
 
 const styles = StyleSheet.create({
 
-  scrollViewContent: {
+    scrollViewContent: {
     flexGrow: 1,
     paddingVertical: Padding.p_mini,
   },
+
   vectorIconLayout1: {
     width: 124,
     height: 124,
@@ -249,9 +250,11 @@ const styles = StyleSheet.create({
     
   },
   frameContainer: {
+    marginTop: 17,
+    marginLeft: -116.5,
     top: "50%",
-    left: "25%",
-    position: "relative",
+    left: "50%",
+    position: "absolute",
     
   },
   frameParent: {

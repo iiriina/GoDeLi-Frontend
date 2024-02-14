@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     return (
         <NavigationContainer>

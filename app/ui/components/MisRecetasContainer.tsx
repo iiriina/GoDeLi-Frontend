@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
     width: 192,
     height: 207,
     minWidth: 150,
+    margin:"0.5%"
   },
 });
 

@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
   frameWrapper2: {
     marginLeft: 6,
     
+    
   },
   bajaEnCalorasWrapper: {
     width: 104,
@@ -354,6 +355,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4,
     },
+    
     
   },
 

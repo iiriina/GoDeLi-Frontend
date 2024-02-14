@@ -60,6 +60,7 @@ export const Color = {
   colorDarkgray_100: "#afafaf",
   neutralGray3: "#9d9fa0",
   lines: "#b8b8b8",
+  
 
   primaryRed: "#ec5f5f",
   colorWhite: "#fff",

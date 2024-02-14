@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Favs" component={ModalTester} />
+        <Stack.Screen name="Mis Favoritos" component={Favoritos} />
         <Stack.Screen name="Receta Individual" component={RecetaIndividual} />
       </Stack.Navigator>
     );

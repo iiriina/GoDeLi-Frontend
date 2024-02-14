@@ -9,7 +9,7 @@ const ModalStack = createStackNavigator();
 
 const CrearRecetaStack = () => {
   return (
-      <ModalStack.Navigator initialRouteName="ModalScreen1">
+      <ModalStack.Navigator initialRouteName="ModalScreen1" >
         <ModalStack.Screen name="ModalScreen1" component={ModalScreen1} />
         <ModalStack.Screen name="ModalScreen2" component={ModalScreen2} />
         <ModalStack.Screen name="ModalScreen3" component={ModalScreen3} />

@@ -2,11 +2,69 @@ import * as React from "react";
 import { Image, StyleSheet, View, Text, ScrollView,Button} from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
 
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+  } from '@react-native-google-signin/google-signin';
+
 
 const Frame = ({ navigation }) => {
   
   const handleSignInWithGoogle = () => {
-      navigation.navigate('SignUp');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MainApp' }],
+      });
+  };
+
+  const [loggedIn, setloggedIn] = React.useState(false);
+  const [userInfo, setuserInfo] = React.useState([]);
+
+  _signIn = async () => {
+    console.log('333333333333')
+    try {
+      await GoogleSignin.hasPlayServices();
+      const {accessToken, idToken} = await GoogleSignin.signIn();
+      console.log(accessToken)
+      console.log(idToken)
+      console.log('asdasdasdasdasd')
+      setloggedIn(true);
+    } catch (error) {
+      console.log(error)
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        alert('Cancel');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        alert('Signin in progress');
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        alert('PLAY_SERVICES_NOT_AVAILABLE');
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    GoogleSignin.configure({
+      scopes: ['email','profile'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId:
+        '798826375665-qdn9hecbboatcou52t4p9sssurdahejf.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    });
+  }, []);
+
+  signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      setloggedIn(false);
+      setuserInfo([]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -66,23 +124,28 @@ lo encontrás acá, en GoDeLi.`}</Text>
 
 
 
-              <View style={styles.buttonCtaNormalIcon}>
-                <View style={styles.iconFillFacebookParent}>
-                  <Image
-                    style={[styles.iconFillFacebook, styles.iconLayout]}
-                    resizeMode="cover"
-                    source={require("../assets/icon--fill--facebook.png")}
+                  <View style={styles.body}>
+                <View style={styles.sectionContainer}>
+                  <GoogleSigninButton
+                    style={{width: 192, height: 48}}
+                    size={GoogleSigninButton.Size.Wide}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={this._signIn}
                   />
-                  <Image
-                    style={[styles.iconFillGoogle, styles.iconLayout]}
-                    resizeMode="cover"
-                    source={require("../assets/icon--fill--google.png")}
-                  />
-                  <Text style={[styles.logInWith, styles.logInWithTypo]}>
-                    Iniciar sesión con Google
-                  </Text>
+                </View>
+                <View style={styles.buttonContainer}>
+                  {!loggedIn && <Text>You are currently logged out</Text>}
+                  {loggedIn && (
+                    <Button
+                      onPress={this.signOut}
+                      title="LogOut"
+                      color="red"></Button>
+                  )}
                 </View>
               </View>
+
+
+
 
 
               <View>

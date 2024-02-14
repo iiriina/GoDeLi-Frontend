@@ -34,7 +34,9 @@ const TabNavigator = () => {
 
     return(
 
-     <Tab.Navigator initialRouteName={SCREENS.B}>
+     <Tab.Navigator initialRouteName={SCREENS.B} screenOptions={{
+        headerShown: false,
+      }}>
         <Tab.Screen 
             name = {SCREENS.B} 
             component={HomeStack}

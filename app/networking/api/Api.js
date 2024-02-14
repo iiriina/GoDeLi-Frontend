@@ -5,7 +5,7 @@ axios.defaults.baseURL = Config.BASE_URL;
 axios.defaults.timeout = Config.TIME_OUT;
 axios.defaults.headers.common = {
     Accept: 'application/json' , // el formato que espero que la info vuelva
-    'Content-Type' : 'application/json' ,// el formato en que le mando la info
+    'Content-Type' : 'application/json' , // el formato en que le mando la info
 };
 function setClientToken (token) {
     axios.defaults.headers.common = {Authorization: 'bearer ' + {token}};

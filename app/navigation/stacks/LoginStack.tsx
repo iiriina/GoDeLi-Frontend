@@ -19,6 +19,7 @@ import CrearReceta1 from '../../ui/screens/CrearReceta1';
 import CrearReceta2 from '../../ui/screens/CrearReceta2';
 import CrearReceta3 from '../../ui/screens/CrearReceta3';
 import Iniciov2 from '../../ui/screens/Iniciov2';
+import TabStack from './TabStack'
 
 
 const Stack = createNativeStackNavigator();
@@ -37,84 +38,13 @@ const LoginStack = () => {
                 options={{ title: 'Login' }}
             />
             <Stack.Screen
-                name="SignUp"
-                component={TabNavigator}
+                name="MainApp"
+                component={TabStack}
                 options={{ title: 'Sign Up' }}
             />
         </Stack.Navigator>
     );
 };
 
-const TabNavigator = () => {
-    return(
-     <Tab.Navigator initialRouteName={SCREENS.B}>
-        <Tab.Screen 
-            name = {SCREENS.B} 
-            component={Recetas}
-            options = {{
-                title: '',
-                tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.CUBIERTOS} />
-                    ),
-                tabBarLabel: () => null,
-            }}
-        />
-
-
-        <Tab.Screen 
-            name = {SCREENS.H} 
-            component={MisRecetasContainer}
-            options = {{
-                title: '',
-                tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.CHEF} />
-                    ),
-                tabBarLabel: () => null,
-            }}
-        />
-
-
-        <Tab.Screen 
-            name = {SCREENS.E} 
-            component={CrearReceta1}
-            options = {{
-                title: '',
-                tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.MAS} />
-                    ),
-                tabBarLabel: () => null,    
-            }}
-        />
-
-
-        <Tab.Screen 
-            name = {SCREENS.D} 
-            component={RecetaIndividual}
-            options = {{
-                title: '',
-                tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.CORAZON} />
-                    ),
-                tabBarLabel: () => null,
-            }}
-        />
-
-
-        <Tab.Screen 
-            name = {SCREENS.C} 
-            component={Perfil}
-            options = {{
-                title: '',
-                tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.PERFIL} />
-                    ),
-                tabBarLabel: () => null,
-            }}
-        />
-
-
-    </Tab.Navigator>
-    );
-};    
 
 export default LoginStack;

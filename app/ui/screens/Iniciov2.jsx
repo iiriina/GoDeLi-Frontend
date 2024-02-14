@@ -12,7 +12,10 @@ import {
 const Frame = ({ navigation }) => {
   
   const handleSignInWithGoogle = () => {
-      navigation.navigate('SignUp');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MainApp' }],
+      });
   };
 
   const [loggedIn, setloggedIn] = React.useState(false);

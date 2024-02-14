@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     width: 48,
     height: 41,
+    marginBottom: 10
   },
 });
 

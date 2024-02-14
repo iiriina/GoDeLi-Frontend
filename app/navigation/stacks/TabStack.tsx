@@ -95,11 +95,12 @@ const TabNavigator = () => {
             name = {SCREENS.C} 
             component={Perfil}
             options = {{
-                title: '',
+                title: 'Perfil',
                 tabBarIcon: ({focused}) => (
                     <Image source={ICONS.PERFIL} />
                     ),
                 tabBarLabel: () => null,
+                headerShown: true,
             }}
         />
 

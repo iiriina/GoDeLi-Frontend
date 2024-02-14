@@ -67,6 +67,9 @@ const Frame = () => {
                 </View>
               </View>
             </View>
+
+            <View style={styles.aux}/>
+
             <View style={styles.vectorWrapper}>
               <Image
                 style={[styles.frameChild, styles.framePosition]}
@@ -102,7 +105,7 @@ const Frame = () => {
               resizeMode="cover"
               source={require("../assets/agriculture.png")}
             />
-            <Text style={[styles.mins, styles.minsLayout]}>25 mins</Text>
+            <Text style={[styles.mins, styles.minsLayout]}>25 min.</Text>
           </View>
         </View>
       </View>
@@ -219,10 +222,12 @@ const styles = StyleSheet.create({
   },
   frameWrapper2: {
     marginLeft: 6,
+    
   },
   bajaEnCalorasWrapper: {
     width: 104,
     height: 21,
+    
   },
   frameParent1: {
     marginTop: 6,
@@ -230,6 +235,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     alignSelf: "stretch",
+    
+
+    
   },
   frameChild: {
     width: 360,
@@ -264,7 +272,7 @@ const styles = StyleSheet.create({
   groupView: {
     height: 24,
     width: 104,
-    marginTop: 6,
+    marginTop: -10,
   },
   frameGroup: {
     flex: 1,
@@ -338,7 +346,7 @@ const styles = StyleSheet.create({
     borderColor: "#cfcfcf",
     borderWidth: 1,
     width: 383,
-    alignItems: "flex-end",
+    alignItems: "center",
     overflow: "hidden",
     borderRadius: Border.br_5xl,
     shadowOpacity: 1,
@@ -346,7 +354,15 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4,
     },
+    
   },
+
+  aux: {
+    borderBottomWidth: 0.3, // This sets the thickness of the top border
+    borderBottomColor: 'black',
+
+    paddingBottom: 20,
+  }
 });
 
 export default Frame;

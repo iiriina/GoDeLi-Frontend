@@ -39,7 +39,7 @@ const Perfil = () => {
     }).then(image => {
       console.log(image);
       setImage(image.path);
-      
+      // @ts-ignore: Object is possibly 'undefined'.
       this.bs.current.snapTo(1); 
       
     });
@@ -76,7 +76,7 @@ const Perfil = () => {
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
     <View style={styles.perfil}>
-      <Header/>
+      
       <View style={[styles.rectangleParent, styles.rectangleLayout]}>
         <View style={[styles.groupChild, styles.groupLayout]} />
         <Text style={styles.eliminarCuenta}>Eliminar cuenta</Text>

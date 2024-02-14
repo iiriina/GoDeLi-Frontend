@@ -4,116 +4,13 @@ import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
 import  NotificationComponent  from '../components/NotificationComponent';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
+import CardReceta from '../components/CardReceta'
 
 
 const Recetas = () => {
   return (
     <View style={[styles.frameParent, styles.parentShadowBox]}>
-      <View style={[styles.frameGroup, styles.frameFlexBox]}>
-        <View style={[styles.frameContainer, styles.frameFlexBox]}>
-          <View style={[styles.foodAesthetic1Wrapper, styles.frameFlexBox]}>
-            <Image
-              style={[styles.foodAesthetic1, styles.frameChildLayout]}
-              resizeMode="cover"
-              source={require("../assets/food-aesthetic-1.png")}
-            />
-          </View>
-          <View style={[styles.frameWrapper, styles.frameWrapperPosition]}>
-            <View style={styles.frameView}>
-              <View style={styles.frameWrapper1}>
-                <View style={styles.frameParent1}>
-                  <View style={styles.pollitoConArrozWrapper}>
-                    <Text style={styles.pollitoConArroz}>
-                      Pollito Con Arroz
-                    </Text>
-                  </View>
-                  <View style={styles.parent}>
-                    <Badge style={[styles.badge, styles.badgePosition]} />
-                    <Image
-                      style={styles.fill1Icon}
-                      resizeMode="cover"
-                      source={require("../assets/fill-1.png")}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View
-                style={[styles.frameParent2, styles.frameWrapperSpaceBlock]}
-              >
-                <View>
-                  <View style={styles.wrapperSpaceBlock}>
-                    <Text style={[styles.vegano, styles.veganoTypo]}>
-                      Vegano
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.frameWrapper3}>
-                  <View style={styles.wrapperSpaceBlock}>
-                    <Text style={[styles.vegano, styles.veganoTypo]}>
-                      Vegetariano
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.frameWrapper3}>
-                  <View
-                    style={[
-                      styles.bajaEnCalorasWrapper,
-                      styles.wrapperSpaceBlock,
-                    ]}
-                  >
-                    <Text style={[styles.vegano, styles.veganoTypo]}>
-                      Baja en Calorías
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={[styles.vectorWrapper, styles.frameWrapperSpaceBlock]}
-              >
-                <Image
-                  style={[styles.frameChild, styles.badgePosition]}
-                  resizeMode="cover"
-                  source={require("../assets/vector-4.png")}
-                />
-              </View>
-              <View style={styles.frameWrapperSpaceBlock}>
-                <View style={styles.avatarParent}>
-                  <Image
-                    style={styles.avatarIcon}
-                    resizeMode="cover"
-                    source={require("../assets/avatar.png")}
-                  />
-                  <Text style={[styles.abigailPerez, styles.veganoTypo]}>
-                    Abigail, Perez
-                  </Text>
-                  
-                </View>
-              </View>
-            </View>
-          </View>
-          <Image
-            style={[styles.frameItem, styles.framePosition]}
-            resizeMode="cover"
-            source={require("../assets/ellipse-17.png")}
-          />
-          <Image
-            style={[styles.frameInner, styles.framePosition]}
-            resizeMode="cover"
-            source={require("../assets/group-18.png")}
-          />
-        </View>
-        <View style={[styles.agricultureParent, styles.frameWrapperPosition]}>
-          <Image
-            style={styles.agricultureIcon}
-            resizeMode="cover"
-            source={require("../assets/agriculture.png")}
-          />
-          <Text style={styles.mins}>25 mins</Text>
-          
-        </View>
-        
-        
-      </View>
+        <CardReceta/>
       
     </View>
 

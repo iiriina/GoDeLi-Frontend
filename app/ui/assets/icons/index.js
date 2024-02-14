@@ -4,6 +4,7 @@ const ICONS = {
     MAS: require('./add.png'),
     CORAZON: require('./favorite.png'),
     PERFIL: require('./Vector.png'),
+    LOGO: require('./logo.svg'),
 };
 
 export default ICONS;

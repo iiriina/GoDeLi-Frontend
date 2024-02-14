@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import Favoritos from '../../ui/screens/Favoritos';
 import RecetaIndividual from '../../ui/screens/RecetaIndividual';
-
+import ModalTester from '../../ui/screens/Modal';
 
 const Stack = createStackNavigator();
 

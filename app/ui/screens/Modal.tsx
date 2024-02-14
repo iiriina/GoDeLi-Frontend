@@ -41,140 +41,37 @@ function ModalTester() {
               </View>
             </View>
           </View>
-          <View style={styles.formFlexBox}>
-            <ButtonCTASmall
-              categoryFilter="Vegano"
-              buttonCTASmallWidth={88}
-              buttonCTASmallHeight={44}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="solid"
-              buttonCTASmallBorderColor="#b9b9b9"
-              buttonCTASmallBorderWidth={1}
-              buttonCTASmallMarginLeft="unset"
-              buttonCTASmallBackgroundColor="unset"
-              frameViewBackgroundColor="#fff"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#000"
-            />
-            <ButtonCTASmall
-              categoryFilter="Vegetariano"
-              buttonCTASmallWidth={121}
-              buttonCTASmallHeight={44}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="solid"
-              buttonCTASmallBorderColor="#b9b9b9"
-              buttonCTASmallBorderWidth={1}
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="unset"
-              frameViewBackgroundColor="#fff"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#000"
-            />
-            <ButtonCTASmall
-              categoryFilter="Rápida preparación"
-              buttonCTASmallWidth={176}
-              buttonCTASmallHeight={44}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="solid"
-              buttonCTASmallBorderColor="#b9b9b9"
-              buttonCTASmallBorderWidth={1}
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="unset"
-              frameViewBackgroundColor="#fff"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#000"
-            />
-            <ButtonCTASmall
-              categoryFilter="Apto Celíacos"
-              buttonCTASmallWidth={136}
-              buttonCTASmallHeight={44}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="solid"
-              buttonCTASmallBorderColor="#b9b9b9"
-              buttonCTASmallBorderWidth={1}
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="unset"
-              frameViewBackgroundColor="#fff"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#000"
-            />
-            <ButtonCTASmall
-              categoryFilter="Estimula el Sist. Inmune"
-              buttonCTASmallWidth={198}
-              buttonCTASmallHeight={41}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="unset"
-              buttonCTASmallBorderColor="unset"
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="#fff"
-              frameViewBackgroundColor="#e84443"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#fff"
-            />
-            <ButtonCTASmall
-              categoryFilter="Antiinflamatorio"
-              buttonCTASmallWidth={144}
-              buttonCTASmallHeight={41}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="unset"
-              buttonCTASmallBorderColor="unset"
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="#fff"
-              frameViewBackgroundColor="#e84443"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#fff"
-            />
-            <ButtonCTASmall
-              categoryFilter="Bajo en Sodio"
-              buttonCTASmallWidth={128}
-              buttonCTASmallHeight={44}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="solid"
-              buttonCTASmallBorderColor="#b9b9b9"
-              buttonCTASmallBorderWidth={1}
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="unset"
-              frameViewBackgroundColor="#fff"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#000"
-            />
-            <ButtonCTASmall
-              categoryFilter="Bajo en Calorías"
-              buttonCTASmallWidth={146}
-              buttonCTASmallHeight={42}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="unset"
-              buttonCTASmallBorderColor="unset"
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="unset"
-              frameViewBackgroundColor="#e84443"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#fff"
-            />
-            <ButtonCTASmall
-              categoryFilter="Promueve Flora Intestinal"
-              buttonCTASmallWidth={214}
-              buttonCTASmallHeight={44}
-              buttonCTASmallBorderRadius={4}
-              buttonCTASmallBorderStyle="solid"
-              buttonCTASmallBorderColor="#b9b9b9"
-              buttonCTASmallBorderWidth={1}
-              buttonCTASmallMarginLeft={12}
-              buttonCTASmallBackgroundColor="unset"
-              frameViewBackgroundColor="#fff"
-              sampleButtonFontWeight="600"
-              sampleButtonFontFamily="Poppins-SemiBold"
-              sampleButtonColor="#000"
-            />
-          </View>
+    <View style={styles.Frame1000003647}>
+      <View style={styles.Frame34}>
+        <Text style={styles.SampleButton}>Vegano</Text>
+      </View>
+      <View style={styles.Frame41}>
+        <Text style={styles.SampleButton1}>Vegetariano</Text>
+      </View>
+      <View style={styles.Frame42}>
+        <Text style={styles.SampleButton2}>Rápida preparación</Text>
+      </View>
+      <View style={styles.Frame43}>
+        <Text style={styles.SampleButton3}>Apto Celíacos</Text>
+      </View>
+      <View style={styles.Frame44}>
+        <Text style={styles.SampleButton4}>Estimula el Sist. Inmune</Text>
+      </View>
+      <View style={styles.Frame45}>
+        <Text style={styles.SampleButton5}>Antiinflamatorio</Text>
+      </View>
+      <View style={styles.Frame46}>
+        <Text style={styles.SampleButton6}>Bajo en Sodio</Text>
+      </View>
+      <View style={styles.Frame47}>
+        <Text style={styles.SampleButton7}>Bajo en Calorías</Text>
+      </View>
+      <View style={styles.Frame48}>
+        <Text style={styles.SampleButton8}>Promueve Flora Intestinal</Text>
+      </View>
+    </View>
+
+
           <View style={[styles.form, styles.formFlexBox]}>
             <View style={[styles.buttonCtaNormal, styles.downBarParentFlexBox]}>
               <View style={styles.baseBackground} />
@@ -209,6 +106,8 @@ const styles = StyleSheet.create({
       marginTop: 25,
       flexDirection: "row",
       alignSelf: "stretch",
+      backgroundColor: "c4c4c4",
+
     },
     downBar: {
       backgroundColor: "#c4c4c4",
@@ -299,6 +198,202 @@ const styles = StyleSheet.create({
       maxWidth: "100%",
       maxHeight: "100%",
     },
+    
+  Frame1000003647: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
+    height: 40,
+    flexWrap: 'wrap', // Agrega la propiedad flexWrap para permitir el envoltorio de elementos
+
+  },
+  Frame34: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginRight: "3%",
+  
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderWidth: 1,
+    borderColor: "rgba(175,175,175,1)",
+    borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  SampleButton: {
+    color: "rgba(0,0,0,1)",
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "600",
+  },
+  Frame41: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginRight: 12,
+    paddingLeft: 13,
+    paddingRight: 13,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1,
+    borderColor: "rgba(175,175,175,1)",
+    borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  SampleButton1: {
+    color: "rgba(0,0,0,1)",
+    fontWeight: "600",
+    fontSize: 14,
+  },
+  Frame42: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginRight: 12,
+    paddingLeft: 13,
+    paddingRight: 13,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1,
+    borderColor: "rgba(175,175,175,1)",
+    borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  SampleButton2: {
+    color: "rgba(0,0,0,1)",
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "600",
+  },
+  Frame43: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginRight: 12,
+    paddingLeft: 13,
+    paddingRight: 13,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1,
+    borderColor: "rgba(175,175,175,1)",
+    borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  SampleButton3: {
+    color: "rgba(0,0,0,1)",
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "600",
+  },
+  Frame44: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginRight: 12,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 8,
+    backgroundColor: "rgba(232,68,67,1)",
+  },
+  SampleButton4: {
+    color: "rgba(255,255,255,1)",
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "600",
+  },
+  Frame45: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginRight: 12,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 8,
+    backgroundColor: "rgba(232,68,67,1)",
+  },
+  SampleButton5: {
+    color: "rgba(255,255,255,1)",
+    fontSize: 14,
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "600",
+  },
+  Frame46: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginRight: 12,
+    paddingLeft: 13,
+    paddingRight: 13,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1,
+    borderColor: "rgba(175,175,175,1)",
+    borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  SampleButton6: {
+    color: "rgba(0,0,0,1)",
+    fontSize: 14,
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "600",
+    height: "100%",
+
+  },
+  Frame47: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    height: "100%",
+    marginRight: 12,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 8,
+    backgroundColor: "rgba(232,68,67,1)",
+  },
+  SampleButton7: {
+    color: "rgba(255,255,255,1)",
+    fontSize: 14,
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "600",
+  },
+  Frame48: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    height: "100%",
+    paddingLeft: 13,
+    paddingRight: 13,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1,
+    borderColor: "rgba(175,175,175,1)",
+    borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  SampleButton8: {
+    color: "rgba(0,0,0,1)",
+    fontSize: 14,
+    fontFamily: "Poppins",
+    fontWeight: "600",
+  },
+
+
+
   });
 
   

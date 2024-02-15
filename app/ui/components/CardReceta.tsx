@@ -1,8 +1,14 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
 
 const Frame = () => {
+  const [isHeartFilled, setIsHeartFilled] = useState(false);
+  const toggleHeart = () => {
+    setIsHeartFilled(!isHeartFilled);
+  };
+  
+
   return (
     <View style={[styles.frameParent, styles.frameParentShadowBox]}>
       <View style={styles.unsplashjpkfc5DDiParent}>
@@ -335,7 +341,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     alignSelf: "stretch",
     alignItems: "flex-end",
-    overflow: "hidden",
+    
     backgroundColor: Color.white,
     borderRadius: Border.br_5xl,
   },
@@ -345,11 +351,14 @@ const styles = StyleSheet.create({
     elevation: 4,
     borderStyle: "solid",
     borderColor: "#cfcfcf",
-    borderWidth: 1,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
     width: 383,
     alignItems: "center",
     overflow: "hidden",
-    borderRadius: Border.br_5xl,
+  
     shadowOpacity: 1,
     shadowOffset: {
       width: 0,

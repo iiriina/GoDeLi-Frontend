@@ -83,6 +83,11 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: Border.br_5xl,
     marginTop: '3%',
+    shadowOpacity: 3,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
   },
 
   formFlexBox: {

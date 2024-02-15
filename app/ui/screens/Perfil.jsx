@@ -8,7 +8,8 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 import Carrousel from "../components/Carrousel";
 import ImagePicker from 'react-native-image-crop-picker';
 import Header from '../components/Header'
-
+import healthWS from '../../networking/api/endpoints/healthWS';
+import axios from 'axios';
 
 const Perfil = () => {
 
@@ -49,6 +50,42 @@ const Perfil = () => {
     });
   }
   
+  const handlerHealth = async () => {
+    console.log(0)
+    try {
+      console.log(1)
+      const response = await axios.get('https://godeli-production.up.railway.app/health'); //auxilio
+      console.log(3)
+      console.log(response) ;
+    } catch (error) {
+      console.log(2)
+      console.log(error);
+    }
+  }
+
+  const handlerHealth2 = async () => {
+    healthWS
+      .health() 
+      .then(response => {
+        console.log(response)
+        console.log("hola")
+      })
+      .catch( (error) =>{
+          console.log(2);
+          console.log(error);
+      })
+  }
+
+
+  const handlerHealth3 = async () => {
+    console.log(0)
+    try {
+      const response = await healthWS.health();
+      console.log(response) ;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
 
@@ -195,6 +232,11 @@ const Perfil = () => {
         onPress={() => this.bs.current.snapTo(1)}>
         <Text style={styles.panelButtonTitle}>Cancel</Text>
       </TouchableOpacity>
+
+
+      <TouchableOpacity style={styles.panelButton} onPress={handlerHealth3}>
+        <Text style={styles.panelButtonTitle}>Probar Health</Text>
+      </TouchableOpacity>
     </View>
 
 
@@ -203,7 +245,7 @@ const Perfil = () => {
 
     </ScrollView>
   );
-};
+      }
 
 const styles = StyleSheet.create({
   rectangleLayout: {

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import Config from 'react-native-config';
+import {config} from '../api/ApiConfig';
 
-axios.defaults.baseURL = Config.BASE_URL;
-axios.defaults.timeout = Config.TIME_OUT;
+axios.defaults.baseURL = config.BASE_URL;
+axios.defaults.timeout = config.TIME_OUT;
 axios.defaults.headers.common = {
     Accept: 'application/json' , // el formato que espero que la info vuelva
     'Content-Type' : 'application/json' , // el formato en que le mando la info

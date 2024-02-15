@@ -20,7 +20,7 @@ import CrearReceta2 from '../../ui/screens/CrearReceta2';
 import CrearReceta3 from '../../ui/screens/CrearReceta3';
 import Iniciov2 from '../../ui/screens/Iniciov2';
 import TabStack from './TabStack'
-
+import InicioResponsive from '../../ui/screens/InicioResponsive';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,7 +34,7 @@ const LoginStack = () => {
         >
             <Stack.Screen
                 name="Login"
-                component={Iniciov2}
+                component={InicioResponsive}
                 options={{ title: 'Login' }}
             />
             <Stack.Screen

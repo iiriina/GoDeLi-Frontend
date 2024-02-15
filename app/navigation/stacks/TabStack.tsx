@@ -72,6 +72,8 @@ const TabNavigator = () => {
                     <Image source={ICONS.MAS} />
                     ),
                 tabBarLabel: () => null,
+                tabBarStyle: { display: "none" },
+
             }}
         />
 

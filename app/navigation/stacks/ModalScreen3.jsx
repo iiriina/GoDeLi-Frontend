@@ -5,10 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 const ModalScreen = ({ navigation }) => {
 
   const handleClose = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'MainApp' }],
-    });
+    navigation.popToTop();
+    navigation.goBack(null);  
   };
 
 

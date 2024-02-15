@@ -79,7 +79,7 @@ const Frame = ({ navigation }) => {
               resizeMode="cover"
               source={require("../assets/frame-4.png")}
             />
-            <View style={styles.frameItem} />
+            <View style={styles.burbujanaranjaabajo} />
           </View>
           <View style={styles.frameContainer}>
             <View style={styles.image391Wrapper}>
@@ -111,7 +111,7 @@ const Frame = ({ navigation }) => {
                 />
               </View>
             </View>
-            <View style={styles.frameView}>
+            <View style={styles.frameTodoElTexto}>
               <View>
                 <Text style={[styles.bienvenido, styles.bienvenidoClr]}>
                   ¡Bienvenido!
@@ -164,6 +164,7 @@ lo encontrás acá, en GoDeLi.`}</Text>
         <View style={[styles.iniciarSesinChild, styles.iniciarLayout]} />
         <View style={[styles.iniciarSesinItem, styles.iniciarLayout]} />
       </View>
+      
     </View>
     
   );
@@ -201,20 +202,19 @@ const styles = StyleSheet.create({
   },
   iniciarLayout: {
     borderRadius: Border.br_981xl,
-    right: -219,
+    right: "-55%",
     height: 412,
     width: 373,
     position: "absolute",
   },
   frameChild: {
-    top: 310,
-    left: 68,
+    left: "32%",
+    top: "42%",
     width: 72,
     height: 102,
-    position: "absolute",
   },
-  frameItem: {
-    top: 834,
+  burbujanaranjaabajo: {
+    top: "130%",
     borderRadius: 107,
     backgroundColor: Color.splashColor3,
     height: 412,
@@ -308,29 +308,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  buttonCtaNormalIcon: {
-    borderRadius: Border.br_5xs,
-    backgroundColor: Color.neutralGray6,
-    shadowColor: "rgba(0, 0, 0, 0.25)",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowRadius: 4,
-    elevation: 4,
-    shadowOpacity: 1,
-    borderStyle: "solid",
-    borderColor: Color.colorWhitesmoke_100,
-    borderWidth: 1,
-    paddingLeft: 7,
-    paddingTop: Padding.p_base,
-    paddingRight: 12,
-    paddingBottom: Padding.p_base,
-    marginTop: 16,
-    overflow: "hidden",
-  },
-  frameView: {
-    marginTop: 10,
+  frameTodoElTexto: {
+    marginTop: "1.8%",
     
   },
   frameContainer: {
@@ -349,11 +328,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   iniciarSesinChild: {
-    top: 585,
+    top: "82%",
     backgroundColor: "#e84d43",
   },
   iniciarSesinItem: {
-    top: -196,
+    top: "-28%",
     backgroundColor: Color.splashColor2,
   },
   iniciarSesin: {
@@ -361,11 +340,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffeed9",
     height: 721,
     overflow: "hidden",
+    height:"100%"
   },
   iniciarSesinParent: {
     flex: 1,
     flexDirection: "row",
-
+    height: "100%",
   },
 });
 

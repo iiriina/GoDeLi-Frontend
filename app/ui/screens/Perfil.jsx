@@ -12,8 +12,8 @@ import Header from '../components/Header'
 
 const Perfil = () => {
 
-  const [image, setImage] = React.useState('https://api.adorable.io/avatars/80/abott@adorable.png');
-
+  //const [image, setImage] = React.useState('https://images.unsplash.com/photo-1593288942460-e321b92a6cde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTl8fHxlbnwwfHx8fHw%3D');
+  const [images, setImages] = React.useState([]);
   // ENTRAR A LA GALERÍA Y SUBIR FOTOS - CAMARA
 
   const takePhotoFromCamera = () => {
@@ -24,7 +24,9 @@ const Perfil = () => {
       compressImageQuality: 0.7
     }).then(image => {
       console.log(image);
-      setImage(image.path);
+      //setImage(image.path);
+      setImages([...images, image.path]); // Agregar la nueva imagen al array
+
       // @ts-ignore: Object is possibly 'undefined'.
       this.bs.current.snapTo(1);
     });
@@ -38,7 +40,9 @@ const Perfil = () => {
       compressImageQuality: 0.7
     }).then(image => {
       console.log(image);
-      setImage(image.path);
+      //setImage(image.path);
+      setImages([...images, image.path]); // Agregar la nueva imagen al array
+
       // @ts-ignore: Object is possibly 'undefined'.
       this.bs.current.snapTo(1); 
       
@@ -59,7 +63,7 @@ const Perfil = () => {
 
   const [playing, setPlaying] = React.useState(false);
 
-  const onStateChange = React.useCallback((state: string) => {
+  const onStateChange = React.useCallback((state) => {
     if (state === 'ended') {
       setPlaying(false);
       Alert.alert('video has finished playing!');
@@ -67,7 +71,7 @@ const Perfil = () => {
   }, []);
   
   const togglePlaying = React.useCallback(() => {
-    setPlaying((prev: any) => !prev);
+    setPlaying((prev) => !prev);
   }, []);
 
 
@@ -162,6 +166,18 @@ const Perfil = () => {
       
     </View>
 
+
+    {/* <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />*/}
+    
+    <View>
+      {images.map((image, index) => (
+          <Image key={index} source={{ uri: image }} style={{ width: 100, height: 100 }} />
+      ))}
+    </View>
+
+    <Text>Hola!</Text>
+
+
     <View style={styles.panel}>
       <View style={{alignItems: 'center'}}>
         <Text style={styles.panelTitle}>Upload Photo</Text>
@@ -183,7 +199,6 @@ const Perfil = () => {
 
 
     <View>
-  <Image source={{ uri: image }} />
 </View>
 
     </ScrollView>

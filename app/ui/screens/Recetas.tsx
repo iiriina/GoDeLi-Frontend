@@ -1,45 +1,47 @@
 import * as React from "react";
-import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable } from "react-native";
+import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
 import  NotificationComponent  from '../components/NotificationComponent';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 import CardReceta from '../components/CardReceta'
+import ModalFiltros from '../components/Modal'; 
+import { useState } from "react";
 
 
 const Recetas = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
-    <ScrollView style={{backgroundColor: Color.white}}>
-
-    
-  <View style={[styles.formDefaultWrapper, styles.formFlexBox]}>
-            <View style={[styles.formDefault, styles.formBorder]}>
-              <View style={styles.placeholderParent}>
-                <TextInput
-                  style={styles.placeholderTypo1}
-                  placeholder="Buscar comida o ingrediente..."
-                  placeholderTextColor="#737373"
-                />
-                <Pressable style={styles.emailDisabled}>
-                  <View style={styles.formDefaultContainer}>
-                    <View style={[styles.formDefault1, styles.formPosition]}>
-                      <Image
-                        style={styles.plusMathIcon}
-                        resizeMode="cover"
-                        source={require("../assets/icons/filtro3.png")}
-                      />
-                    </View>
-                  </View>
-                </Pressable>
+    <ScrollView style={{ backgroundColor: Color.white }}>
+      <View style={[styles.formDefaultWrapper, styles.formFlexBox]}>
+        <View style={[styles.formDefault, styles.formBorder]}>
+          <View style={styles.placeholderParent}>
+            <TextInput
+              style={styles.placeholderTypo1}
+              placeholder="Buscar comida o ingrediente..."
+              placeholderTextColor="#737373"
+            />
+            {/* Icono para abrir los filtros */}
+            <TouchableOpacity
+              style={styles.emailDisabled}
+              onPress={() => setModalVisible(true)} // Abre el modal cuando se presiona
+            >
+              <View style={styles.formDefaultContainer}>
+                <View style={[styles.formDefault1, styles.formPosition]}>
+                  <Image
+                    style={styles.plusMathIcon}
+                    resizeMode="cover"
+                    source={require("../assets/icons/filtro3.png")}
+                  />
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
+        </View>
+      </View>
 
-
-
-
-
-    <View style={[styles.frameParent, styles.parentShadowBox]}>
+      <View style={[styles.frameParent, styles.parentShadowBox]}>
         <CardReceta/>
     </View>
 
@@ -51,13 +53,13 @@ const Recetas = () => {
         <CardReceta/>
     </View>
 
+
+      {/* ModalFiltros ahora se llama directamente aquí */}
+      <ModalFiltros
+        isVisible={modalVisible}
+        toggleModal={() => setModalVisible(!modalVisible)}
+      />
     </ScrollView>
-
-
-
-          
-                    
-                    
   );
 };
 

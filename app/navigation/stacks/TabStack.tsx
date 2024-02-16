@@ -10,7 +10,8 @@ import CrearRecetaStack from './CrearRecetaStack';
 import Perfil from '../../ui/screens/Perfil';
 import SCREENS from '../../ui/screens/index';
 import ICONS from "../../ui/assets/icons";
-
+import Modal from '../../ui/components/Modal';
+import Perfilvfinal from '../../ui/screens/Perfilvfinal';
 
 
 const Tab = createBottomTabNavigator();

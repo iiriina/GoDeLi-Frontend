@@ -68,7 +68,7 @@ export const Color = {
   colorLavenderblush: "#ffefef",
   colorGray: "#8f8f8f",
   neutralGray2: "#8c8c8c",
-
+  button2Text: "#fff",
 };
 
 /* Paddings */
@@ -88,6 +88,7 @@ export const Padding = {
 
   p_lg: 18,
   p_2xs: 11,
+  p_7xl: 26,
 
 };
 

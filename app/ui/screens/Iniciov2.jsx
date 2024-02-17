@@ -28,13 +28,12 @@ const Frame = ({ navigation }) => {
   const [userInfo, setuserInfo] = React.useState([]);
 
   const dispatch = useDispatch();
-  const dispatch2 = useDispatch(); //auxilio
 
   const handleLogin = (idToken) => {
     dispatch(fetchLogin({ idToken }));
   };
   const handleUser = (user) => {
-    dispatch2(updateUser({id:user.id,name:user.name,email:user.email,photo:user.photo}));
+    dispatch(updateUser(user));
   };
 
 
@@ -77,7 +76,7 @@ const Frame = ({ navigation }) => {
         '798826375665-qdn9hecbboatcou52t4p9sssurdahejf.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
-  }, [jwtToken]);
+  }, []);
 
   signOut = async () => {
     try {

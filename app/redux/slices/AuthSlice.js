@@ -51,9 +51,13 @@ const authReducer = createSlice({
         console.log('entrooooo')
         console.log(action.payload.name);
         state.user.id = action.payload.id;
+        console.log(action.payload.id);
         state.user.email = action.payload.email; 
+        console.log(action.payload.email);
         state.user.name = action.payload.name; 
+        console.log(action.payload.name);
         state.user.photo = action.payload.photo; 
+        console.log(action.payload.photo);
         console.log('saliooooo')
     },
   },

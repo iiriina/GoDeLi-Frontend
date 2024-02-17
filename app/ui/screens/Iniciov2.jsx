@@ -2,6 +2,12 @@ import * as React from "react";
 import { Image, StyleSheet, View, Text, ScrollView,Button} from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
 
+
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLogin, updateJWT, updateUser } from '../../redux/slices/AuthSlice';
+
+import {setClientToken} from '../../networking/api/Api'
+
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -21,15 +27,32 @@ const Frame = ({ navigation }) => {
   const [loggedIn, setloggedIn] = React.useState(false);
   const [userInfo, setuserInfo] = React.useState([]);
 
+  const dispatch = useDispatch();
+  const dispatch2 = useDispatch(); //auxilio
+
+  const handleLogin = (idToken) => {
+    dispatch(fetchLogin({ idToken }));
+  };
+  const handleUser = (user) => {
+    dispatch2(updateUser({id:user.id,name:user.name,email:user.email,photo:user.photo}));
+  };
+
+
+
+  
+
   _signIn = async () => {
-    console.log('333333333333')
+    
     try {
+    
       await GoogleSignin.hasPlayServices();
-      const {accessToken, idToken} = await GoogleSignin.signIn();
-      console.log(accessToken)
-      console.log(idToken)
-      console.log('asdasdasdasdasd')
+      const {idToken, user} = await GoogleSignin.signIn();
       setloggedIn(true);
+      setClientToken(idToken);
+      handleLogin(idToken);
+      handleUser(user);
+      
+      
     } catch (error) {
       console.log(error)
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -54,7 +77,7 @@ const Frame = ({ navigation }) => {
         '798826375665-qdn9hecbboatcou52t4p9sssurdahejf.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
-  }, []);
+  }, [jwtToken]);
 
   signOut = async () => {
     try {

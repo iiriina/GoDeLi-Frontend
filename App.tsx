@@ -31,6 +31,14 @@ import RootNavigator from './app/navigation/RootNavigator';
 
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider} from '@ui-kitten/components';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+
+import {store} from './app/redux/Store';
+
+
+
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -73,10 +81,16 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const persistor = persistStore(store);
+
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
-      <RootNavigator/>
+    <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <RootNavigator/>
       </ApplicationProvider>
+    </PersistGate>
+  </Provider>
   );
 }
 

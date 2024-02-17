@@ -34,7 +34,7 @@ const LoginStack = () => {
         >
             <Stack.Screen
                 name="Login"
-                component={InicioResponsive}
+                component={Iniciov2}
                 options={{ title: 'Login' }}
             />
             <Stack.Screen

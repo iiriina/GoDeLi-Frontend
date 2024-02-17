@@ -26,9 +26,6 @@ const Frame = ({navigation}) => {
       try {
         await GoogleSignin.hasPlayServices();
         const {accessToken, idToken} = await GoogleSignin.signIn();
-        console.log(accessToken)
-        console.log(idToken)
-        console.log('asdasdasdasdasd')
         setloggedIn(true);
       } catch (error) {
         console.log(error)

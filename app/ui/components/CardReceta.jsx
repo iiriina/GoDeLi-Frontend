@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
 
-const Frame = () => {
+const Frame = ({ data, index }) => {
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const toggleHeart = () => {
     setIsHeartFilled(!isHeartFilled);
@@ -28,7 +28,7 @@ const Frame = () => {
                   ]}
                 >
                   <Text style={[styles.pollitoConArroz, styles.textTypo]}>
-                    Pollito Con Arroz
+                    {data.title}
                   </Text>
                 </View>
                 <View style={styles.groupParent}>

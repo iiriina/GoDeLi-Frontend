@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, Text, View, StyleSheet } from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 import Modal from "react-native-modal";
 import CustomButton from "./CustomButtonModal";
 import { FontSize, Border, FontFamily, Color } from "../GlobalStyles";
+import { Button } from "react-native-paper";
 
 interface ButtonStates {
   [key: string]: boolean;
@@ -30,6 +31,10 @@ const ModalTester: React.FC<{ isVisible: boolean; toggleModal: () => void }> = (
       [buttonText]: !prevButtonStates[buttonText],
     }));
   };
+
+  const onPress = () => {
+
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -70,15 +75,14 @@ const ModalTester: React.FC<{ isVisible: boolean; toggleModal: () => void }> = (
                   />
                 ))}
               </View>
-
-              <View style={[styles.form, styles.formFlexBox]}>
-                <View style={[styles.buttonCtaNormal, styles.downBarParentFlexBox]}>
-                  <View style={styles.baseBackground} />
-                  <Text style={[styles.sampleButton, styles.subtitleLayout]}>
+              <Button
+                  mode="contained"
+                  onPress={onPress}
+                  >   
+                  <Text>
                     Buscar
                   </Text>
-                </View>
-              </View>
+                </Button>
             </View>
           </View>
         </View>

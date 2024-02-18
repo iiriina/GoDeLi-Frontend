@@ -18,6 +18,22 @@ export const fetchLogin = createAsyncThunk(
   }
 );
 
+export const fetchLogout = createAsyncThunk(
+  'auth/fetchLogout',
+  async ({ googleId }, { rejectWithValue }) => {
+    try {
+      const aux = await authWS.delete(googleId);
+      console.log(aux.data)
+      return aux.data;
+      
+    } catch (error) {
+      return rejectWithValue({
+        error: error.response,
+      });
+    }
+  }
+);
+
 const authReducer = createSlice({
   name: 'auth',
   initialState: {
@@ -39,6 +55,9 @@ const authReducer = createSlice({
       state.session.accessToken = null;
       state.session.refreshToken = null;
       state.user.id = null;
+      state.user.email = null;
+      state.user.photo = null;
+      state.user.name = null;
     },
     resetAccessToken: (state) => {
       state.session.accessToken = null;
@@ -81,7 +100,32 @@ const authReducer = createSlice({
       state.isFetching = false;
       // Aquí puedes manejar errores específicos si es necesario
     });
-  },
+
+
+
+    builder.addCase(fetchLogout.pending, (state) => {
+      console.log("EL PENDING fetchLogout");
+      state.isFetching = true;
+    });
+    builder.addCase(fetchLogout.fulfilled, (state, action) => {
+      console.log("EL FULFILLED 0 fetchLogout");  
+      state.isFetching = false;
+      state.succeed = true;
+      state.session.accessToken = null;
+      state.session.refreshToken = null;
+      state.user.id = null;
+      state.user.email = null;
+      state.user.photo = null;
+      state.user.name = null;   
+      axios.defaults.headers.common['Authorization'] = '';
+      console.log("EL FULFILLED fetchLogout");
+    });
+    builder.addCase(fetchLogout.rejected, (state, action) => {
+        console.log("EL REJECTED fetchLogout");
+      state.isFetching = false;
+      // Aquí puedes manejar errores específicos si es necesario
+    });
+    },
   
 });
 

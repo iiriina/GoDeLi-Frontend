@@ -16,8 +16,7 @@ axios.defaults.headers.common = {
 
 
 
-console.log(store);
-
+// -------------------------------------------EL INTERCEPTOR--------------------------------
 
 axios.interceptors.response.use(
   (res) => {
@@ -62,7 +61,7 @@ axios.interceptors.response.use(
   },
 );
 
-
+// -----------------------------------------------------------------------------------
 
 
 

@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { StyleSheet, View, Text, Image, ScrollView,Alert,Button, Platform,TouchableOpacity  } from "react-native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import  NotificationComponent  from '../components/NotificationComponent';
@@ -12,6 +13,9 @@ import healthWS from '../../networking/api/endpoints/healthWS';
 import recipeWS from '../../networking/api/endpoints/recipeWS';
 import axios from 'axios';
 import {store} from '../../redux/store'
+import {setClientToken, clearClientToken} from '../../networking/api/Api'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLogout  } from '../../redux/slices/AuthSlice';
 
 const Perfil = () => {
 
@@ -86,7 +90,7 @@ const Perfil = () => {
       console.log(axios.defaults.headers);
       console.log("HOLA22")
       const response = await recipeWS.getRecipes({});
-      console.log(response.headers);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error.response);
     }
@@ -100,6 +104,25 @@ const Perfil = () => {
       console.log("HOLA22")
       const response = await recipeWS.getRecipes({});
       console.log(response.headers);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+
+
+  const dispatch = useDispatch();
+
+  const handleLogout = (googleId) => {
+    dispatch(fetchLogout({ googleId }));
+  };
+
+
+
+  const handlerLogout = async () => {
+    try {
+      console.log(store.getState().auth.user.id)
+      setClientToken(store.getState().auth.session.refreshToken);
+      handleLogout(store.getState().auth.user.id);
     } catch (error) {
       console.log(error.response);
     }
@@ -254,6 +277,11 @@ const Perfil = () => {
 
       <TouchableOpacity style={styles.panelButton} onPress={handlerHealth3}>
         <Text style={styles.panelButtonTitle}>Probar Refresh Token</Text>
+      </TouchableOpacity>
+
+
+      <TouchableOpacity style={styles.panelButton} onPress={handlerLogout}>
+        <Text style={styles.panelButtonTitle}>Probar Logout</Text>
       </TouchableOpacity>
     </View>
 

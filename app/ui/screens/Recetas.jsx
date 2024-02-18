@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
@@ -6,11 +7,32 @@ import  NotificationComponent  from '../components/NotificationComponent';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 import CardReceta from '../components/CardReceta'
 import ModalFiltros from '../components/Modal'; 
-import { useState } from "react";
+import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
+import {store} from '../../redux/store'
+import recipeWS from '../../networking/api/endpoints/recipeWS';
 
 
 const Recetas = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [recetas, setRecetas] = useState([]);
+
+  const handlerHealth3 = async () => {
+    try {
+      console.log("HOLA21")
+      console.log(store.getState().auth.session.accessToken)
+      console.log(axios.defaults.headers);
+      console.log("HOLA22")
+      const response = await recipeWS.getRecipes({});
+      console.log(response.data.data);
+      setRecetas(response.data.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  useEffect(() => {
+    handlerHealth3();
+  }, []);
 
   return (
     <ScrollView style={{ backgroundColor: Color.white }}>
@@ -41,17 +63,11 @@ const Recetas = () => {
         </View>
       </View>
 
-      <View style={[styles.frameParent, styles.parentShadowBox]}>
-        <CardReceta/>
-    </View>
-
-    <View style={[styles.frameParent, styles.parentShadowBox]}>
-        <CardReceta/>
-    </View>
-
-    <View style={[styles.frameParent, styles.parentShadowBox]}>
-        <CardReceta/>
-    </View>
+      {recetas.map((receta, index) => (
+        <View key={index} style={[styles.frameParent, styles.parentShadowBox]}>
+          <CardReceta data={receta} />
+        </View>
+      ))}
 
 
       {/* ModalFiltros ahora se llama directamente aquí */}

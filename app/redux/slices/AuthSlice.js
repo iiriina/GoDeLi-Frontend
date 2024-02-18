@@ -7,6 +7,7 @@ export const fetchLogin = createAsyncThunk(
   async ({ idToken }, { rejectWithValue }) => {
     try {
       const aux = await authWS.create(idToken);
+      updateJWT(aux.data.accessToken);
       return aux.data;
       
     } catch (error) {
@@ -34,18 +35,17 @@ const authReducer = createSlice({
     succeed: false,
   },
   reducers: {
-    updatePNToken: (state, token) => {
-      state.session.pnToken = token.payload;
-      console.log('token.payload;token.payload;token.payload;token.payload;: ', state.session.pnToken);
-    },
     logoutAction: (state) => {
       state.session.accessToken = null;
       state.session.refreshToken = null;
       state.user.id = null;
-      
     },
-    updateJWT: (state) => {
-      axios.defaults.headers.common.Authorization = 'Bearer ' + state.session.jwt;
+    resetAccessToken: (state) => {
+      state.session.accessToken = null;
+    },
+    updateJWT: (state,token) => {
+      state.session.accessToken = token.payload;
+      axios.defaults.headers.common.Authorization = 'Bearer ' + state.session.accessToken;
     },
     updateUser: (state, action) => {
         console.log('entrooooo')
@@ -85,6 +85,6 @@ const authReducer = createSlice({
   
 });
 
-export const { logoutAction, updatePNToken, updateJWT, updateUser } = authReducer.actions;
+export const { logoutAction, updateJWT, updateUser, resetAccessToken } = authReducer.actions;
 
 export default authReducer.reducer;

@@ -9,7 +9,9 @@ import Carrousel from "../components/Carrousel";
 import ImagePicker from 'react-native-image-crop-picker';
 import Header from '../components/Header'
 import healthWS from '../../networking/api/endpoints/healthWS';
+import recipeWS from '../../networking/api/endpoints/recipeWS';
 import axios from 'axios';
+import {store} from '../../redux/store'
 
 const Perfil = () => {
 
@@ -78,12 +80,28 @@ const Perfil = () => {
 
 
   const handlerHealth3 = async () => {
-    console.log(0)
     try {
-      const response = await healthWS.health();
-      console.log(response) ;
+      console.log("HOLA21")
+      console.log(store.getState().auth.session.accessToken)
+      console.log(axios.defaults.headers);
+      console.log("HOLA22")
+      const response = await recipeWS.getRecipes({});
+      console.log(response.headers);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
+    }
+  }
+
+  const handlerHealth4 = async () => {
+    try {
+      console.log("HOLA21")
+      console.log(store.getState().auth.session.accessToken)
+      console.log(axios.defaults.headers);
+      console.log("HOLA22")
+      const response = await recipeWS.getRecipes({});
+      console.log(response.headers);
+    } catch (error) {
+      console.log(error.response);
     }
   }
 
@@ -235,7 +253,7 @@ const Perfil = () => {
 
 
       <TouchableOpacity style={styles.panelButton} onPress={handlerHealth3}>
-        <Text style={styles.panelButtonTitle}>Probar Health</Text>
+        <Text style={styles.panelButtonTitle}>Probar Refresh Token</Text>
       </TouchableOpacity>
     </View>
 

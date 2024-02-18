@@ -9,12 +9,21 @@ import Iniciov2 from '../ui/screens/Iniciov2'
 
 import Routes from './Routes';
 import Header from '../ui/components/Header';
+import { useSelector } from 'react-redux';
+import {store} from '../redux/store'
+import {setInicialToken} from '../networking/api/Api'
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
+  
+    const isLoggedIn = useSelector(state => !!state.auth.session.refreshToken);
+    console.log(store.getState().auth.session.refreshToken);
+    console.log(isLoggedIn)
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    if (isLoggedIn) {
+      setInicialToken();
+    }
 
     return (
         <NavigationContainer>

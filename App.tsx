@@ -35,7 +35,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 
-import {store} from './app/redux/Store';
+import {store} from './app/redux/store';
 
 
 
@@ -81,11 +81,9 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const persistor = persistStore(store);
-
   return (
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    <PersistGate loading={null} persistor={persistStore(store)}>
       <ApplicationProvider {...eva} theme={eva.light}>
         <RootNavigator/>
       </ApplicationProvider>

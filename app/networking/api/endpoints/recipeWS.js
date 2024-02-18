@@ -1,7 +1,7 @@
 import api from '../Api';
 import {urlApi} from '../ApiConfig';
 
-export let recipeWS = {
+export default recipeWS = {
     create: async function (title, description, images, video, dishes, time, owner, tags, steps, ingredients, nutritionalInfo ) {
         // Construye la URL para modificar un usuario utilizando la función definida en urlApi
         const URL = urlApi.recipes.create();
@@ -22,9 +22,9 @@ export let recipeWS = {
         }
         // Realiza una solicitud PUT al servidor con la URL y el cuerpo de la solicitud
         return await api.post(URL, requestBody);   
-},
+    },
     getRecipes: async function (filtros) {
-        const URL = urlApi.recipes.getRecipes();
+        const URL = urlApi.recipes.getRecipes;
         return await api.get(URL, { 
             params: filtros
         });

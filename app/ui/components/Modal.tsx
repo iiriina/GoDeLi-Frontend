@@ -17,8 +17,8 @@ const ModalTester: React.FC<{
   onFilterSearch: () => void; // Esto es nuevo
 }> = ({ isVisible, toggleModal, setSelectedFilters, selectedFilters, onFilterSearch }) => {
   const [buttonStates, setButtonStates] = useState<ButtonStates>({
-    Vegano: false,
-    Vegetariano: false,
+    amogus: false,
+    rico: false,
     'Rápida preparación': false,
     'Apto Celíacos': false,
     'Estimula el Sist. Inmune': false,
@@ -29,12 +29,16 @@ const ModalTester: React.FC<{
   });
 
   const handleButtonPress = (buttonText: string) => {
-    setButtonStates((prevButtonStates) => ({
-      ...prevButtonStates,
-      [buttonText]: !prevButtonStates[buttonText],
-    }));
-    setSelectedFilters(buttonStates);
+    setButtonStates((prevButtonStates) => {
+      const updatedButtonStates = {
+        ...prevButtonStates,
+        [buttonText]: !prevButtonStates[buttonText],
+      };
+      setSelectedFilters(updatedButtonStates);
+      return updatedButtonStates;
+    });
   };
+  
 
   const onPress = () => {
     onFilterSearch();

@@ -30,16 +30,17 @@ const Recetas = () => {
         .join("&");
         
       let filtros = ""
-      if (searchText){
-        filtros += '?tags=' + filters
+      if (filters){
+        console.log(filters)
+        filtros += '&tags=' + filters
       }
       
       if (searchText){
         filtros += '&search=' + searchText
       }
-      
-      console.log("filtrossss", filtros)
-      
+      console.log("LOS FILTROS SON ESTOS:")
+      console.log(filtros)
+      console.log("LOS FILTROS ERAN ESOS")
       const response = await recipeWS.getRecipes(filtros);
       console.log(response.data.data);
       
@@ -78,7 +79,8 @@ const Recetas = () => {
               placeholderTextColor="#737373"
               value={searchText}
               onChangeText={setSearchText}
-              onKeyPress={handleKeyPress}
+              onSubmitEditing={handlerHealth3}
+              
             />
           
             {/* Icono para abrir los filtros */}

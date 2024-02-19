@@ -1,13 +1,49 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View,TouchableOpacity,Animated, Easing } from "react-native";
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
+import axios from 'axios';
 
 const Frame = ({ data, index }) => {
-  const [isHeartFilled, setIsHeartFilled] = useState(false);
+
+  const [isSelected, setIsSelected] = useState(false);
+  const scaleValue = new Animated.Value(1);
+
   const toggleHeart = () => {
-    setIsHeartFilled(!isHeartFilled);
+    setIsSelected(!isSelected);
+    patchFavorite(isSelected); 
+
+    Animated.sequence([
+      Animated.timing(scaleValue, {
+        toValue: 1.2,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }),
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true
+      })
+    ]).start();
   };
-  
+
+  const patchFavorite = async (isFavorite) => {
+    try {
+      // Realiza la solicitud PATCH al endpoint correspondiente
+      const response = await axios.patch(`https://godeli-production.up.railway.app/users/${userId}/favourites`, {
+        isFavorite: isFavorite // Envía el nuevo estado del favorito al servidor
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error al actualizar el estado del favorito:', error);
+    }
+  };
+
+
+  const animatedStyle = {
+    transform: [{ scale: scaleValue }]
+  };
 
   return (
     <View style={[styles.frameParent, styles.frameParentShadowBox]}>
@@ -15,7 +51,7 @@ const Frame = ({ data, index }) => {
         <Image
           style={styles.unsplashjpkfc5DDiIcon}
           resizeMode="cover"
-          source={require("../assets/unsplashjpkfc5-ddi.png")}
+          src={data.images[0].secure_url}
         />
         <View style={styles.frameWrapper}>
           <View style={styles.frameGroup}>
@@ -34,9 +70,14 @@ const Frame = ({ data, index }) => {
                 <View style={styles.groupParent}>
                   <View style={styles.groupWrapper}>
                     <View style={styles.textPosition}>
+                      {data.rateAvg ?
                       <Text style={[styles.text, styles.textPosition]}>
-                        4.3
+                        {data.rateAvg}
                       </Text>
+                      :
+                      <Text style={[styles.text, styles.textPosition]}>
+                        N/A
+                      </Text>}
                     </View>
                   </View>
                   <Image
@@ -48,32 +89,14 @@ const Frame = ({ data, index }) => {
               </View>
             </View>
             <View style={styles.frameParent1}>
-              <View>
-                <View style={styles.wrapperSpaceBlock}>
-                  <Text style={[styles.vegano, styles.veganoTypo]}>Vegano</Text>
-                </View>
-              </View>
-              <View style={styles.frameWrapper2}>
-                <View style={styles.wrapperSpaceBlock}>
-                  <Text style={[styles.vegano, styles.veganoTypo]}>
-                    Vegetariano
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.frameWrapper2}>
-                <View
-                  style={[
-                    styles.bajaEnCalorasWrapper,
-                    styles.wrapperSpaceBlock,
-                  ]}
-                >
-                  <Text style={[styles.vegano, styles.veganoTypo]}>
-                    Baja en Calorías
-                  </Text>
-                </View>
-              </View>
+            {data.tags.map((tag, index) => (
+              <View style={[styles.wrapperSpaceBlock, styles.frameWrapper2]}>
+              <Text style={[styles.vegano, styles.veganoTypo]}>
+                {tag}
+              </Text>
             </View>
-
+          ))}
+            </View>
             <View style={styles.aux}/>
 
             <View style={styles.vectorWrapper}>
@@ -89,21 +112,29 @@ const Frame = ({ data, index }) => {
                   <Image
                     style={styles.avatarIcon}
                     resizeMode="cover"
-                    source={require("../assets/avatar.png")}
+                    src={data.owner.photo}
+                    onError={(error) => console.log("Error al cargar la imagen:", error)}
                   />
                   <Text style={[styles.abigailPerez, styles.veganoTypo]}>
-                    Abigail, Perez
+                    {data.owner.name}
                   </Text>
                 </View>
               </View>
             </View>
           </View>
         </View>
-        <Image
-          style={styles.frameItem}
-          resizeMode="cover"
-          source={require("../assets/group-18.png")}
-        />
+        <TouchableOpacity
+          style= {styles.frameItem}
+          onPress = {toggleHeart}> 
+          
+          <Animated.Image
+        style={[styles.heartIcon, animatedStyle]}
+        resizeMode="cover"
+        source={isSelected ? require("../assets/group-18.png") : require("../assets/group-27.png")}
+          />
+
+        </TouchableOpacity>
+        
         <View style={[styles.groupContainer, styles.frameParentShadowBox]}>
           <View style={styles.agricultureParent}>
             <Image
@@ -111,7 +142,7 @@ const Frame = ({ data, index }) => {
               resizeMode="cover"
               source={require("../assets/agriculture.png")}
             />
-            <Text style={[styles.mins, styles.minsLayout]}>25 min.</Text>
+            <Text style={[styles.mins, styles.minsLayout]}>{data.time + " Min"}</Text>
           </View>
         </View>
       </View>
@@ -159,6 +190,7 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_3xs,
     alignItems: "center",
     flexDirection: "row",
+    margin: 5
   },
   framePosition: {
     left: 0,
@@ -227,7 +259,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   frameWrapper2: {
-    marginLeft: 6,
+    marginLeft: -1,
     
     
   },
@@ -238,14 +270,14 @@ const styles = StyleSheet.create({
   },
   frameParent1: {
     marginTop: 6,
+    marginLeft: -5,
     alignItems: "center",
     flexWrap: "wrap",
     flexDirection: "row",
     alignSelf: "stretch",
-    
-
-    
+    paddingHorizontal: 8,
   },
+
   frameChild: {
     width: 360,
     height: 0,
@@ -294,8 +326,8 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   frameItem: {
-    top: 12,
-    right: 17,
+    top: 8,
+    right: 9,
     width: 34,
     height: 34,
     zIndex: 2,

@@ -25,9 +25,7 @@ export default recipeWS = {
     },
     getRecipes: async function (filtros) {
         const URL = urlApi.recipes.getRecipes;
-        return await api.get(URL, { 
-            params: filtros
-        });
+        return await api.get(URL+filtros);
         
     }, 
     

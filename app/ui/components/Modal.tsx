@@ -9,10 +9,13 @@ interface ButtonStates {
   [key: string]: boolean;
 }
 
-const ModalTester: React.FC<{ isVisible: boolean; toggleModal: () => void }> = ({
-  isVisible,
-  toggleModal,
-}) => {
+const ModalTester: React.FC<{
+  isVisible: boolean;
+  toggleModal: () => void;
+  setSelectedFilters: (filters: any) => void;
+  selectedFilters: any;
+  onFilterSearch: () => void; // Esto es nuevo
+}> = ({ isVisible, toggleModal, setSelectedFilters, selectedFilters, onFilterSearch }) => {
   const [buttonStates, setButtonStates] = useState<ButtonStates>({
     Vegano: false,
     Vegetariano: false,
@@ -30,11 +33,13 @@ const ModalTester: React.FC<{ isVisible: boolean; toggleModal: () => void }> = (
       ...prevButtonStates,
       [buttonText]: !prevButtonStates[buttonText],
     }));
+    setSelectedFilters(buttonStates);
   };
 
   const onPress = () => {
+    onFilterSearch();
+};
 
-  }
 
   return (
     <View style={{ flex: 1 }}>

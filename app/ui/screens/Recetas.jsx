@@ -9,7 +9,7 @@ import CardReceta from '../components/CardReceta'
 import ModalFiltros from '../components/Modal'; 
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
 import {store} from '../../redux/store'
-import recipeWS from '../../networking/api/endpoints/recipeWS';
+import userWS from '../../networking/api/endpoints/userWS';
 
 
 const Recetas = () => {
@@ -18,12 +18,7 @@ const Recetas = () => {
 
   const handlerHealth3 = async () => {
     try {
-      console.log("HOLA21")
-      console.log(store.getState().auth.session.accessToken)
-      console.log(axios.defaults.headers);
-      console.log("HOLA22")
-      const response = await recipeWS.getRecipes({});
-      console.log(response.data.data);
+      const response = await userWS.get();
       setRecetas(response.data.data);
     } catch (error) {
       console.log(error.response);

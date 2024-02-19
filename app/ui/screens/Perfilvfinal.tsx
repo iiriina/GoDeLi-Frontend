@@ -1,8 +1,44 @@
 import * as React from "react";
 import { Image, StyleSheet, View, Text, TextInput } from "react-native";
 import { Padding, Color, Border, FontSize, FontFamily } from "../GlobalStyles";
+import { Button } from "react-native-paper";
+import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
+import {store} from '../../redux/store'
+import userWS from '../../networking/api/endpoints/userWS';
+
 
 const Perfil = () => {
+
+  const [recetas, setRecetas] = React.useState([]);
+
+    const handlerHealth3 = async () => {
+      try {
+        console.log("hola1")
+        setClientToken(store.getState().auth.session.accessToken)
+        const response = await userWS.getMyRec(store.getState().auth.user.id);
+        console.log("hola2")
+        
+        console.log(response.data);
+        setRecetas(response.data);
+        console.log(recetas[0].images[0].secure_url)
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
+  
+    useEffect(() => {
+      handlerHealth3();
+    }, []);
+
+  const handlerA = () => {
+    
+  }
+
+
+
+
+
+
   return (
     <View style={styles.perfil}>
       <View style={styles.groupParent}>
@@ -43,9 +79,15 @@ const Perfil = () => {
         <View style={[styles.groupWrapper, styles.groupLayout]}>
           <View style={[styles.rectangleParent, styles.groupLayout]}>
             <View style={[styles.groupChild, styles.groupLayout]} />
-            <Text style={[styles.guardarCambios, styles.cerrarSesinTypo]}>
-              Guardar cambios
-            </Text>
+            
+            <Button
+                  mode="contained"
+                  onPress={handlerA}
+                  >   
+                  <Text>
+                    Guardar Cambios
+                  </Text>
+                </Button>
           </View>
         </View>
         <Image
@@ -57,14 +99,26 @@ const Perfil = () => {
         <View style={[styles.groupWrapper, styles.groupLayout]}>
           <View style={[styles.rectangleParent, styles.groupLayout]}>
             <View style={[styles.groupChild, styles.groupLayout]} />
-            <Text style={[styles.cerrarSesin, styles.cerrarSesinTypo]}>
-              Cerrar sesión
-            </Text>
+            <Button
+                  mode="contained"
+                  onPress={handlerA}
+                  >   
+                  <Text>
+                    Cerrar sesión
+                  </Text>
+                </Button>
           </View>
         </View>
         <View style={[styles.groupWrapper, styles.groupLayout]}>
           <View style={[styles.groupInner, styles.groupLayout]} />
-          <Text style={styles.eliminarCuenta}>Eliminar cuenta</Text>
+          <Button
+                  mode="contained"
+                  onPress={handlerA}
+                  >   
+                  <Text style={styles.eliminarCuenta}>
+                    Eliminar cuenta
+                  </Text>
+                </Button>
         </View>
       </View>
     </View>

@@ -66,6 +66,8 @@ const NutritionalInformationCard = ({
           style={[styles.formDefault, styles.parentFlexBox]}
           placeholder={caloriesAndProteins}
           placeholderTextColor="#4c4c4c"
+          keyboardType="numeric" // Establecer el teclado numérico
+
         />
       </View>
     </View>

@@ -55,7 +55,7 @@ const Perfil = () => {
       
     });
   }
-  
+   
   const handlerHealth = async () => {
     console.log(0)
     try {

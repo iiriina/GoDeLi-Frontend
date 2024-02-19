@@ -5,7 +5,7 @@ import CardReceta from "../components/CardReceta";
 const RecetasFavoritas = () => {
   return (
     <View style={styles.container}>
-      <CardReceta />
+      <CardReceta data={undefined} index={undefined} />
     </View>
   );
 };

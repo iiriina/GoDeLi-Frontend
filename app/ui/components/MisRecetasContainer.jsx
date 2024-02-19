@@ -2,26 +2,12 @@ import React, { useMemo } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
 
-export type MisRecetasContainerType = {
-  /** Style props */
-  frameViewMarginLeft?: number | string;
-};
 
-const getStyleValue = (key: string, value: string | number | undefined) => {
-  if (value === undefined) return;
-  return { [key]: value === "unset" ? undefined : value };
-};
-const MisRecetasContainer = ({
-  frameViewMarginLeft,
-}: MisRecetasContainerType) => {
-  const frameViewStyle = useMemo(() => {
-    return {
-      ...getStyleValue("marginLeft", frameViewMarginLeft),
-    };
-  }, [frameViewMarginLeft]);
+const MisRecetasContainer = ({ data }) => {
+  
 
   return (
-    <View style={[styles.frameWrapper, frameViewStyle]}>
+    <View style={[styles.frameWrapper]}>
       <View style={[styles.image5Parent, styles.parentFlexBox]}>
         <Image
           style={styles.image5Icon}

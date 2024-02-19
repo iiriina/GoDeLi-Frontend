@@ -16,7 +16,7 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   // blacklist: ['auth'], // Persiste todo excepto este slice
-  // whitelist: ['auth'], // Solo persiste este slice
+  whitelist: ['auth'], // Solo persiste este slice
   // migrate: createMigrate(migrations, { debug: true })
   
 };

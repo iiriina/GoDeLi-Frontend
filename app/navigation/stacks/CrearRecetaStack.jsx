@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const ModalStack = createStackNavigator();
 
+
 const CrearRecetaStack = () => {
   return (
       <ModalStack.Navigator initialRouteName="ModalScreen1" screenOptions={{presentation: 'modal'}} >

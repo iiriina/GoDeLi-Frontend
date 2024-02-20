@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useNavigation } from "react";
 import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
@@ -8,7 +8,7 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-a
 import CardReceta from '../components/CardReceta'
 import ModalFiltros from '../components/Modal'; 
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
-import {store} from '../../redux/store'
+import {store} from '../../redux/store'; 
 import recipeWS from '../../networking/api/endpoints/recipeWS';
 
 
@@ -17,6 +17,8 @@ const Recetas = () => {
   const [recetas, setRecetas] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({});
+  
+  
 
   const handlerHealth3 = async () => {
     try {
@@ -27,7 +29,7 @@ const Recetas = () => {
       let filters = Object.keys(selectedFilters)
         .filter((filter) => selectedFilters[filter])
         .map((filter) => encodeURIComponent(filter.normalize("NFD").replace(/[\u0300-\u036f]/g, '')))
-        .join("&");
+        .join(",");
         
       let filtros = ""
       if (filters){

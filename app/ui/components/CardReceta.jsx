@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, Text, View,TouchableOpacity,Animated, Easing } from "react-native";
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
+import { store } from '../../redux/store';
 import axios from 'axios';
 
+
 const Frame = ({ data, index }) => {
+  
+
+  const [recetas, setRecetas] = useState([]); 
+  const navigation = useNavigation();
+
+  const handleCardPress = (recipeId) => {
+    navigation.navigate('Receta Individual', { recipeId });
+  };
 
   const [isSelected, setIsSelected] = useState(false);
   const scaleValue = new Animated.Value(1);
 
   const toggleHeart = () => {
     setIsSelected(!isSelected);
-    patchFavorite(isSelected); 
+    patchFavorite(recipeId); 
 
     Animated.sequence([
       Animated.timing(scaleValue, {
@@ -28,11 +39,13 @@ const Frame = ({ data, index }) => {
     ]).start();
   };
 
-  const patchFavorite = async (isFavorite) => {
+  const [recipeId, setRecipeId] = useState(data._id);
+  
+  const patchFavorite = async (recipeId) => {
     try {
-      // Realiza la solicitud PATCH al endpoint correspondiente
-      const response = await axios.patch(`https://godeli-production.up.railway.app/users/${userId}/favourites`, {
-        isFavorite: isFavorite // Envía el nuevo estado del favorito al servidor
+      const userId = store.getState().auth.user.id;
+      const response = await axios.patch(`https://godeli-production.up.railway.app/users/${userId}/favorites`, {
+        recipeId: recipeId // Envía el ID de la receta al servidor
       });
       console.log(response.data);
     } catch (error) {
@@ -46,13 +59,17 @@ const Frame = ({ data, index }) => {
   };
 
   return (
+    <TouchableOpacity onPress={() => handleCardPress(recipeId)}>
     <View style={[styles.frameParent, styles.frameParentShadowBox]}>
+      
       <View style={styles.unsplashjpkfc5DDiParent}>
+      {data.images[0].secure_url && (
         <Image
           style={styles.unsplashjpkfc5DDiIcon}
           resizeMode="cover"
-          src={data.images[0].secure_url}
+          source={{ uri: data.images[0].secure_url }}
         />
+        )}
         <View style={styles.frameWrapper}>
           <View style={styles.frameGroup}>
             <View style={[styles.frameContainer, styles.avatarParentFlexBox]}>
@@ -120,8 +137,11 @@ const Frame = ({ data, index }) => {
                   </Text>
                 </View>
               </View>
+              
             </View>
+            
           </View>
+          
         </View>
         <TouchableOpacity
           style= {styles.frameItem}
@@ -130,7 +150,7 @@ const Frame = ({ data, index }) => {
           <Animated.Image
         style={[styles.heartIcon, animatedStyle]}
         resizeMode="cover"
-        source={isSelected ? require("../assets/group-18.png") : require("../assets/group-27.png")}
+        source={isSelected ? require("../assets/group-27.png") : require("../assets/group-18.png")}
           />
 
         </TouchableOpacity>
@@ -147,6 +167,7 @@ const Frame = ({ data, index }) => {
         </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
 };
 

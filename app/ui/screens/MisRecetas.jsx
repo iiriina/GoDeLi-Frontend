@@ -41,16 +41,17 @@ const MisRecetas = () => {
 
     return (
         <View style={{ flex: 1, }}>
-            <View style={{ flex: 1,flexWrap:"wrap",flexDirection:"row",margin:"3%",width:"100%"  }}>
-                {recetas.map((receta, index) => (
-
-                  
+            {recetas && recetas.length > 0 ? (
+        <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", margin: "3%", width: "100%" }}>
+            {recetas.map((receta, index) => (
                 <MisRecetasContainer data={receta} index={index} />
-              
-
             ))}
-                
-            </View>
+        </View>
+    ) : (
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Text>No hay recetas para mostrar</Text>
+        </View>
+    )}
         </View>
     );
 };

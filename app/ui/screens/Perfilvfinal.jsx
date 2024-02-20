@@ -5,6 +5,11 @@ import { Button } from "react-native-paper";
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
 import {store} from '../../redux/store'
 import userWS from '../../networking/api/endpoints/userWS';
+import healthWS from '../../networking/api/endpoints/healthWS';
+import recipeWS from '../../networking/api/endpoints/recipeWS';
+import {setClientToken, clearClientToken} from '../../networking/api/Api'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLogout  } from '../../redux/slices/AuthSlice';
 
 
 const Perfil = () => {
@@ -31,14 +36,34 @@ const Perfil = () => {
     }, []);
 
 
+
     */
-  const handlerA = () => {
+
+
     
+  const dispatch = useDispatch();
+
+  const handleLogout = (googleId) => {
+    dispatch(fetchLogout({ googleId }));
+  };
+
+
+
+  const handlerLogout = async () => {
+    try {
+      console.log(store.getState().auth.user.id)
+      setClientToken(store.getState().auth.session.refreshToken);
+      handleLogout(store.getState().auth.user.id);
+    } catch (error) {
+      console.log(error.response);
+    }
   }
 
 
 
+  const handlerA = () => {
 
+  }
 
 
   return (
@@ -103,7 +128,7 @@ const Perfil = () => {
             <View style={[styles.groupChild, styles.groupLayout]} />
             <Button
                   mode="contained"
-                  onPress={handlerA}
+                  onPress={handlerLogout}
                   >   
                   <Text>
                     Cerrar sesión

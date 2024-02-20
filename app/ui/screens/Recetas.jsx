@@ -8,8 +8,10 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-a
 import CardReceta from '../components/CardReceta'
 import ModalFiltros from '../components/Modal'; 
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
+
 import {store} from '../../redux/store'; 
 import recipeWS from '../../networking/api/endpoints/recipeWS';
+
 
 
 const Recetas = () => {
@@ -22,6 +24,7 @@ const Recetas = () => {
 
   const handlerHealth3 = async () => {
     try {
+
       console.log("HOLA21")
       console.log(store.getState().auth.session.accessToken)
       console.log(axios.defaults.headers);

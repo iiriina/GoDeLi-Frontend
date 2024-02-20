@@ -21,14 +21,9 @@ const MisRecetas = () => {
     const handlerHealth3 = async () => {
       try {
 
-        console.log("hola1")
         setClientToken(store.getState().auth.session.accessToken)
         const response = await userWS.getMyRec(store.getState().auth.user.id);
-        console.log("hola2")
-        
-        console.log(response.data);
         setRecetas(response.data);
-        console.log(recetas[0].images[0].secure_url)
 
       } catch (error) {
         console.log(error.response);
@@ -44,7 +39,7 @@ const MisRecetas = () => {
             {recetas && recetas.length > 0 ? (
         <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", margin: "3%", width: "100%" }}>
             {recetas.map((receta, index) => (
-                <MisRecetasContainer data={receta} index={index} />
+                <MisRecetasContainer data={receta} key={index} />
             ))}
         </View>
     ) : (

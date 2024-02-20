@@ -14,6 +14,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import React, { useState, useEffect } from "react";
 import { useSelector,useDispatch } from 'react-redux'; // Importa useDispatch
 import { updateParteUno } from '../../redux/slices/CrearRecetaSlice';
+import {store} from '../../redux/store'
 
 import RNFetchBlob from 'rn-fetch-blob';
 
@@ -29,7 +30,7 @@ const ModalScreen = ({ navigation }) => {
 
   const [images, setImages] = React.useState([]);
   // ENTRAR A LA GALERÍA Y SUBIR FOTOS - CAMARA
-  console.log(images);
+  
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
       compressImageMaxWidth: 300,
@@ -77,10 +78,8 @@ const ModalScreen = ({ navigation }) => {
 
   const [video, setVideo] = useState('');
 
-  console.log(title);
-  console.log(description);
-  console.log(video);
-  console.log(images);
+
+
 
 
 

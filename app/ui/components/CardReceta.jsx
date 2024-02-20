@@ -47,7 +47,7 @@ const Frame = ({ data, index }) => {
       const response = await axios.patch(`https://godeli-production.up.railway.app/users/${userId}/favorites`, {
         recipeId: recipeId // Envía el ID de la receta al servidor
       });
-      console.log(response.data);
+
     } catch (error) {
       console.error('Error al actualizar el estado del favorito:', error);
     }

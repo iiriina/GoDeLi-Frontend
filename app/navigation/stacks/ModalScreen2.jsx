@@ -21,8 +21,6 @@ const ModalScreen = ({ navigation }) => {
   const [ingredientes, setIngredientes] = useState([]);
   const [nuevoIngrediente, setNuevoIngrediente] = useState('');
 
-  console.log(pasos);
-  console.log(ingredientes);
   // Función para agregar un nuevo ingrediente a la lista
   const agregarIngrediente = () => {
     if (nuevoIngrediente.trim() !== '') {
@@ -66,7 +64,12 @@ const ModalScreen = ({ navigation }) => {
         navigation.navigate("ModalScreen3");
       }
     };
-    
+
+
+    const handleAtrasPress = () => {
+      navigation.navigate("ModalScreen1");
+    }
+
     return (
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
 
@@ -173,6 +176,7 @@ const ModalScreen = ({ navigation }) => {
             mode="contained"
             labelStyle={styles.formDefault6Btn2}
             contentStyle={styles.formDefault6Btn12}
+            onPress = {handleAtrasPress}
           >
             Anterior
           </Button>

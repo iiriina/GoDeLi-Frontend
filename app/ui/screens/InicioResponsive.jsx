@@ -22,7 +22,6 @@ const Frame = ({navigation}) => {
     const [userInfo, setuserInfo] = React.useState([]);
   
     _signIn = async () => {
-      console.log('333333333333')
       try {
         await GoogleSignin.hasPlayServices();
         const {accessToken, idToken} = await GoogleSignin.signIn();

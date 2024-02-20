@@ -10,7 +10,6 @@ export default recipeWS = {
 
     getRecipes: async function (filtros) {
         const URL = urlApi.recipes.getRecipes;
-        console.log(URL+filtros)
         return await api.get(URL+filtros);
         
     }, 
@@ -18,7 +17,6 @@ export default recipeWS = {
     
     getRecipeInd: async function (_id) {
         const URL = urlApi.recipes.getRecipeInd(_id);
-        console.log(URL)
         return await api.get(URL);
     },
 

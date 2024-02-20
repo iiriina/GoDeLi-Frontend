@@ -51,7 +51,7 @@ const Perfil = () => {
 
   const handlerLogout = async () => {
     try {
-      console.log(store.getState().auth.user.id)
+      
       setClientToken(store.getState().auth.session.refreshToken);
       handleLogout(store.getState().auth.user.id);
     } catch (error) {
@@ -103,50 +103,38 @@ const Perfil = () => {
           placeholder="cbala@uade.edu.io"
           placeholderTextColor="#6a6767"
         />
-        <View style={[styles.groupWrapper, styles.groupLayout]}>
-          <View style={[styles.rectangleParent, styles.groupLayout]}>
-            <View style={[styles.groupChild, styles.groupLayout]} />
             
             <Button
-                  mode="contained"
-                  onPress={handlerA}
-                  >   
-                  <Text>
-                    Guardar Cambios
-                  </Text>
-                </Button>
-          </View>
-        </View>
+              style={[styles.formDefault42, styles.formBorder2]}
+              mode="contained"
+              labelStyle={styles.formDefault6Btn2}
+              contentStyle={styles.formDefault6Btn12}
+              onPress={handlerA}
+            >
+              Guardar Cambios
+            </Button>
+
+         
+       
         <Image
           style={[styles.lineIcon, styles.lineIconLayout]}
           resizeMode="cover"
           source={require("../assets/line-3.png")}
         />
         <Text style={styles.tusDatos}>Cuenta</Text>
-        <View style={[styles.groupWrapper, styles.groupLayout]}>
-          <View style={[styles.rectangleParent, styles.groupLayout]}>
-            <View style={[styles.groupChild, styles.groupLayout]} />
-            <Button
-                  mode="contained"
-                  onPress={handlerLogout}
-                  >   
-                  <Text>
-                    Cerrar sesión
-                  </Text>
-                </Button>
-          </View>
-        </View>
-        <View style={[styles.groupWrapper, styles.groupLayout]}>
-          <View style={[styles.groupInner, styles.groupLayout]} />
-          <Button
-                  mode="contained"
-                  onPress={handlerA}
-                  >   
-                  <Text style={styles.eliminarCuenta}>
-                    Eliminar cuenta
-                  </Text>
-                </Button>
-        </View>
+          
+        <Button
+              style={[styles.formDefault42, styles.formBorder2]}
+              mode="contained"
+              onPress={handlerLogout}
+              labelStyle={styles.formDefault6Btn2}
+              contentStyle={styles.formDefault6Btn12}
+
+            >
+              Cerrar Sesión
+            </Button>
+
+
       </View>
     </View>
   );
@@ -323,6 +311,17 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: Color.button2Text,
   },
+  formDefault42: {
+    borderColor: Color.button1Text,
+    marginTop:"10%",
+    overflow: "hidden",
+    borderWidth: 1,
+    borderStyle: "solid",
+    margin: "1%",
+    backgroundColor: "#E84443",
+  },
+  
+  
 });
 
 export default Perfil;

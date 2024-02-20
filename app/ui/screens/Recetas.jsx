@@ -25,10 +25,7 @@ const Recetas = () => {
   const handlerHealth3 = async () => {
     try {
 
-      console.log("HOLA21")
-      console.log(store.getState().auth.session.accessToken)
-      console.log(axios.defaults.headers);
-      console.log("HOLA22")
+
       let filters = Object.keys(selectedFilters)
         .filter((filter) => selectedFilters[filter])
         .map((filter) => encodeURIComponent(filter.normalize("NFD").replace(/[\u0300-\u036f]/g, '')))
@@ -36,18 +33,14 @@ const Recetas = () => {
         
       let filtros = ""
       if (filters){
-        console.log(filters)
         filtros += '&tags=' + filters
       }
       
       if (searchText){
         filtros += '&search=' + searchText
       }
-      console.log("LOS FILTROS SON ESTOS:")
-      console.log(filtros)
-      console.log("LOS FILTROS ERAN ESOS")
+
       const response = await recipeWS.getRecipes(filtros);
-      console.log(response.data.data);
       
       setRecetas(response.data.data);
     } catch (error) {

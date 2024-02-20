@@ -12,6 +12,7 @@ import SCREENS from '../../ui/screens/index';
 import ICONS from "../../ui/assets/icons";
 import Modal from '../../ui/components/Modal';
 import Perfilvfinal from '../../ui/screens/Perfilvfinal';
+import { CommonActions } from '@react-navigation/native';
 
 
 const Tab = createBottomTabNavigator();
@@ -67,6 +68,7 @@ const TabNavigator = () => {
         <Tab.Screen 
             name = {SCREENS.E} 
             component={CrearRecetaStack}
+           
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (
@@ -96,7 +98,7 @@ const TabNavigator = () => {
 
         <Tab.Screen 
             name = {SCREENS.C} 
-            component={Perfil}
+            component={Perfilvfinal}
             options = {{
                 title: 'Perfil',
                 tabBarIcon: ({focused}) => (

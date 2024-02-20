@@ -30,7 +30,7 @@ const Perfil = () => {
       cropping: true,
       compressImageQuality: 0.7
     }).then(image => {
-      console.log(image);
+
       //setImage(image.path);
       setImages([...images, image.path]); // Agregar la nueva imagen al array
 
@@ -46,7 +46,7 @@ const Perfil = () => {
       cropping: true,
       compressImageQuality: 0.7
     }).then(image => {
-      console.log(image);
+
       //setImage(image.path);
       setImages([...images, image.path]); // Agregar la nueva imagen al array
 
@@ -57,14 +57,10 @@ const Perfil = () => {
   }
    
   const handlerHealth = async () => {
-    console.log(0)
+
     try {
-      console.log(1)
       const response = await axios.get('https://godeli-production.up.railway.app/health'); //auxilio
-      console.log(3)
-      console.log(response) ;
     } catch (error) {
-      console.log(2)
       console.log(error);
     }
   }
@@ -74,10 +70,9 @@ const Perfil = () => {
       .health() 
       .then(response => {
         console.log(response)
-        console.log("hola")
+
       })
       .catch( (error) =>{
-          console.log(2);
           console.log(error);
       })
   }
@@ -85,12 +80,9 @@ const Perfil = () => {
 
   const handlerHealth3 = async () => {
     try {
-      console.log("HOLA21")
-      console.log(store.getState().auth.session.accessToken)
-      console.log(axios.defaults.headers);
-      console.log("HOLA22")
+
       const response = await recipeWS.getRecipes('');
-      console.log(response.data.data);
+
     } catch (error) {
       console.log(error.response);
     }
@@ -98,12 +90,9 @@ const Perfil = () => {
 
   const handlerHealth4 = async () => {
     try {
-      console.log("HOLA21")
-      console.log(store.getState().auth.session.accessToken)
-      console.log(axios.defaults.headers);
-      console.log("HOLA22")
+
       const response = await recipeWS.getRecipes('');
-      console.log(response.headers);
+
     } catch (error) {
       console.log(error.response);
     }
@@ -120,7 +109,6 @@ const Perfil = () => {
 
   const handlerLogout = async () => {
     try {
-      console.log(store.getState().auth.user.id)
       setClientToken(store.getState().auth.session.refreshToken);
       handleLogout(store.getState().auth.user.id);
     } catch (error) {

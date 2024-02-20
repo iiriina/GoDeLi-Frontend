@@ -19,6 +19,7 @@ const CrearRecetaStack = ({ navigation }) => {
 
   const handleVolver =() => {
     dispatch(eliminarDatosCreacion());
+    
     navigation.popToTop();
     navigation.goBack(null);
     
@@ -26,8 +27,20 @@ const CrearRecetaStack = ({ navigation }) => {
 
   const handleVolver2 =() => {
     dispatch(eliminarDatosCreacion());
+    
     navigation.goBack(null);
     
+  }
+
+  const handleVolver3 =() => {
+    dispatch(eliminarDatosCreacion());
+    
+
+    navigation.navigate('GoDeLi');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MainApp' }],
+      });
   }
   
 
@@ -40,7 +53,7 @@ const CrearRecetaStack = ({ navigation }) => {
           tabBarStyle: { display: "none" },
           title: "Crear Receta",
           headerLeft: () => (
-            <TouchableOpacity onPress={handleVolver2} style={styles.button}>
+            <TouchableOpacity onPress={handleVolver3} style={styles.button}>
               <Text style={styles.text}>X</Text>
             </TouchableOpacity>
           ),
@@ -53,7 +66,7 @@ const CrearRecetaStack = ({ navigation }) => {
           tabBarStyle: { display: "none" },
           title: "Crear Receta",
           headerLeft: () => (
-            <TouchableOpacity onPress={handleVolver} style={styles.button}>
+            <TouchableOpacity onPress={handleVolver3} style={styles.button}>
               <Text style={styles.text}>X</Text>
             </TouchableOpacity>
           ),
@@ -66,7 +79,7 @@ const CrearRecetaStack = ({ navigation }) => {
           tabBarStyle: { display: "none" },
           title: "Crear Receta",
           headerLeft: () => (
-            <TouchableOpacity onPress={handleVolver} style={styles.button}>
+            <TouchableOpacity onPress={handleVolver3} style={styles.button}>
               <Text style={styles.text}>X</Text>
             </TouchableOpacity>
           ),

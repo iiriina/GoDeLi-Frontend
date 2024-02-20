@@ -19,12 +19,12 @@ const ModalTester: React.FC<{
   const [buttonStates, setButtonStates] = useState<ButtonStates>({
     Vegano: false,
     Vegetariano: false,
-    'Rápida preparación': false,
-    'Apto Celíacos': false,
+    'Rapida preparacion': false,
+    'Apto Celiacos': false,
     'Estimula el Sist. Inmune': false,
     Antiinflamatorio: false,
     'Bajo en Sodio': false,
-    'Bajo en Calorías': false,
+    'Bajo en Calorias': false,
     'Promueve Flora Intestinal': false,
   });
 

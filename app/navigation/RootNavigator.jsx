@@ -18,8 +18,6 @@ const Stack = createNativeStackNavigator();
 const RootNavigator = () => {
   
     const isLoggedIn = useSelector(state => !!state.auth.session.refreshToken);
-    console.log(store.getState().auth.session.refreshToken);
-    console.log(isLoggedIn)
 
     if (isLoggedIn) {
       setInicialToken();

@@ -69,9 +69,7 @@ function setClientToken(token) {
 }
 
 function setInicialToken() {
-  console.log("HOLA99")
-  console.log(store.getState().auth.session.accessToken)
-  console.log("HOLA100")
+ 
   axios.defaults.headers.common['Authorization'] = `Bearer ${store.getState().auth.session.accessToken}`;
 }
 

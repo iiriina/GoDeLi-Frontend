@@ -21,9 +21,9 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 const RecetaIndividual = () => {
   const handlerHealth3 = async () => {
     try {
-      console.log(recipeId);
+    
       const response = await recipeWS.getRecipeInd(recipeId); 
-      console.log(response.data.data)
+
       setReceta(response.data.data)
       
   
@@ -80,8 +80,6 @@ const urls: String[]= []
 receta.images.forEach((image, index) => (
   urls.push(image.secure_url)
 ))
-console.log(urls)
-
 
   return (
     
@@ -145,6 +143,10 @@ console.log(urls)
             </View>
           </View>
           <View style={[styles.tag, styles.tagFlexBox]}>
+            
+            {receta.tags.map((tag, index) => (
+              <TagsComida vegetariana={tag} key ={index}/>
+          ))}
             <TagsComida vegetariana="Vegetariana" />
             <TagsComida frameViewMarginLeft={9} vegetariana="Vegana" />
             <TagsComida

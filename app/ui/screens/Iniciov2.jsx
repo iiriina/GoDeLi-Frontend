@@ -145,24 +145,19 @@ lo encontrás acá, en GoDeLi.`}</Text>
                   />
                 </View>
                 <View style={styles.buttonContainer}>
-                  {!loggedIn && <Text>You are currently logged out</Text>}
-                  {loggedIn && (
-                    <Button
-                      onPress={this.signOut}
-                      title="LogOut"
-                      color="red"></Button>
-                  )}
+                  {!loggedIn }
+                  {loggedIn }
                 </View>
               </View>
 
 
 
 
-
+              {/*      
               <View>
                    <Button title="AVANZAR" onPress={handleSignInWithGoogle} />
               </View>
-
+                  */}
 
 
 

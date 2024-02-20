@@ -4,29 +4,49 @@ import { View, Button } from 'react-native';
 
 import { AlertNotificationRoot, Dialog, Toast, ALERT_TYPE } from 'react-native-alert-notification';
 
-// Define el componente NotificationComponent
-const NotificationComponent = () => {
+// Define el componente para notificación de éxito
+const SuccessNotificationComponent = () => {
   return (
     <AlertNotificationRoot>
       <View>
-        {/* Botón para mostrar el cuadro de diálogo */}
+        {/* Botón para mostrar el cuadro de diálogo de éxito */}
         <Button
-          title={'dialog box'}
+          title={'Dialog Box Success'}
           onPress={() =>
             Dialog.show({
               type: ALERT_TYPE.SUCCESS,
               title: 'Success',
-              textBody: 'Congrats! this is dialog box success',
-              button: 'close',
+              textBody: 'Congrats! This is a dialog box showing success.',
+              button: 'Close',
             })
           }
         />
-        
-       
       </View>
     </AlertNotificationRoot>
   );
 };
 
-// Exporta el componente
-export default NotificationComponent;
+// Define el componente para notificación de error
+const ErrorNotificationComponent = () => {
+  return (
+    <AlertNotificationRoot>
+      <View>
+        {/* Botón para mostrar el cuadro de diálogo de error */}
+        <Button
+          title={'Dialog Box Error'}
+          onPress={() =>
+            Dialog.show({
+              type: ALERT_TYPE.DANGER,
+              title: 'Error',
+              textBody: 'Oops! Something went wrong.',
+              button: 'Close',
+            })
+          }
+        />
+      </View>
+    </AlertNotificationRoot>
+  );
+};
+
+// Exporta ambos componentes
+export { SuccessNotificationComponent, ErrorNotificationComponent };

@@ -43,9 +43,7 @@ const ModalScreen = ({ navigation }) => {
     setFats(newValue); 
   };
       
-  console.log(proteins);
-  console.log(fats);
-  console.log(calories);
+
 
   const handleClose = () => {
     navigation.popToTop();
@@ -56,12 +54,12 @@ const ModalScreen = ({ navigation }) => {
   const [buttonStates, setButtonStates] = React.useState({
     Vegano: false,
     Vegetariano: false,
-    'Rápida preparación': false,
-    'Apto Celíacos': false,
+    'Rapida preparacion': false,
+    'Apto Celiacos': false,
     'Estimula el Sist. Inmune': false,
     Antiinflamatorio: false,
     'Bajo en Sodio': false,
-    'Bajo en Calorías': false,
+    'Bajo en Calorias': false,
     'Promueve Flora Intestinal': false,
   });
 
@@ -85,7 +83,7 @@ const handleButtonPress = (buttonText) => {
 
 };
 
-console.log(selectedTags);
+
 
   const onPress = () => {
 
@@ -104,14 +102,11 @@ console.log(selectedTags);
       } else {
         setSubmitted(true); // Marca el formulario como enviado
 
-        console.log("A VER LAS CALORIES:")
-        console.log(calories)
-        console.log("A VER LAS CALORIES")
 
 
         
         const owner = {
-          googleId: Number(store.getState().auth.user.id),
+          googleId: store.getState().auth.user.id,
           name: store.getState().auth.user.name,
           email: store.getState().auth.user.email,
           photo: store.getState().auth.user.photo,
@@ -122,18 +117,19 @@ console.log(selectedTags);
         dispatch(updateParteTres({ selectedTags, time, dishes, calories, proteins, fats,owner }));
     
 
-      // Obtiene el estado actual del store
+        // Obtiene el estado actual del store
         const recipeData = store.getState().recipe.recipe;
 
-        console.log("RECIPE DATAAAAAAAAA:")
-        console.log(recipeData);
         // Realiza la llamada para crear la receta en el backend
         const response = dispatch(fetchCreateRecipe(recipeData));
     
         //habria que mostrar que se creo o no se creo la receta
 
-      navigation.popToTop();
-      navigation.goBack(null);  
+        navigation.navigate('GoDeLi');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MainApp' }],
+        });  
     }
       } catch (error) {
         // Maneja errores
@@ -141,6 +137,10 @@ console.log(selectedTags);
       }
  
   };
+
+  const handleAtrasPress = () => {
+    navigation.navigate("ModalScreen2");
+  }
   
 
   const isFatsEmpty = !fats;
@@ -275,6 +275,7 @@ console.log(selectedTags);
             mode="contained"
             labelStyle={styles.formDefault6Btn2}
             contentStyle={styles.formDefault6Btn12}
+            onPress = {handleAtrasPress}
           >
             Anterior
           </Button>

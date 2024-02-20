@@ -7,22 +7,17 @@ export const fetchCreateRecipe = createAsyncThunk(
     'recipe/fetchCreateRecipe',
     async (recipeData, { rejectWithValue }) => {
       try {
-        console.log("AUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-
-        console.log("El json que mandamos es" + recipeData);
+       
 
         const aux = await recipeWS.create(recipeData);
-        console.log("la respuesta es" + aux)
+       
         eliminarDatosCreacion();
-        console.log("AUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3")
+       
         
         return aux;
         
       } catch (error) {
-        console.log("el error es" + error);
-        console.log("el error response es" + error.response);
-        console.error('AxiosError:', error);
-        console.log('Error Response:', error.response.data);
+        console.log(error);
     
         return rejectWithValue({
           error: error.response,
@@ -61,6 +56,7 @@ const recipeReducer = createSlice({
   },
   reducers: {
     eliminarDatosCreacion: (state) => {
+
       state.recipe.title = null;
       state.recipe.description = null;
       state.recipe.images = null;
@@ -79,39 +75,32 @@ const recipeReducer = createSlice({
 
     },
     updateParteUno: (state, action) => {
-        console.log('entrooooo parte 1')
+
         state.recipe.title = action.payload.title;
-        console.log(action.payload.title);
-
+        
         state.recipe.images = action.payload.images; 
-        console.log(action.payload.images);
-
+        
         state.recipe.video = action.payload.video; 
-        console.log(action.payload.video);
-
+        
         state.recipe.description = action.payload.description; 
-        console.log(action.payload.description);
-        console.log('saliooooo parte 1');
+
     },
     updateParteDos: (state, action) => {
-        console.log('entrooooo parte 2')
+
         state.recipe.ingredients = action.payload.ingredientes;
-        console.log(action.payload.ingredients);
+      
  
         state.recipe.steps = action.payload.pasos; 
-        console.log(action.payload.steps);
-        console.log('saliooooo parte 2');
+
     },
     updateParteTres: (state, action) => {
-        console.log('entrooooo parte 3')
+
         state.recipe.tags = action.payload.selectedTags;
-        console.log(action.payload.selectedTags);
 
         state.recipe.time = action.payload.time; 
-        console.log(action.payload.time);
 
         state.recipe.dishes = action.payload.dishes; 
-        console.log(action.payload.dishes);
+
 
         const aux = {
           calories: action.payload.calories,
@@ -120,7 +109,7 @@ const recipeReducer = createSlice({
         }
 
         state.recipe.nutritionalInfo = aux;
-        console.log('saliooooo parte 3');
+
 
         state.recipe.owner = action.payload.owner;
     },

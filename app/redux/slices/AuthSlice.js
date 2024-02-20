@@ -23,7 +23,6 @@ export const fetchLogout = createAsyncThunk(
   async ({ googleId }, { rejectWithValue }) => {
     try {
       const aux = await authWS.delete(googleId);
-      console.log(aux.data)
       return aux.data;
       
     } catch (error) {
@@ -67,36 +66,33 @@ const authReducer = createSlice({
       axios.defaults.headers.common.Authorization = 'Bearer ' + state.session.accessToken;
     },
     updateUser: (state, action) => {
-        console.log('entrooooo')
-        console.log(action.payload.name);
+
         state.user.id = action.payload.id;
-        console.log(action.payload.id);
+
         state.user.email = action.payload.email; 
-        console.log(action.payload.email);
+
         state.user.name = action.payload.name; 
-        console.log(action.payload.name);
+
         state.user.photo = action.payload.photo; 
-        console.log(action.payload.photo);
-        console.log('saliooooo')
+
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchLogin.pending, (state) => {
-        console.log("EL PENDING");
       state.isFetching = true;
     });
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
-      console.log("EL FULFILLED 0");  
+
       state.isFetching = false;
       state.succeed = true;
       state.user.id = action.payload.id;
       state.session.accessToken = action.payload.accessToken;
       state.session.refreshToken = action.payload.refreshToken;   
       axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload.accessToken}`;
-      console.log("EL FULFILLED");
+
     });
     builder.addCase(fetchLogin.rejected, (state, action) => {
-        console.log("EL REJECTED");
+
       state.isFetching = false;
       // Aquí puedes manejar errores específicos si es necesario
     });
@@ -104,11 +100,11 @@ const authReducer = createSlice({
 
 
     builder.addCase(fetchLogout.pending, (state) => {
-      console.log("EL PENDING fetchLogout");
+
       state.isFetching = true;
     });
     builder.addCase(fetchLogout.fulfilled, (state, action) => {
-      console.log("EL FULFILLED 0 fetchLogout");  
+
       state.isFetching = false;
       state.succeed = true;
       state.session.accessToken = null;
@@ -118,10 +114,9 @@ const authReducer = createSlice({
       state.user.photo = null;
       state.user.name = null;   
       axios.defaults.headers.common['Authorization'] = '';
-      console.log("EL FULFILLED fetchLogout");
+
     });
     builder.addCase(fetchLogout.rejected, (state, action) => {
-        console.log("EL REJECTED fetchLogout");
       state.isFetching = false;
       // Aquí puedes manejar errores específicos si es necesario
     });

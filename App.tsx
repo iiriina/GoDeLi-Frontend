@@ -81,15 +81,26 @@ function App(): React.JSX.Element {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-    console.log('Connection type', state.type);
-    
-    console.log('Is connected?', state.isConnected);
+      // Comprobar si el estado de conexión es falso
+      if (!state.isConnected) {
+        Alert.alert(
+          'Sin conexión a Internet', // Título del Alert
+          'Parece que no estás conectado a Internet. Por favor, verifica tu conexión.', // Mensaje del Alert
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('Alerta de No Conexión Cerrada'),
+            },
+          ],
+          { cancelable: false } // Esto evita que el alert se cierre al tocar fuera del alert
+        );
+      }
     });
+
     return () => {
-    console.log('Do some cleanup - remaove listeners');
-    unsubscribe();
+      unsubscribe();
     };
-    }, []);
+  }, []);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,

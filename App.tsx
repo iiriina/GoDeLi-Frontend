@@ -39,6 +39,7 @@ import {store} from './app/redux/store';
 
 import interceptor from './app/networking/api/interceptor'
 import NetInfo from '@react-native-community/netinfo';
+import { AlertNotificationRoot } from 'react-native-alert-notification';
 
 
 
@@ -107,6 +108,7 @@ function App(): React.JSX.Element {
   };
 
   return (
+    <AlertNotificationRoot>
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistStore(store)}>
       <ApplicationProvider {...eva} theme={eva.light}>
@@ -114,6 +116,7 @@ function App(): React.JSX.Element {
       </ApplicationProvider>
     </PersistGate>
   </Provider>
+  </AlertNotificationRoot>
   );
 }
 

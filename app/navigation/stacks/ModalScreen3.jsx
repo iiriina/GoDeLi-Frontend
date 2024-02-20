@@ -16,6 +16,7 @@ import { useDispatch, useSelector  } from 'react-redux'; // Importa useDispatch
 import { updateParteTres } from '../../redux/slices/CrearRecetaSlice';
 import { store } from '../../redux/store';
 import { fetchCreateRecipe } from '../../redux/slices/CrearRecetaSlice';
+import { AlertNotificationRoot, Dialog, Toast, ALERT_TYPE } from 'react-native-alert-notification';
 
 const ModalScreen = ({ navigation }) => {
 
@@ -122,8 +123,13 @@ const handleButtonPress = (buttonText) => {
 
         // Realiza la llamada para crear la receta en el backend
         const response = dispatch(fetchCreateRecipe(recipeData));
-    
         //habria que mostrar que se creo o no se creo la receta
+          Dialog.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: 'Exito',
+            textBody: 'Felicitaciones! Se ha creado correctamente una receta.',
+            button: 'Cerrar',
+          });
 
         navigation.navigate('GoDeLi');
         navigation.reset({
@@ -133,6 +139,14 @@ const handleButtonPress = (buttonText) => {
     }
       } catch (error) {
         // Maneja errores
+
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Algo salió mal',
+          textBody: 'No hemos podido subir la receta :(.',
+          button: 'Cerrar',
+        });
+
         console.error('Error al crear la receta:', error);
       }
  
@@ -150,7 +164,6 @@ const handleButtonPress = (buttonText) => {
   return (
 
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
-
     <View style={styles.frameParent}>
       <View style={styles.frameWrapper}>
         <View>
@@ -297,7 +310,6 @@ const handleButtonPress = (buttonText) => {
 
 
       </View>
-
 
 
       </ScrollView>

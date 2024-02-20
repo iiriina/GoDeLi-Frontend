@@ -1,5 +1,7 @@
 import * as React from "react";
-import { Image, StyleSheet, Text, View, ImageBackground,ScrollView, Alert,Button } from "react-native";
+import { useState, useEffect} from "react";
+import Carousel from 'react-native-reanimated-carousel';
+import { Image, StyleSheet, Text, View, ImageBackground,ScrollView,Dimensions, Alert,Button } from "react-native";
 import TagsComida from "../components/TagsComida";
 import BotoncitoInfo from "../components/BotoncitoInfo";
 import FruitSection from "../components/FruitSection";
@@ -9,34 +11,118 @@ import FormElementsAvatar from "../components/FormElementsAvatar";
 import Rating from "../components/Rating";
 import TypePrimarySmallTrueDisa from "../components/TypePrimarySmallTrueDisa";
 import { Border, Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
-import Carrousel from "../components/Carrousel";
 import YoutubePlayer from 'react-native-youtube-iframe';
+import axios from 'axios'; 
+import recipeWS from '../../networking/api/endpoints/recipeWS';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 
 
+const RecetaIndividual = () => {
+  const handlerHealth3 = async () => {
+    try {
+      console.log(recipeId);
+      const response = await recipeWS.getRecipeInd(recipeId); 
+      console.log(response.data.data)
+      setReceta(response.data.data)
+      
+  
+    }catch(e){
+      console.log(e)
+    }
+  }
 
-const Frame = () => {
+  useEffect(() => {
+    handlerHealth3();
+  }, []);
 
+  const [receta, setReceta] = useState<Receta | undefined>();
+  const route = useRoute();
+  const { recipeId } = route.params as { recipeId: any };
+  if (!receta) {
+    return null; // O puedes renderizar un indicador de carga u otra cosa
+  }
 
   
-
-
+  interface Receta {
+    title: string;
+    time: string,
+    images: [
+    {
+      public_id: string,
+      secure_url: string
+    }
+  ],
+  rates: string,
+  ratesAmount: string,
+  rateAvg : string,
+  owner: {
+    name: string,
+    googleId: string,
+    email: string,
+    photo: string
+  },
+  tags: [string],
+  ingredients: [string],
+  description: string,
+   video : string,
+  dishes: string,
+  steps: string,
+  nutritionalInfo: {
+    calories: string,
+    proteins: string,
+    fats: string
+  }
+    // Otras propiedades de receta...
+  }
   
+const urls: String[]= []
+receta.images.forEach((image, index) => (
+  urls.push(image.secure_url)
+))
+console.log(urls)
+
+
   return (
+    
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
     <View style={styles.frameParent}>
       <View style={styles.frameGroup}>
         
+      <View>
+  <View
+    style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height/2.8 }}
+  >
+  {urls.length === 1 ? (
+    <Image
+      style={[styles.fixedImage]}
+      resizeMode="cover"
+      source={{uri: urls[0].toString() }}
+    />
+  ) : (
+    <Carousel
+      width={Dimensions.get('window').width/1.08}
+      height={Dimensions.get('window').height/2.75}
+      data={urls}
+      renderItem={({ item }) => (
         <Image
-          style={[styles.frameChild, styles.frameChildLayout]}
+          style={[styles.carouselImage]}
           resizeMode="cover"
-          source={require("../assets/frame-1000003621.png")}
+          source={{ uri: item.toString() }} 
         />
+      )}
+    />
+  )}
+  </View>
+  
+</View>
          
         <View style={[styles.frameContainer, styles.ratingParentSpaceBlock]}>
           <View style={[styles.frameView, styles.frameViewFlexBox]}>
             <View style={styles.titleWrapper}>
-              <Text style={styles.title}>Pollo con Arroz</Text>
+            <Text style={styles.title}>
+                {receta && receta.title}
+            </Text>
             </View>
             <View style={[styles.groupParent, styles.groupLayout]}>
               <View style={[styles.groupWrapper, styles.groupLayout]}>
@@ -101,7 +187,7 @@ const Frame = () => {
               source={require("../assets/star1.png")}
             />
           </View>
-          <Text style={styles.placeholder}>{`4.5 (23) `}</Text>
+          <Text style={styles.placeholder}> {receta && receta.rateAvg} </Text>
         </View>
       </View>
       <View style={styles.frameParent1}>
@@ -111,16 +197,21 @@ const Frame = () => {
             vector={require("../assets/timer.png")}
             vectorIconWidth={21}
             vectorIconHeight={24}
-            placeholder="32 Minutos"
+            placeholder={`${receta && receta.time}min.`} 
           />
           <BotoncitoInfo
             vector={require("../assets/vector1.png")}
-            placeholder="2 Platos"
+            placeholder={`${receta && receta.dishes} platos`} 
           />
         </View>
+        <View style={[styles.titleFrame, styles.titleLayout]}>
+          <Text style={[styles.title2, styles.titleLayout]}>
+            Descripcion
+          </Text>
+        </View>
+      
         <Text style={[styles.laDescripcinDe, styles.placeholder1Typo]}>
-          La descripción de esta receta, es muy rica, podes comerla con toda tu
-          familia. Disfruta de este delicioso platillo.
+          {receta && receta.description}
         </Text>
         <View style={[styles.titleContainer, styles.titleLayout]}>
           <Text style={[styles.title1, styles.title1Position]}>
@@ -129,18 +220,7 @@ const Frame = () => {
         </View>
         <View style={styles.frameParent3}>
           <FruitSection />
-          <View style={styles.groupParent1}>
-            <View style={styles.rectangleWrapper}>
-              <Ingrediente />
-            </View>
-            <View
-              style={[styles.manzanas200GrWrapper, styles.manzanas200Layout]}
-            >
-              <Text style={[styles.manzanas200Gr, styles.protenasTypo]}>
-                Manzanas, 200 gr
-              </Text>
-            </View>
-          </View>
+          
           <FruitSection propMarginTop={7} propTop={13} />
         </View>
         <View style={[styles.titleFrame, styles.titleLayout]}>
@@ -148,12 +228,9 @@ const Frame = () => {
         </View>
         <Text
           style={[styles.laDescripcinDe, styles.placeholder1Typo]}
-        >{`Primero pelar tal cosa
-Después hacer tal otra.
-Después cocinar a fuego lento blablabla.
-Después hacer tal otra cosa. `}</Text>
+        >{receta && receta.steps}</Text>
         <View style={styles.amenties}>
-          <TagInfoNutri caloras="Calorías" placeholder="24 Kcal" />
+          <TagInfoNutri caloras="Calorías" placeholder={receta && receta.nutritionalInfo.calories} />
           <View style={[styles.amentiesInner, styles.wifiParentFlexBox]}>
             <View style={[styles.wifiParent, styles.wifiParentFlexBox]}>
               <Image
@@ -165,7 +242,7 @@ Después hacer tal otra cosa. `}</Text>
                 Proteínas
               </Text>
               <Text style={[styles.placeholder1, styles.protenasSpaceBlock]}>
-                1330 gr.
+              {receta && receta.nutritionalInfo.proteins}
               </Text>
             </View>
           </View>
@@ -176,7 +253,7 @@ Después hacer tal otra cosa. `}</Text>
             frameViewHeight1="unset"
             wifiIconWidth={36}
             caloras="Grasas"
-            placeholder="180 gr."
+            placeholder={receta && receta.nutritionalInfo.fats}
           />
         </View>
         <ImageBackground
@@ -195,11 +272,11 @@ Después hacer tal otra cosa. `}</Text>
         <View style={[styles.bio, styles.bioFlexBox]}>
           <View>
             <Image
-              source={require("../assets/avatar-2.png")}
+              src={receta && receta.owner.photo}
               style={{width: 41, height: 42}}
             />
             <View style={[styles.name, styles.tagFlexBox]}>
-              <Text style={[styles.title3, styles.titleTypo]}>Analía Gómez</Text>
+              <Text style={[styles.title3, styles.titleTypo]}>{receta && receta.owner.name}</Text>
             </View>
           </View>
         </View>
@@ -361,6 +438,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
   },
+  fixedImage:{
+    width:"93%",
+    height:"100%"
+  },
   frameView: {
     flexDirection: "row",
     alignSelf: "stretch",
@@ -508,6 +589,11 @@ const styles = StyleSheet.create({
     width: 179,
     textAlign: "left",
   },
+  carouselImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+},
   name: {
     marginLeft: 8,
     justifyContent: "center",
@@ -551,4 +637,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Frame;
+export default RecetaIndividual;

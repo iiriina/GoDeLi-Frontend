@@ -11,8 +11,8 @@ import {
 import { FontSize, FontFamily, Padding, Color, Border } from "../../ui/GlobalStyles";
 import { Button } from "react-native-paper";
 import ImagePicker from 'react-native-image-crop-picker';
-import React, { useState } from "react";
-import { useDispatch } from 'react-redux'; // Importa useDispatch
+import React, { useState, useEffect } from "react";
+import { useSelector,useDispatch } from 'react-redux'; // Importa useDispatch
 import { updateParteUno } from '../../redux/slices/CrearRecetaSlice';
 
 import RNFetchBlob from 'rn-fetch-blob';
@@ -20,6 +20,12 @@ import RNFetchBlob from 'rn-fetch-blob';
 const ModalScreen = ({ navigation }) => {
 
   const dispatch = useDispatch(); // Obtiene la función dispatch
+
+  const creacionFinalizada = useSelector(state => state.creacionFinalizada); // Asegúrate de usar el nombre correcto del slice
+
+
+  const [error, setError] = useState('');
+
 
   const [images, setImages] = React.useState([]);
   // ENTRAR A LA GALERÍA Y SUBIR FOTOS - CAMARA
@@ -75,6 +81,30 @@ const ModalScreen = ({ navigation }) => {
   console.log(description);
   console.log(video);
   console.log(images);
+
+
+
+
+
+  // Restablecer los estados del componente a su valor inicial
+  const resetComponentState = () => {
+    setImages([]);
+    setTitle('');
+    setDescription('');
+    setVideo('');
+  };
+
+
+  
+  // Restablecer los estados cuando creacionFinalizada es true
+  useEffect(() => {
+    if (creacionFinalizada) {
+      resetComponentState();
+    }
+  }, [creacionFinalizada]);
+
+
+/*
   // Función para manejar el botón de "Siguiente"
   const handleSiguientePress = () => {
     // Llama a la acción updateParteUno con los datos de la primera pantalla
@@ -82,116 +112,129 @@ const ModalScreen = ({ navigation }) => {
     // Navega a la siguiente pantalla
     navigation.navigate("ModalScreen2");
   };
+*/
 
-    return (
+
+const [submitted, setSubmitted] = useState(false); // Estado para rastrear si se ha enviado el formulario
+
+const handleSiguientePress = () => {
+  if (!title || !description || !video || images.length === 0) {
+    setError('Todos los campos son obligatorios');
+    setSubmitted(true); // Marca el formulario como enviado
+  } else {
+    setError('');
+    setSubmitted(true); // Marca el formulario como enviado
+    dispatch(updateParteUno({ title, description, video, images }));
+    navigation.navigate("ModalScreen2");
+  }
+};
+
+  return (
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-
-    <View style={styles.frameParent}>
-
- 
-    <View style={styles.frameGroup}>
-        <View>
-          <Text style={styles.headingTypo}>Título</Text>
+      <View style={styles.frameParent}>
+        <View style={styles.frameGroup}>
+          <View>
+            <Text style={styles.headingTypo}>Título</Text>
+          </View>
+          <View style={[styles.emailDisabled, styles.emailDisabledFlexBox]}>
+            <TextInput
+              style={[
+                styles.formDefault,
+                styles.formBorder,
+                (!title && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
+              ]}
+                            placeholder="Titulo de la receta"
+              multiline={false}
+              placeholderTextColor="#4c4c4c"
+              onChangeText={setTitle}
+              scrollEnabled
+              value={title}
+            />
+          </View>
         </View>
-        <View style={[styles.emailDisabled, styles.emailDisabledFlexBox]}>
+
+        <View style={styles.parentSpaceBlock}>
+          <View style={styles.headingLayout}>
+            <Text style={[styles.heading1, styles.headingLayout]}>Fotos </Text>
+          </View>
+          {images.map((image, index) => (
+            <View key={index} style={styles.imageContainer}>
+              <Image source={{ uri: image }} style={styles.image} />
+              <TouchableOpacity
+                style={styles.deleteIcon}
+                onPress={() => handleDeleteImage(index)}>
+                <Text style={styles.deleteIconText}>X</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+          <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
+            <Text style={styles.panelButtonTitle}>Tomar foto</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
+            <Text style={styles.panelButtonTitle}>Elegir de la galería</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={[styles.heading2, styles.parentSpaceBlock]}>Video </Text>
+        <View style={[styles.image28Parent, styles.parentSpaceBlock]}>
           <TextInput
-            style={[styles.formDefault, styles.formBorder]}
-            placeholder="Titulo de la receta"
+            style={[
+              styles.formDefault,
+              styles.formBorder,
+              (!video && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
+            ]}            
+            placeholder="Link de Youtube"
             multiline={false}
             placeholderTextColor="#4c4c4c"
-            onChangeText={setTitle}
             scrollEnabled
-            
+            onChangeText={setVideo}
+            value={video}
           />
         </View>
-    </View> 
+
+        <Text style={[styles.heading2, styles.parentSpaceBlock]}>
+          Descripción *
+        </Text>
+        <View style={[styles.image28Parent, styles.parentSpaceBlock]}>
+          <TextInput
+              style={[
+                styles.formDefault,
+                styles.formBorder,
+                (!description && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
+              ]}            placeholder="Descripción de la receta"
+            multiline={true}
+            placeholderTextColor="#4c4c4c"
+            scrollEnabled
+            textAlignVertical="top"
+            onChangeText={setDescription}
+            value={description}
+          />
+        </View>
+        {error ? <Text style={[styles.errorText, styles.paddiiings]}>{error}</Text> : null}
+
+        <View style={[styles.emailDisabledParent2, styles.emailSpaceBlock2]}>
+          <View style={styles.emailDisabled22}>
+            <Pressable style={[styles.formDefault32, styles.formFlexBox2]}>
+              <Text style={styles.placeholder12}>Paso 1/3</Text>
+            </Pressable>
+          </View>
 
 
-      <View style={styles.parentSpaceBlock}>
-        <View style={styles.headingLayout}>
-          <Text style={[styles.heading1, styles.headingLayout]}>Fotos</Text>
+          <View style={[styles.emailDisabledGroup, styles.emailFlexBox]}>
+            <Button
+              style={[styles.formDefault42, styles.formBorder2]}
+              mode="contained"
+              labelStyle={styles.formDefault6Btn2}
+              contentStyle={styles.formDefault6Btn12}
+              onPress={handleSiguientePress}
+            >
+              Siguiente
+            </Button>
+          </View>
         </View>
 
-
-<View>
-  {images.map((image, index) => (
-    <View key={index} style={styles.imageContainer}>
-      <Image source={{ uri: image }} style={styles.image} />
-      <TouchableOpacity
-        style={styles.deleteIcon}
-        onPress={() => handleDeleteImage(index)}>
-        <Text style={styles.deleteIconText}>X</Text>
-      </TouchableOpacity>
-    </View>
-  ))}
-</View>
-
-
-      <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
-        <Text style={styles.panelButtonTitle}>Tomar foto</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
-        <Text style={styles.panelButtonTitle}>Elegir de la galería</Text>
-      </TouchableOpacity>
-
-
-    </View>
-
-
-      <Text style={[styles.heading2, styles.parentSpaceBlock]}>Video</Text>
-      <View style={[styles.image28Parent, styles.parentSpaceBlock]}>
-        <TextInput
-          style={[styles.formDefault, styles.formBorder]}
-          placeholder="Link de Youtube"
-          multiline={false}
-          placeholderTextColor="#4c4c4c"
-          scrollEnabled
-          onChangeText={setVideo}
-
-        />
       </View>
-      <Text style={[styles.heading2, styles.parentSpaceBlock]}>
-        Descripción
-      </Text>
-      <View style={[styles.image28Parent, styles.parentSpaceBlock]}>
-        <TextInput
-          style={[styles.formDefault3, styles.formBorder]}
-          placeholder="Descripción de la receta"
-          multiline={true}
-          placeholderTextColor="#4c4c4c"
-          scrollEnabled
-          textAlignVertical="top" // Establecer textAlignVertical en top
-          onChangeText={setDescription}
-
-        />
-      </View>
-    
-    <View style={[styles.emailDisabledParent2, styles.emailSpaceBlock2]}>
-      <View style={styles.emailDisabled22}>
-        <Pressable style={[styles.formDefault32, styles.formFlexBox2]}>
-          <Text style={styles.placeholder12}>Paso 1/3</Text>
-        </Pressable>
-      </View>
-
-      <View style={[styles.emailDisabledGroup, styles.emailFlexBox]}>
-        <Button
-          style={[styles.formDefault42, styles.formBorder2]}
-          mode="contained"
-          labelStyle={styles.formDefault6Btn2}
-          contentStyle={styles.formDefault6Btn12}
-          onPress={handleSiguientePress}
-
-        >
-          Siguiente
-        </Button>
-      </View>
-
-      
-    </View>
-
-  </View>
-
-  </ScrollView>
+    </ScrollView>
 
     );
   };
@@ -592,6 +635,12 @@ const ModalScreen = ({ navigation }) => {
     fontWeight: 'bold',
   },
 
+  errorBorder: {
+    borderColor: 'red',
+  },
+  paddiiings:{
+    paddingTop: "4%",
+  }
 
     
   });

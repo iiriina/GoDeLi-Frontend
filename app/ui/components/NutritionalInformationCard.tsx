@@ -15,11 +15,14 @@ export type NutritionalInformationCardType = {
   nutritionInfo?: string;
   labelText?: string;
   caloriesAndProteins?: string;
+  isFieldEmpty?: boolean; // Nuevo
+  submitted?: boolean; // Nuevo: Si el formulario se ha enviado
 
   /** Style props */
   propMarginLeft?: number | string;
   propWidth?: number | string;
   onTextChange?: (text: string) => void; // Nuevo
+
 };
 
 const getStyleValue = (key: string, value: string | number | undefined) => {
@@ -35,6 +38,8 @@ const NutritionalInformationCard = ({
   propMarginLeft,
   propWidth,
   onTextChange, // Nuevo
+  isFieldEmpty, // Nuevo
+  submitted
 }: NutritionalInformationCardType) => {
   const frameView1Style = useMemo(() => {
     return {
@@ -66,7 +71,11 @@ const NutritionalInformationCard = ({
       </LinearGradient>
       <View style={[styles.emailDisabled, emailDisabled1Style]}>
         <TextInput
-          style={[styles.formDefault, styles.parentFlexBox]}
+          style={[
+            styles.formDefault,
+            styles.parentFlexBox,
+            isFieldEmpty && submitted && styles.redBorder, // Nuevo
+          ]}
           placeholder={caloriesAndProteins}
           placeholderTextColor="#4c4c4c"
           keyboardType="numeric"
@@ -122,6 +131,9 @@ const styles = StyleSheet.create({
     height: 44,
     marginTop: 10,
   },
+  redBorder: { // Nuevo
+    borderColor: 'red', // Nuevo
+  }, // Nuevo
 });
 
 export default NutritionalInformationCard;

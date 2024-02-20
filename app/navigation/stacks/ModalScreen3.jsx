@@ -21,6 +21,7 @@ const ModalScreen = ({ navigation }) => {
 
   const dispatch = useDispatch(); // Obtiene la función dispatch
 
+  const [error, setError] = useState('');
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [time, setTime] = useState('');
@@ -90,50 +91,61 @@ console.log(selectedTags);
 
   }
 
+  const [submitted, setSubmitted] = useState(false); // Estado para rastrear si se ha enviado el formulario
 
   const handleSiguientePress = async () => {
 
     try {
       // Actualiza la parte tres de la receta en el estado de Redux
+      if (!time || !dishes || !proteins || !calories || !fats) {
+        setError(' * Todos los campos son obligatorios');
+        setSubmitted(true); // Marca el formulario como enviado
 
-      console.log("A VER LAS CALORIES:")
-      console.log(calories)
-      console.log("A VER LAS CALORIES")
+      } else {
+        setSubmitted(true); // Marca el formulario como enviado
+
+        console.log("A VER LAS CALORIES:")
+        console.log(calories)
+        console.log("A VER LAS CALORIES")
 
 
-      
-      const owner = {
-        googleId: Number(store.getState().auth.user.id),
-        name: store.getState().auth.user.name,
-        email: store.getState().auth.user.email,
-        photo: store.getState().auth.user.photo,
+        
+        const owner = {
+          googleId: Number(store.getState().auth.user.id),
+          name: store.getState().auth.user.name,
+          email: store.getState().auth.user.email,
+          photo: store.getState().auth.user.photo,
 
-      }
+        }
 
-      setDishes(Number(dishes));
-      dispatch(updateParteTres({ selectedTags, time, dishes, calories, proteins, fats,owner }));
-  
+        setDishes(Number(dishes));
+        dispatch(updateParteTres({ selectedTags, time, dishes, calories, proteins, fats,owner }));
+    
 
-    // Obtiene el estado actual del store
-      const recipeData = store.getState().recipe.recipe;
+      // Obtiene el estado actual del store
+        const recipeData = store.getState().recipe.recipe;
 
-      console.log("RECIPE DATAAAAAAAAA:")
-      console.log(recipeData);
-      // Realiza la llamada para crear la receta en el backend
-      const response = dispatch(fetchCreateRecipe(recipeData));
-  
-      //habria que mostrar que se creo o no se creo la receta
+        console.log("RECIPE DATAAAAAAAAA:")
+        console.log(recipeData);
+        // Realiza la llamada para crear la receta en el backend
+        const response = dispatch(fetchCreateRecipe(recipeData));
+    
+        //habria que mostrar que se creo o no se creo la receta
 
-    navigation.popToTop();
-    navigation.goBack(null);  
-
-    } catch (error) {
-      // Maneja errores
-      console.error('Error al crear la receta:', error);
+      navigation.popToTop();
+      navigation.goBack(null);  
     }
+      } catch (error) {
+        // Maneja errores
+        console.error('Error al crear la receta:', error);
+      }
+ 
   };
   
 
+  const isFatsEmpty = !fats;
+  const isCaloriesEmpty = !calories;
+  const isProteinsEmpty = !proteins;
 
   return (
 
@@ -165,7 +177,11 @@ console.log(selectedTags);
           <Text style={[styles.heading1, styles.headingTypo]}>Tiempo</Text>
           <View style={[styles.emailDisabled1, styles.emailDisabledFlexBox]}>
           <TextInput
-            style={[styles.formDefault, styles.formBorder]}
+            style={[
+            styles.formDefault,
+            styles.formBorder,
+            (!time && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
+          ]} 
             placeholder="Min."
             multiline={false}
             placeholderTextColor="#4c4c4c"
@@ -180,7 +196,11 @@ console.log(selectedTags);
           <Text style={[styles.heading1, styles.headingTypo]}>Platos</Text>
         <View style={[styles.emailDisabled1, styles.emailDisabledFlexBox]}>
           <TextInput
-            style={[styles.formDefault, styles.formBorder]}
+            style={[
+            styles.formDefault,
+            styles.formBorder,
+            (!dishes && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
+          ]} 
             placeholder="Cant."
             multiline={false}
             placeholderTextColor="#4c4c4c"
@@ -204,6 +224,8 @@ console.log(selectedTags);
           nutritionInfo="Calorías"
           caloriesAndProteins="Kcal"
           onTextChange={handleCalories} // Pasa el manejador como una prop
+          isFieldEmpty={isCaloriesEmpty} // Pasa la información sobre si el campo está vacío
+          submitted={submitted} // Pasa el estado del formulario enviado
 
         />
         <NutritionalInformationCard
@@ -214,6 +236,8 @@ console.log(selectedTags);
           propMarginLeft={14}
           propWidth={57}
           onTextChange={handleProteins} // Pasa el manejador como una prop
+          isFieldEmpty={isProteinsEmpty} // Pasa la información sobre si el campo está vacío
+          submitted={submitted} // Pasa el estado del formulario enviado
 
         />
         <NutritionalInformationCard
@@ -223,6 +247,8 @@ console.log(selectedTags);
           propMarginLeft={14}
           propWidth={57}
           onTextChange={handleFats} // Pasa el manejador como una prop
+          isFieldEmpty={isFatsEmpty} // Pasa la información sobre si el campo está vacío
+          submitted={submitted} // Pasa el estado del formulario enviado
 
         />
         
@@ -232,6 +258,7 @@ console.log(selectedTags);
         
       </View>
 
+      {error ? <Text style={[styles.errorText, styles.paddiiings]}>{error}</Text> : null}
 
 
       <View style={[styles.emailDisabledParent2, styles.emailSpaceBlock2]}>
@@ -589,7 +616,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
+  errorBorder: {
+    borderColor: 'red',
+  },
 
+
+  paddiiings:{
+    paddingTop: "4%",
+  }
 });
 
 export default ModalScreen;

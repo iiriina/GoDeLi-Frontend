@@ -40,7 +40,7 @@ const ModalScreen = ({ navigation }) => {
     setIngredientes(nuevosIngredientes);
   };
   
-
+/*
     // Función para manejar el botón de "Siguiente"
     const handleSiguientePress = () => {
       // Llama a la acción updateParteUno con los datos de la segunda pantalla
@@ -48,19 +48,38 @@ const ModalScreen = ({ navigation }) => {
       // Navega a la siguiente pantalla
       navigation.navigate("ModalScreen3");
     };
-  
+*/
+
+
+    const [error, setError] = useState('');
+
+    const [submitted, setSubmitted] = useState(false); // Estado para rastrear si se ha enviado el formulario
+
+    const handleSiguientePress = () => {
+      if (!pasos || ingredientes.length === 0) {
+        setError(' *   Todos los campos son obligatorios');
+        setSubmitted(true); // Marca el formulario como enviado
+      } else {
+        setError('');
+        setSubmitted(true); // Marca el formulario como enviado
+        dispatch(updateParteDos({ ingredientes, pasos }));
+        navigation.navigate("ModalScreen3");
+      }
+    };
+    
     return (
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
 
       <View style={styles.frameParent}>
 
       <View style={styles.frameGroup}>
+
         <View>
           <Text style={styles.headingTypo}>Ingredientes</Text>
         </View>
         <View style={styles.frameContainer}>
           <View style={[styles.formDefaultWrapper, styles.formFlexBox]}>
-            <View style={[styles.formDefault, styles.formBorder]}>
+            <View style={[styles.formDefault, styles.formBorder, (ingredientes.length === 0 && submitted) && styles.errorBorder  ]}>
               <View style={styles.placeholderParent}>
                 <TextInput
                   style={styles.placeholderTypo1}
@@ -118,7 +137,11 @@ const ModalScreen = ({ navigation }) => {
       <Text style={[styles.heading1, styles.heading1SpaceBlock]}>Pasos</Text>
       <View style={[styles.formDefaultFrame, styles.heading1SpaceBlock]}>
         <TextInput
-          style={[styles.formDefault6, styles.placeholderTypo1]}
+          style={[
+            styles.formDefault6,
+            styles.placeholderTypo1,
+            (!pasos && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
+          ]}            
           placeholder="1- Paso 1, 2- Paso 2, 3- Paso 3 ..."
           multiline={true}
           placeholderTextColor="#4c4c4c"
@@ -132,9 +155,11 @@ const ModalScreen = ({ navigation }) => {
 
 
 
+      {error ? <Text style={[styles.errorText, styles.paddiiings]}>{error}</Text> : null}
 
-      
+
       <View style={[styles.emailDisabledParent2, styles.emailSpaceBlock2]}>
+        
         <View style={styles.emailDisabled22}>
           <Pressable style={[styles.formDefault32, styles.formFlexBox2]}>
             <Text style={styles.placeholder12}>Paso 2/3</Text>
@@ -192,6 +217,16 @@ const ModalScreen = ({ navigation }) => {
       borderStyle: "solid",
       flexDirection: "row",
     },
+
+
+
+
+
+
+
+
+
+
     formPosition: {
       paddingBottom: Padding.p_4xs,
       paddingRight: Padding.p_2xs,
@@ -334,6 +369,13 @@ const ModalScreen = ({ navigation }) => {
       borderStyle: "solid",
       flexDirection: "row",
     },
+
+
+    errorBorder: {
+      borderColor: "red",
+
+    },
+
     placeholder3: {
       color: Color.colorGray,
       lineHeight: 24,
@@ -442,7 +484,10 @@ const ModalScreen = ({ navigation }) => {
       paddingHorizontal: Padding.p_mini,
       flex: 1,
     },  
-
+    paddiiings:{
+      paddingTop: "4%",
+    }
+  
 
     
   });

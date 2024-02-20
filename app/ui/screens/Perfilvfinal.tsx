@@ -10,11 +10,11 @@ import userWS from '../../networking/api/endpoints/userWS';
 const Perfil = () => {
 
   const [recetas, setRecetas] = React.useState([]);
-
+    /*
     const handlerHealth3 = async () => {
       try {
         console.log("hola1")
-        setClientToken(store.getState().auth.session.accessToken)
+        setClientToken(store.getState().auth.user.id)
         const response = await userWS.getMyRec(store.getState().auth.user.id);
         console.log("hola2")
         
@@ -30,6 +30,8 @@ const Perfil = () => {
       handlerHealth3();
     }, []);
 
+
+    */
   const handlerA = () => {
     
   }

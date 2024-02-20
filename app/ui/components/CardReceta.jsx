@@ -53,7 +53,6 @@ const Frame = ({ data, index }) => {
     }
   };
 
-
   const animatedStyle = {
     transform: [{ scale: scaleValue }]
   };
@@ -63,7 +62,7 @@ const Frame = ({ data, index }) => {
     <View style={[styles.frameParent, styles.frameParentShadowBox]}>
       
       <View style={styles.unsplashjpkfc5DDiParent}>
-      {data.images[0].secure_url && (
+      {data.images[0] && (
         <Image
           style={styles.unsplashjpkfc5DDiIcon}
           resizeMode="cover"

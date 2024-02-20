@@ -17,8 +17,8 @@ const ModalTester: React.FC<{
   onFilterSearch: () => void; // Esto es nuevo
 }> = ({ isVisible, toggleModal, setSelectedFilters, selectedFilters, onFilterSearch }) => {
   const [buttonStates, setButtonStates] = useState<ButtonStates>({
-    amogus: false,
-    rico: false,
+    Vegano: false,
+    Vegetariano: false,
     'Rápida preparación': false,
     'Apto Celíacos': false,
     'Estimula el Sist. Inmune': false,

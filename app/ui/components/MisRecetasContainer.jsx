@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+
 import { Image, StyleSheet, Text, View,TouchableOpacity } from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
 import { useNavigation } from '@react-navigation/native';
@@ -8,9 +9,11 @@ const MisRecetasContainer = ({ data , index}) => {
     const navigation = useNavigation();
     
 
+
   return (
     <View style={[styles.frameWrapper]}>
       <View style={[styles.image5Parent, styles.parentFlexBox]}>
+
       <TouchableOpacity
           onPress={() => navigation.navigate('Receta Individual', { recetaId: data.id })}
         >
@@ -23,11 +26,13 @@ const MisRecetasContainer = ({ data , index}) => {
           <View style={styles.frameContainer}>
             <View style={styles.polloConArrozWrapper}>
               <Text style={styles.polloConArroz}>{data.title}</Text>
+
             </View>
           </View>
           <View style={styles.frameParent}>
             <View style={[styles.frameView, styles.textFlexBox]}>
               <View style={styles.parent}>
+
               {data.rateAvg ?
                       <Text style={[styles.text, styles.textTypo]}>
                         {data.rateAvg}
@@ -36,6 +41,7 @@ const MisRecetasContainer = ({ data , index}) => {
                       <Text style={[styles.text, styles.textTypo]}>
                         N/A
                       </Text>}
+
                 <Image
                   style={styles.fill1Icon}
                   resizeMode="cover"
@@ -45,6 +51,7 @@ const MisRecetasContainer = ({ data , index}) => {
             </View>
             <View style={styles.groupWrapper}>
               <View style={styles.group}>
+
                 
                 {data.rateAvg ?
                       <Text style={[styles.text1, styles.textTypo]}>
@@ -54,6 +61,7 @@ const MisRecetasContainer = ({ data , index}) => {
                       <Text style={[styles.text1, styles.textTypo]}>
                         N/A
                       </Text>}
+
 
                 <Image
                   style={styles.fill1Icon1}
@@ -72,7 +80,9 @@ const MisRecetasContainer = ({ data , index}) => {
                   resizeMode="cover"
                   source={require("../assets/agriculture.png")}
                 />
+
                 <Text style={styles.mins}>{data.time + " min."}</Text>
+
               </View>
             </View>
           </View>
@@ -308,4 +318,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default MisRecetasContainer;
+
+

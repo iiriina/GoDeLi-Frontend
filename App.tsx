@@ -15,7 +15,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  View,
+  View, Alert
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -37,6 +37,8 @@ import { persistStore } from 'redux-persist'
 
 import {store} from './app/redux/store';
 
+import interceptor from './app/networking/api/interceptor'
+import NetInfo from '@react-native-community/netinfo';
 
 
 
@@ -76,6 +78,18 @@ function App(): React.JSX.Element {
   useEffect(() => {
     if(Platform.OS === 'android')SplashScreen.hide();
   },[])
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+    console.log('Connection type', state.type);
+    
+    console.log('Is connected?', state.isConnected);
+    });
+    return () => {
+    console.log('Do some cleanup - remaove listeners');
+    unsubscribe();
+    };
+    }, []);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,

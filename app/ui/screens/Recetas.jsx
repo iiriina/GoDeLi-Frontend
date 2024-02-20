@@ -110,7 +110,7 @@ const Recetas = () => {
 
       {recetas.map((receta, index) => (
         <View key={index} style={[styles.frameParent, styles.parentShadowBox]}>
-          <CardReceta data={receta} />
+          <CardReceta data={receta} index={index} />
         </View>
       ))}
 

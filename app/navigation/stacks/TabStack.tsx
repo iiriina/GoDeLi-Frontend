@@ -96,7 +96,7 @@ const TabNavigator = () => {
 
         <Tab.Screen 
             name = {SCREENS.C} 
-            component={Perfilvfinal}
+            component={Perfil}
             options = {{
                 title: 'Perfil',
                 tabBarIcon: ({focused}) => (

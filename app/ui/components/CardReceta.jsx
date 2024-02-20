@@ -106,8 +106,8 @@ const Frame = ({ data, index }) => {
             </View>
             <View style={styles.frameParent1}>
             {data.tags.map((tag, index) => (
-              <View style={[styles.wrapperSpaceBlock, styles.frameWrapper2]}>
-              <Text style={[styles.vegano, styles.veganoTypo]}>
+              <View style={[styles.wrapperSpaceBlock, styles.frameWrapper2]} key= {index}> 
+              <Text style={[styles.vegano, styles.veganoTypo]} key= {index}>
                 {tag}
               </Text>
             </View>

@@ -3,7 +3,6 @@ import { config } from './ApiConfig'; // Asegúrate de que la ruta es correcta
 // Importa tu store de Redux y las acciones necesarias
 import {store} from '../../redux/store';
 import { resetAccessToken, updateJWT } from '../../redux/slices/AuthSlice';
-import authWS from './endpoints/authWS';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from './useAuth'; 
 

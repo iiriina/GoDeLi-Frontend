@@ -22,7 +22,7 @@ export const urlApi = {
     },
     recipes: {
         create: 'recipes/',
-        getRecipes: 'recipes/',
+        getRecipes: 'recipes/?',
         getRecipeInd: (recipeId) => `recipes/${recipeId}`,
         modifyRecipe: (recipeId) => `recipes/${recipeId}`,
         deleteRecipe: (recipeId) => `recipes/${recipeId}`,

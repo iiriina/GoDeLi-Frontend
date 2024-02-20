@@ -24,7 +24,7 @@ const Carrousel = () => {
                 autoPlay={true}
                 data={images}
                 scrollAnimationDuration={1000}
-                onSnapToItem={(index) => console.log('current index:', index)}
+                onSnapToItem={(index) => index}
                 renderItem={({ item, index }) => (
                     <View style={styles.imageContainer}>
                         <Image

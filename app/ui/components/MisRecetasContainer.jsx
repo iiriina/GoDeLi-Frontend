@@ -1,29 +1,47 @@
 import React, { useMemo } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+
+import { Image, StyleSheet, Text, View,TouchableOpacity } from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
+import { useNavigation } from '@react-navigation/native';
 
+const MisRecetasContainer = ({ data , index}) => {
 
-const MisRecetasContainer = ({ data }) => {
-  
+    const navigation = useNavigation();
+    
+
 
   return (
     <View style={[styles.frameWrapper]}>
       <View style={[styles.image5Parent, styles.parentFlexBox]}>
+
+      <TouchableOpacity
+          onPress={() => navigation.navigate('Receta Individual', { recetaId: data.id })}
+        >
         <Image
           style={styles.image5Icon}
           resizeMode="cover"
-          source={require("../assets/image-5.png")}
-        />
+          src={data.images[0].secure_url}
+        /></TouchableOpacity>
         <View style={[styles.groupParent, styles.parentFlexBox]}>
           <View style={styles.frameContainer}>
             <View style={styles.polloConArrozWrapper}>
-              <Text style={styles.polloConArroz}>Pollo con Arroz</Text>
+              <Text style={styles.polloConArroz}>{data.title}</Text>
+
             </View>
           </View>
           <View style={styles.frameParent}>
             <View style={[styles.frameView, styles.textFlexBox]}>
               <View style={styles.parent}>
-                <Text style={[styles.text, styles.textTypo]}>4</Text>
+
+              {data.rateAvg ?
+                      <Text style={[styles.text, styles.textTypo]}>
+                        {data.rateAvg}
+                      </Text>
+                      :
+                      <Text style={[styles.text, styles.textTypo]}>
+                        N/A
+                      </Text>}
+
                 <Image
                   style={styles.fill1Icon}
                   resizeMode="cover"
@@ -33,7 +51,18 @@ const MisRecetasContainer = ({ data }) => {
             </View>
             <View style={styles.groupWrapper}>
               <View style={styles.group}>
-                <Text style={[styles.text1, styles.textTypo]}>4</Text>
+
+                
+                {data.rateAvg ?
+                      <Text style={[styles.text1, styles.textTypo]}>
+                        {data.rateAvg}
+                      </Text>
+                      :
+                      <Text style={[styles.text1, styles.textTypo]}>
+                        N/A
+                      </Text>}
+
+
                 <Image
                   style={styles.fill1Icon1}
                   resizeMode="cover"
@@ -51,7 +80,9 @@ const MisRecetasContainer = ({ data }) => {
                   resizeMode="cover"
                   source={require("../assets/agriculture.png")}
                 />
-                <Text style={styles.mins}>25 mins</Text>
+
+                <Text style={styles.mins}>{data.time + " min."}</Text>
+
               </View>
             </View>
           </View>
@@ -287,4 +318,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default MisRecetasContainer;
+
+

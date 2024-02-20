@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_sm,
     lineHeight: 26,
     fontWeight: "500",
-    fontFamily: FontFamily.bodyEkstraSmallMedium,
+    
     color: Color.colorDarkslategray_100,
     textAlign: "left",
     display: "flex",

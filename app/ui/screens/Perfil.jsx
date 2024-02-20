@@ -89,7 +89,7 @@ const Perfil = () => {
       console.log(store.getState().auth.session.accessToken)
       console.log(axios.defaults.headers);
       console.log("HOLA22")
-      const response = await recipeWS.getRecipes({});
+      const response = await recipeWS.getRecipes('');
       console.log(response.data.data);
     } catch (error) {
       console.log(error.response);
@@ -102,7 +102,7 @@ const Perfil = () => {
       console.log(store.getState().auth.session.accessToken)
       console.log(axios.defaults.headers);
       console.log("HOLA22")
-      const response = await recipeWS.getRecipes({});
+      const response = await recipeWS.getRecipes('');
       console.log(response.headers);
     } catch (error) {
       console.log(error.response);

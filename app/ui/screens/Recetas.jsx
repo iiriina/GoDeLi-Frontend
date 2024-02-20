@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useNavigation } from "react";
 import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
@@ -8,22 +8,47 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-a
 import CardReceta from '../components/CardReceta'
 import ModalFiltros from '../components/Modal'; 
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
-import {store} from '../../redux/store'
+
+import {store} from '../../redux/store'; 
 import recipeWS from '../../networking/api/endpoints/recipeWS';
+
 
 
 const Recetas = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [recetas, setRecetas] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({});
+  
+  
 
   const handlerHealth3 = async () => {
     try {
+
       console.log("HOLA21")
       console.log(store.getState().auth.session.accessToken)
       console.log(axios.defaults.headers);
       console.log("HOLA22")
-      const response = await recipeWS.getRecipes({});
+      let filters = Object.keys(selectedFilters)
+        .filter((filter) => selectedFilters[filter])
+        .map((filter) => encodeURIComponent(filter.normalize("NFD").replace(/[\u0300-\u036f]/g, '')))
+        .join(",");
+        
+      let filtros = ""
+      if (filters){
+        console.log(filters)
+        filtros += '&tags=' + filters
+      }
+      
+      if (searchText){
+        filtros += '&search=' + searchText
+      }
+      console.log("LOS FILTROS SON ESTOS:")
+      console.log(filtros)
+      console.log("LOS FILTROS ERAN ESOS")
+      const response = await recipeWS.getRecipes(filtros);
       console.log(response.data.data);
+      
       setRecetas(response.data.data);
     } catch (error) {
       console.log(error.response);
@@ -34,6 +59,20 @@ const Recetas = () => {
     handlerHealth3();
   }, []);
 
+  const handleKeyPress = (event) => {
+    // Verifica si se presionó la tecla Enter
+    
+    if (event.key === "Enter") {
+      handlerHealth3();
+    };
+
+  };
+
+  const handleFilterSearch = () => {
+    handlerHealth3();
+    setModalVisible(false);
+  };
+
   return (
     <ScrollView style={{ backgroundColor: Color.white }}>
       <View style={[styles.formDefaultWrapper, styles.formFlexBox]}>
@@ -43,7 +82,12 @@ const Recetas = () => {
               style={styles.placeholderTypo1}
               placeholder="Buscar comida o ingrediente..."
               placeholderTextColor="#737373"
+              value={searchText}
+              onChangeText={setSearchText}
+              onSubmitEditing={handlerHealth3}
+              
             />
+          
             {/* Icono para abrir los filtros */}
             <TouchableOpacity
               style={styles.emailDisabled}
@@ -60,6 +104,7 @@ const Recetas = () => {
               </View>
             </TouchableOpacity>
           </View>
+          <View></View>
         </View>
       </View>
 
@@ -74,6 +119,9 @@ const Recetas = () => {
       <ModalFiltros
         isVisible={modalVisible}
         toggleModal={() => setModalVisible(!modalVisible)}
+        setSelectedFilters={setSelectedFilters}
+        selectedFilters={selectedFilters}
+        onFilterSearch={handleFilterSearch}
       />
     </ScrollView>
   );

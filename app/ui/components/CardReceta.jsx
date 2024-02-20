@@ -1,22 +1,74 @@
-import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useState, } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Image, StyleSheet, Text, View,TouchableOpacity,Animated, Easing } from "react-native";
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
+import { store } from '../../redux/store';
+import axios from 'axios';
+
 
 const Frame = ({ data, index }) => {
-  const [isHeartFilled, setIsHeartFilled] = useState(false);
-  const toggleHeart = () => {
-    setIsHeartFilled(!isHeartFilled);
-  };
   
 
+  const [recetas, setRecetas] = useState([]); 
+  const navigation = useNavigation();
+
+  const handleCardPress = (recipeId) => {
+    navigation.navigate('Receta Individual', { recipeId });
+  };
+
+  const [isSelected, setIsSelected] = useState(false);
+  const scaleValue = new Animated.Value(1);
+
+  const toggleHeart = () => {
+    setIsSelected(!isSelected);
+    patchFavorite(recipeId); 
+
+    Animated.sequence([
+      Animated.timing(scaleValue, {
+        toValue: 1.2,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }),
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true
+      })
+    ]).start();
+  };
+
+  const [recipeId, setRecipeId] = useState(data._id);
+  
+  const patchFavorite = async (recipeId) => {
+    try {
+      const userId = store.getState().auth.user.id;
+      const response = await axios.patch(`https://godeli-production.up.railway.app/users/${userId}/favorites`, {
+        recipeId: recipeId // Envía el ID de la receta al servidor
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error al actualizar el estado del favorito:', error);
+    }
+  };
+
+  const animatedStyle = {
+    transform: [{ scale: scaleValue }]
+  };
+
   return (
+    <TouchableOpacity onPress={() => handleCardPress(recipeId)}>
     <View style={[styles.frameParent, styles.frameParentShadowBox]}>
+      
       <View style={styles.unsplashjpkfc5DDiParent}>
+      {data.images[0] && (
         <Image
           style={styles.unsplashjpkfc5DDiIcon}
           resizeMode="cover"
-          source={require("../assets/unsplashjpkfc5-ddi.png")}
+          source={{ uri: data.images[0].secure_url }}
         />
+        )}
         <View style={styles.frameWrapper}>
           <View style={styles.frameGroup}>
             <View style={[styles.frameContainer, styles.avatarParentFlexBox]}>
@@ -34,9 +86,14 @@ const Frame = ({ data, index }) => {
                 <View style={styles.groupParent}>
                   <View style={styles.groupWrapper}>
                     <View style={styles.textPosition}>
+                      {data.rateAvg ?
                       <Text style={[styles.text, styles.textPosition]}>
-                        4.3
+                        {data.rateAvg}
                       </Text>
+                      :
+                      <Text style={[styles.text, styles.textPosition]}>
+                        N/A
+                      </Text>}
                     </View>
                   </View>
                   <Image
@@ -48,32 +105,14 @@ const Frame = ({ data, index }) => {
               </View>
             </View>
             <View style={styles.frameParent1}>
-              <View>
-                <View style={styles.wrapperSpaceBlock}>
-                  <Text style={[styles.vegano, styles.veganoTypo]}>Vegano</Text>
-                </View>
-              </View>
-              <View style={styles.frameWrapper2}>
-                <View style={styles.wrapperSpaceBlock}>
-                  <Text style={[styles.vegano, styles.veganoTypo]}>
-                    Vegetariano
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.frameWrapper2}>
-                <View
-                  style={[
-                    styles.bajaEnCalorasWrapper,
-                    styles.wrapperSpaceBlock,
-                  ]}
-                >
-                  <Text style={[styles.vegano, styles.veganoTypo]}>
-                    Baja en Calorías
-                  </Text>
-                </View>
-              </View>
+            {data.tags.map((tag, index) => (
+              <View style={[styles.wrapperSpaceBlock, styles.frameWrapper2]}>
+              <Text style={[styles.vegano, styles.veganoTypo]}>
+                {tag}
+              </Text>
             </View>
-
+          ))}
+            </View>
             <View style={styles.aux}/>
 
             <View style={styles.vectorWrapper}>
@@ -89,21 +128,32 @@ const Frame = ({ data, index }) => {
                   <Image
                     style={styles.avatarIcon}
                     resizeMode="cover"
-                    source={require("../assets/avatar.png")}
+                    src={data.owner.photo}
+                    onError={(error) => console.log("Error al cargar la imagen:", error)}
                   />
                   <Text style={[styles.abigailPerez, styles.veganoTypo]}>
-                    Abigail, Perez
+                    {data.owner.name}
                   </Text>
                 </View>
               </View>
+              
             </View>
+            
           </View>
+          
         </View>
-        <Image
-          style={styles.frameItem}
-          resizeMode="cover"
-          source={require("../assets/group-18.png")}
-        />
+        <TouchableOpacity
+          style= {styles.frameItem}
+          onPress = {toggleHeart}> 
+          
+          <Animated.Image
+        style={[styles.heartIcon, animatedStyle]}
+        resizeMode="cover"
+        source={isSelected ? require("../assets/group-27.png") : require("../assets/group-18.png")}
+          />
+
+        </TouchableOpacity>
+        
         <View style={[styles.groupContainer, styles.frameParentShadowBox]}>
           <View style={styles.agricultureParent}>
             <Image
@@ -111,11 +161,12 @@ const Frame = ({ data, index }) => {
               resizeMode="cover"
               source={require("../assets/agriculture.png")}
             />
-            <Text style={[styles.mins, styles.minsLayout]}>25 min.</Text>
+            <Text style={[styles.mins, styles.minsLayout]}>{data.time + " Min"}</Text>
           </View>
         </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
 };
 
@@ -159,6 +210,7 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_3xs,
     alignItems: "center",
     flexDirection: "row",
+    margin: 5
   },
   framePosition: {
     left: 0,
@@ -227,7 +279,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   frameWrapper2: {
-    marginLeft: 6,
+    marginLeft: -1,
     
     
   },
@@ -238,14 +290,14 @@ const styles = StyleSheet.create({
   },
   frameParent1: {
     marginTop: 6,
+    marginLeft: -5,
     alignItems: "center",
     flexWrap: "wrap",
     flexDirection: "row",
     alignSelf: "stretch",
-    
-
-    
+    paddingHorizontal: 8,
   },
+
   frameChild: {
     width: 360,
     height: 0,
@@ -294,8 +346,8 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   frameItem: {
-    top: 12,
-    right: 17,
+    top: 8,
+    right: 9,
     width: 34,
     height: 34,
     zIndex: 2,

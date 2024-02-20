@@ -164,7 +164,6 @@ const ModalScreen = ({ navigation }) => {
 
         
       </View>
-      <Button onPress={handleSiguientePress} />
 
     </View>
 
@@ -427,6 +426,8 @@ const ModalScreen = ({ navigation }) => {
       borderWidth: 1,
       borderStyle: "solid",
       margin: "1%",
+      backgroundColor: "#E84443"
+
     },
     emailDisabledParent2: {
       alignItems: "flex-end",

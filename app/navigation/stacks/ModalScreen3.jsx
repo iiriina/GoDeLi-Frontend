@@ -271,8 +271,6 @@ console.log(selectedTags);
       </View>
 
 
-      <Button title="Ir atrás" onPress={() => navigation.goBack()} />
-      <Button title="Cerrar" onPress={handleClose} />
 
       </ScrollView>
 
@@ -544,6 +542,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     margin: "1%",
+    backgroundColor: "#E84443",
   },
   emailDisabledParent2: {
     alignItems: "flex-end",

@@ -37,7 +37,7 @@ const ModalScreen = ({ navigation }) => {
           setImages([...images, base64Image]);
         })
         .catch(error => console.log(error));
-    });
+    }).catch(error => console.log(error));
   };
   
   const choosePhotoFromLibrary = () => {
@@ -53,7 +53,7 @@ const ModalScreen = ({ navigation }) => {
           setImages([...images, base64Image]);
         })
         .catch(error => console.log(error));
-    });
+    }).catch(error => console.log(error));
   };
   
   const handleDeleteImage = (index) => {
@@ -133,12 +133,7 @@ const ModalScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
         <Text style={styles.panelButtonTitle}>Elegir de la galería</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.panelButton}
-        // @ts-ignore: Object is possibly 'undefined'.
-        onPress={() => this.bs.current.snapTo(1)}>
-        <Text style={styles.panelButtonTitle}>Cancel</Text>
-      </TouchableOpacity>
+
 
     </View>
 
@@ -193,7 +188,6 @@ const ModalScreen = ({ navigation }) => {
 
       
     </View>
-    <Button onPress={() => navigation.navigate('ModalScreen2')} />
 
   </View>
 
@@ -273,6 +267,7 @@ const ModalScreen = ({ navigation }) => {
       borderWidth: 1,
       borderStyle: "solid",
       margin: "1%",
+      backgroundColor: "#E84443"
     },
     emailDisabledParent2: {
       alignItems: "flex-end",
@@ -538,7 +533,7 @@ const ModalScreen = ({ navigation }) => {
   panelButton: {
     padding: 13,
     borderRadius: 10,
-    backgroundColor: '#FF6347',
+    backgroundColor: '#E84443',
     alignItems: 'center',
     marginVertical: 7,
   },

@@ -19,12 +19,14 @@ export type NutritionalInformationCardType = {
   /** Style props */
   propMarginLeft?: number | string;
   propWidth?: number | string;
+  onTextChange?: (text: string) => void; // Nuevo
 };
 
 const getStyleValue = (key: string, value: string | number | undefined) => {
   if (value === undefined) return;
   return { [key]: value === "unset" ? undefined : value };
 };
+
 const NutritionalInformationCard = ({
   iconImageUrl,
   nutritionInfo,
@@ -32,6 +34,7 @@ const NutritionalInformationCard = ({
   caloriesAndProteins,
   propMarginLeft,
   propWidth,
+  onTextChange, // Nuevo
 }: NutritionalInformationCardType) => {
   const frameView1Style = useMemo(() => {
     return {
@@ -66,8 +69,8 @@ const NutritionalInformationCard = ({
           style={[styles.formDefault, styles.parentFlexBox]}
           placeholder={caloriesAndProteins}
           placeholderTextColor="#4c4c4c"
-          keyboardType="numeric" // Establecer el teclado numérico
-
+          keyboardType="numeric"
+          onChangeText={onTextChange} // Nuevo
         />
       </View>
     </View>

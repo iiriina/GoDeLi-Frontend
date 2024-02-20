@@ -12,9 +12,14 @@ import { FontSize, FontFamily, Padding, Color, Border } from "../../ui/GlobalSty
 import { Button } from "react-native-paper";
 import ImagePicker from 'react-native-image-crop-picker';
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux'; // Importa useDispatch
+import { updateParteUno } from '../../redux/slices/CrearRecetaSlice';
+
+import RNFetchBlob from 'rn-fetch-blob';
 
 const ModalScreen = ({ navigation }) => {
 
+  const dispatch = useDispatch(); // Obtiene la función dispatch
 
   const [images, setImages] = React.useState([]);
   // ENTRAR A LA GALERÍA Y SUBIR FOTOS - CAMARA
@@ -26,15 +31,15 @@ const ModalScreen = ({ navigation }) => {
       cropping: true,
       compressImageQuality: 0.7
     }).then(image => {
-      console.log(image);
-      //setImage(image.path);
-      setImages([...images, image.path]); // Agregar la nueva imagen al array
-
-      // @ts-ignore: Object is possibly 'undefined'.
-      this.bs.current.snapTo(1);
+      RNFetchBlob.fs.readFile(image.path, 'base64')
+        .then(data => {
+          const base64Image = `data:${image.mime};base64,${data}`;
+          setImages([...images, base64Image]);
+        })
+        .catch(error => console.log(error));
     });
-  }
-
+  };
+  
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
       width: 300,
@@ -42,16 +47,15 @@ const ModalScreen = ({ navigation }) => {
       cropping: true,
       compressImageQuality: 0.7
     }).then(image => {
-      console.log(image);
-      //setImage(image.path);
-      setImages([...images, image.path]); // Agregar la nueva imagen al array
-
-      // @ts-ignore: Object is possibly 'undefined'.
-      this.bs.current.snapTo(1); 
-      
+      RNFetchBlob.fs.readFile(image.path, 'base64')
+        .then(data => {
+          const base64Image = `data:${image.mime};base64,${data}`;
+          setImages([...images, base64Image]);
+        })
+        .catch(error => console.log(error));
     });
-  }
-
+  };
+  
   const handleDeleteImage = (index) => {
     // Crea una copia del array de imágenes actual
     const updatedImages = [...images];
@@ -67,10 +71,14 @@ const ModalScreen = ({ navigation }) => {
 
   const [video, setVideo] = useState('');
 
+  console.log(title);
+  console.log(description);
+  console.log(video);
+  console.log(images);
   // Función para manejar el botón de "Siguiente"
   const handleSiguientePress = () => {
     // Llama a la acción updateParteUno con los datos de la primera pantalla
-    dispatch(updateParteUno({ title, description, video, images }));
+    dispatch(updateParteUno({title, description, video, images}));
     // Navega a la siguiente pantalla
     navigation.navigate("ModalScreen2");
   };
@@ -105,18 +113,18 @@ const ModalScreen = ({ navigation }) => {
         </View>
 
 
-        <View>
-        {images.map((image, index) => (
-          <View key={index} style={styles.imageContainer}>
-            <Image source={{ uri: image }} style={styles.image} />
-            <TouchableOpacity
-              style={styles.deleteIcon}
-              onPress={() => handleDeleteImage(index)}>
-              <Text style={styles.deleteIconText}>X</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
+<View>
+  {images.map((image, index) => (
+    <View key={index} style={styles.imageContainer}>
+      <Image source={{ uri: image }} style={styles.image} />
+      <TouchableOpacity
+        style={styles.deleteIcon}
+        onPress={() => handleDeleteImage(index)}>
+        <Text style={styles.deleteIconText}>X</Text>
+      </TouchableOpacity>
+    </View>
+  ))}
+</View>
 
 
       <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>

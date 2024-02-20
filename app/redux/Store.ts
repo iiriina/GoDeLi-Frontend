@@ -5,10 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthSlice from './slices/AuthSlice';
 import logger from 'redux-logger'
 import storage from "redux-persist/lib/storage";
+import CrearRecetaSlice from './slices/CrearRecetaSlice';
 
 
 const reducers = combineReducers({
   auth: AuthSlice,
+  recipe: CrearRecetaSlice,
 });
 
 const persistConfig = {

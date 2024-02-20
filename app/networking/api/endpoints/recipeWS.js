@@ -4,7 +4,7 @@ import {urlApi} from '../ApiConfig';
 export default recipeWS = {
 
     create: async function (recipeData) {
-        const URL = urlApi.recipes.create();
+        const URL = urlApi.recipes.create;
         return await api.post(URL, recipeData);   
     },
 

@@ -1,6 +1,6 @@
 import { View, Modal, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -12,8 +12,39 @@ import { Button } from "react-native-paper";
 import { FontSize, FontFamily, Padding, Color, Border } from "../../ui/GlobalStyles";
 import NutritionalInformationCard from '../../ui/components/NutritionalInformationCard';
 import CustomButton from '../../ui/components/CustomButtonModal';
+import { useDispatch, useSelector  } from 'react-redux'; // Importa useDispatch
+import { updateParteTres } from '../../redux/slices/CrearRecetaSlice';
+import { store } from '../../redux/store';
+import { fetchCreateRecipe } from '../../redux/slices/CrearRecetaSlice';
 
 const ModalScreen = ({ navigation }) => {
+
+  const dispatch = useDispatch(); // Obtiene la función dispatch
+
+
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [time, setTime] = useState('');
+  const [dishes, setDishes] = useState('');
+
+  const [proteins, setProteins] = useState('');
+  const [calories, setCalories] = useState('');
+  const [fats, setFats] = useState('');
+
+  const handleProteins = (newValue) => {
+    setProteins(newValue);
+  };
+
+  const handleCalories = (newValue) => {
+    setCalories(newValue); 
+  };
+
+  const handleFats = (newValue) => {
+    setFats(newValue); 
+  };
+      
+  console.log(proteins);
+  console.log(fats);
+  console.log(calories);
 
   const handleClose = () => {
     navigation.popToTop();
@@ -33,16 +64,75 @@ const ModalScreen = ({ navigation }) => {
     'Promueve Flora Intestinal': false,
   });
 
-  const handleButtonPress = (buttonText) => {
-    setButtonStates((prevButtonStates) => ({
-      ...prevButtonStates,
-      [buttonText]: !prevButtonStates[buttonText],
-    }));
-  };
+const handleButtonPress = (buttonText) => {
+  // Verifica si el tag está seleccionado
+
+  const tagIndex = selectedTags.indexOf(buttonText);
+  if (tagIndex === -1) {
+    // Si no está seleccionado, agrégalo al estado
+    setSelectedTags([...selectedTags, buttonText]);
+  } else {
+    // Si está seleccionado, quítalo del estado
+    const newTags = [...selectedTags];
+    newTags.splice(tagIndex, 1);
+    setSelectedTags(newTags);
+  }
+  setButtonStates((prevButtonStates) => ({
+    ...prevButtonStates,
+    [buttonText]: !prevButtonStates[buttonText],
+  }));
+
+};
+
+console.log(selectedTags);
 
   const onPress = () => {
 
   }
+
+
+  const handleSiguientePress = async () => {
+
+    try {
+      // Actualiza la parte tres de la receta en el estado de Redux
+
+      console.log("A VER LAS CALORIES:")
+      console.log(calories)
+      console.log("A VER LAS CALORIES")
+
+
+      
+      const owner = {
+        googleId: Number(store.getState().auth.user.id),
+        name: store.getState().auth.user.name,
+        email: store.getState().auth.user.email,
+        photo: store.getState().auth.user.photo,
+
+      }
+
+      setDishes(Number(dishes));
+      dispatch(updateParteTres({ selectedTags, time, dishes, calories, proteins, fats,owner }));
+  
+
+    // Obtiene el estado actual del store
+      const recipeData = store.getState().recipe.recipe;
+
+      console.log("RECIPE DATAAAAAAAAA:")
+      console.log(recipeData);
+      // Realiza la llamada para crear la receta en el backend
+      const response = dispatch(fetchCreateRecipe(recipeData));
+  
+      //habria que mostrar que se creo o no se creo la receta
+
+    navigation.popToTop();
+    navigation.goBack(null);  
+
+    } catch (error) {
+      // Maneja errores
+      console.error('Error al crear la receta:', error);
+    }
+  };
+  
 
 
   return (
@@ -68,7 +158,6 @@ const ModalScreen = ({ navigation }) => {
                 ))}
               </View>
 
-
       </View>
 
       <View style={styles.frameContainer}>
@@ -82,6 +171,7 @@ const ModalScreen = ({ navigation }) => {
             placeholderTextColor="#4c4c4c"
             scrollEnabled
             keyboardType="numeric" // Establecer el teclado numérico
+            onChangeText={setTime}
 
           />
         </View>
@@ -96,6 +186,7 @@ const ModalScreen = ({ navigation }) => {
             placeholderTextColor="#4c4c4c"
             scrollEnabled
             keyboardType="numeric" // Establecer el teclado numérico
+            onChangeText={setDishes}
 
           />
         </View>
@@ -107,10 +198,13 @@ const ModalScreen = ({ navigation }) => {
       </Text>
       
       <View style={styles.amenties}>
+
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi.png")}
           nutritionInfo="Calorías"
           caloriesAndProteins="Kcal"
+          onTextChange={handleCalories} // Pasa el manejador como una prop
+
         />
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi1.png")}
@@ -119,6 +213,8 @@ const ModalScreen = ({ navigation }) => {
           caloriesAndProteins="gr."
           propMarginLeft={14}
           propWidth={57}
+          onTextChange={handleProteins} // Pasa el manejador como una prop
+
         />
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi2.png")}
@@ -126,6 +222,8 @@ const ModalScreen = ({ navigation }) => {
           caloriesAndProteins="gr."
           propMarginLeft={14}
           propWidth={57}
+          onTextChange={handleFats} // Pasa el manejador como una prop
+
         />
         
 
@@ -158,6 +256,7 @@ const ModalScreen = ({ navigation }) => {
             mode="contained"
             labelStyle={styles.formDefault6Btn2}
             contentStyle={styles.formDefault6Btn12}
+            onPress = {handleSiguientePress}
           >
             Siguiente
           </Button>

@@ -10,13 +10,19 @@ import {
 import { Button } from "react-native-paper";
 import { FontSize, FontFamily, Padding, Color, Border } from "../../ui/GlobalStyles";
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux'; // Importa useDispatch
+import { updateParteDos } from '../../redux/slices/CrearRecetaSlice';
 
 const ModalScreen = ({ navigation }) => {
+
+  const dispatch = useDispatch(); // Obtiene la función dispatch
 
   const [pasos, setPasos] = useState('');
   const [ingredientes, setIngredientes] = useState([]);
   const [nuevoIngrediente, setNuevoIngrediente] = useState('');
 
+  console.log(pasos);
+  console.log(ingredientes);
   // Función para agregar un nuevo ingrediente a la lista
   const agregarIngrediente = () => {
     if (nuevoIngrediente.trim() !== '') {
@@ -33,6 +39,15 @@ const ModalScreen = ({ navigation }) => {
     // Actualiza el estado con el nuevo array de ingredientes sin el ingrediente eliminado
     setIngredientes(nuevosIngredientes);
   };
+  
+
+    // Función para manejar el botón de "Siguiente"
+    const handleSiguientePress = () => {
+      // Llama a la acción updateParteUno con los datos de la segunda pantalla
+      dispatch(updateParteDos({ ingredientes, pasos }));
+      // Navega a la siguiente pantalla
+      navigation.navigate("ModalScreen3");
+    };
   
     return (
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -109,6 +124,7 @@ const ModalScreen = ({ navigation }) => {
           placeholderTextColor="#4c4c4c"
           scrollEnabled
           textAlignVertical="top" // Establecer textAlignVertical en top
+          onChangeText={setPasos}
 
         />
       </View>
@@ -140,6 +156,7 @@ const ModalScreen = ({ navigation }) => {
             mode="contained"
             labelStyle={styles.formDefault6Btn2}
             contentStyle={styles.formDefault6Btn12}
+            onPress = {handleSiguientePress}
           >
             Siguiente
           </Button>
@@ -147,7 +164,7 @@ const ModalScreen = ({ navigation }) => {
 
         
       </View>
-      <Button onPress={() => navigation.navigate('ModalScreen3')} />
+      <Button onPress={handleSiguientePress} />
 
     </View>
 

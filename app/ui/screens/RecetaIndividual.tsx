@@ -136,11 +136,14 @@ const videoId = receta && receta.video ? obtenerIdVideoYoutube(receta.video) ?? 
         style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height/2.8 }}
       >
       {urls.length === 1 ? (
+        <View style={{width: Dimensions.get('window').width/1.08, height: Dimensions.get('window').height/2.75  }}>
         <Image
-          style={[styles.fixedImage]}
+
+          style={[styles.carouselImage, ] }
           resizeMode="cover"
           source={{uri: urls[0].toString() }}
         />
+        </View>
       ) : (
         <Carousel
           width={Dimensions.get('window').width/1.08}

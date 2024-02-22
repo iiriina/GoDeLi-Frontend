@@ -29,13 +29,9 @@ const Frame = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const handleLogin = (idToken) => {
-    dispatch(fetchLogin({ idToken }));
+  const handleLogin = (idToken,user) => {
+    dispatch(fetchLogin({ idToken,user }));
   };
-  const handleUser = (user) => {
-    dispatch(updateUser(user));
-  };
-
 
 
   
@@ -49,8 +45,8 @@ const Frame = ({ navigation }) => {
       const {idToken, user} = await GoogleSignin.signIn();
       setloggedIn(true);
       setClientToken(idToken);
-      handleLogin(idToken);
-      handleUser(user);
+      handleLogin(idToken,user);
+      
       
       
     } catch (error) {

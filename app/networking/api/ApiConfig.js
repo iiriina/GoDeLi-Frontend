@@ -16,8 +16,8 @@ export const urlApi = {
         modify: (userId) => `users/${userId}`,
         get: (userId) => `users/${userId}`,
         delete: (userId) => `users/${userId}`,
-        patchFavs: (userId) => `users/${userId}/favourites`,
-        getFavs: (userId) => `users/${userId}/favourites`,
+        patchFavs: (userId) => `users/${userId}/favorites`,
+        getFavs: (userId) => `users/${userId}/favorites`,
         getMyRec: (userId) => `users/${userId}/recipes`,
     },
     recipes: {

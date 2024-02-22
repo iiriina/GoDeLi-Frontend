@@ -116,6 +116,9 @@ const Recetas = () => {
         selectedFilters={selectedFilters}
         onFilterSearch={handleFilterSearch}
       />
+
+
+      
     </ScrollView>
   );
 };

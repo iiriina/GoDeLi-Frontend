@@ -174,8 +174,10 @@ const Perfil = () => {
             </View>
           </View>
         </View>
+
         <Text style={styles.carlitosBal}>{name}</Text>
         <Text style={styles.cbalauadeeduio}>{email}</Text>
+
         <Image
           style={[styles.frameItem, styles.lineIconLayout]}
           resizeMode="cover"
@@ -185,14 +187,18 @@ const Perfil = () => {
         {error ? <Text style={[styles.errorText, styles.paddiiings]}>{error}</Text> : null}
         <TextInput
           style={[styles.frameInner, styles.frameBorder]}
+
           placeholder={name}
           onChangeText={setName}
+
           placeholderTextColor="#000"
           value={name}
 
         />
         <TextInput
           style={[styles.frameTextinput, styles.frameBorder]}
+
+
           placeholderTextColor="#6a6767"
           ellipsizeMode='head' // Cambia 'tail' por 'head' aquí
           editable={false}

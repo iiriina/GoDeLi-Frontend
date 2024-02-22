@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.bodyEkstraSmallMedium_size,
     lineHeight: 15,
     fontWeight: "500",
-    fontFamily: FontFamily.bodyEkstraSmallMedium,
     color: Color.neutralWhite,
     textAlign: "left",
   },

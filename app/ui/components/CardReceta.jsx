@@ -4,6 +4,8 @@ import { Image, StyleSheet, Text, View,TouchableOpacity,Animated, Easing } from 
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
 import { store } from '../../redux/store';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { updateFavs } from '../../redux/slices/AuthSlice';
 
 
 const Frame = ({ data, index }) => {
@@ -15,11 +17,15 @@ const Frame = ({ data, index }) => {
   const handleCardPress = (recipeId) => {
     navigation.navigate('Receta Individual', { recipeId });
   };
+  const [isSelected, setIsSelected] = useState(store.getState().auth.favs.includes(data._id));
 
-  const [isSelected, setIsSelected] = useState(false);
+  const dispatch = useDispatch();
+
+
   const scaleValue = new Animated.Value(1);
 
   const toggleHeart = () => {
+    store.dispatch(updateFavs(data._id));
     setIsSelected(!isSelected);
     patchFavorite(recipeId); 
 

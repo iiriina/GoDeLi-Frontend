@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Image, StyleSheet, View, Text, TextInput } from "react-native";
+import {useState, useEffect} from "react";
+import { Image, StyleSheet, View, Text, TextInput,TouchableOpacity } from "react-native";
 import { Padding, Color, Border, FontSize, FontFamily } from "../GlobalStyles";
 import { Button } from "react-native-paper";
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
@@ -9,23 +9,31 @@ import healthWS from '../../networking/api/endpoints/healthWS';
 import recipeWS from '../../networking/api/endpoints/recipeWS';
 import {setClientToken, clearClientToken} from '../../networking/api/Api'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchLogout  } from '../../redux/slices/AuthSlice';
-
+import { fetchLogout, logoutAction, updateUser  } from '../../redux/slices/AuthSlice';
+import ImagePicker from 'react-native-image-crop-picker';
+import RNFetchBlob from 'rn-fetch-blob';
+import { AlertNotificationRoot, Dialog, Toast, ALERT_TYPE } from 'react-native-alert-notification';
 
 const Perfil = () => {
+    
+    const [user, setUser] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [image, setImage] = useState(null);
 
-  const [recetas, setRecetas] = React.useState([]);
-    /*
+    const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState('');
+
     const handlerHealth3 = async () => {
       try {
-        console.log("hola1")
-        setClientToken(store.getState().auth.user.id)
-        const response = await userWS.getMyRec(store.getState().auth.user.id);
-        console.log("hola2")
+        const response = await userWS.get(store.getState().auth.user.id);
+        setUser(response.data)
+        console.log(response.data)
+        setName(response.data.name);
+        setEmail(response.data.email);
+        setImage(response.data.image);
         
-        console.log(response.data);
-        setRecetas(response.data);
-        console.log(recetas[0].images[0].secure_url)
+        
       } catch (error) {
         console.log(error.response);
       }
@@ -37,7 +45,43 @@ const Perfil = () => {
 
 
 
-    */
+    const handleGuardarCambios = async () => {
+      try {
+        if (!name === 0) {
+            setError('El nombre no puede quedar en blanco');
+            setSubmitted(true); 
+            return;
+          } else {
+            setError('');
+            setSubmitted(true); 
+            const response = await userWS.modify(store.getState().auth.user.id, name, email, image, store.getState().auth.favs);
+            aux = {
+              id: store.getState().auth.user.id,
+              name: name,
+              email: email,
+              photo: image,
+            }
+            store.dispatch(updateUser(aux));
+            Dialog.show({
+              type: ALERT_TYPE.SUCCESS,
+              title: 'Exito',
+              textBody: 'Los datos se han actualizado con éxito',
+              button: 'Cerrar',
+            });
+
+      }
+      } catch (error) {
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Algo salió mal',
+          textBody: 'No pudimos actualizar tus datos.',
+          button: 'Cerrar',
+        });
+      }
+      
+        
+      
+    };
 
 
     
@@ -51,7 +95,6 @@ const Perfil = () => {
 
   const handlerLogout = async () => {
     try {
-      
       setClientToken(store.getState().auth.session.refreshToken);
       handleLogout(store.getState().auth.user.id);
     } catch (error) {
@@ -62,8 +105,51 @@ const Perfil = () => {
 
 
   const handlerA = () => {
-
+    console.log(image)
   }
+
+  const handlerDeleteAccount = async () => {
+    try {
+        await userWS.delete(store.getState().auth.user.id);
+        store.dispatch(logoutAction());        
+        Dialog.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: 'Exito',
+          textBody: 'La cuenta fue eliminada con éxito. Esperamos volver a verte pronto!',
+          button: 'Cerrar',
+        });
+        
+
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+
+
+
+
+
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+      compressImageQuality: 0.7
+    }).then(image => {
+      RNFetchBlob.fs.readFile(image.path, 'base64')
+        .then(data => {
+          const base64Image = `data:${image.mime};base64,${data}`;
+          setImage(base64Image);
+        })
+        .catch(error => console.log(error));
+    }).catch(error => console.log(error));
+  };
+
+
+
+
+
 
 
   return (
@@ -72,36 +158,53 @@ const Perfil = () => {
         <View style={styles.frameWrapper}>
           <View style={[styles.frameContainer, styles.frameContainerPosition]}>
             <View style={styles.ellipseParent}>
-              <Image
-                style={styles.frameChild}
-                resizeMode="cover"
-                source={require("../assets/ellipse-1.png")}
-              />
+            {image ? (
+                <Image
+                  style={styles.frameChild}
+                  resizeMode="cover"
+                  source={{ uri: image }}
+                />
+              ) : null}
+              <TouchableOpacity onPress={choosePhotoFromLibrary}>
               <Image
                 style={styles.image392}
                 resizeMode="cover"
                 source={require("../assets/image-39-2.png")}
-              />
+              /></TouchableOpacity>
             </View>
           </View>
         </View>
-        <Text style={styles.carlitosBal}>Tu Nombre</Text>
-        <Text style={styles.cbalauadeeduio}>tumail@uade.edu.io</Text>
+
+        <Text style={styles.carlitosBal}>{name}</Text>
+        <Text style={styles.cbalauadeeduio}>{email}</Text>
+
         <Image
           style={[styles.frameItem, styles.lineIconLayout]}
           resizeMode="cover"
           source={require("../assets/group-1000003479.png")}
         />
         <Text style={styles.tusDatos}>Tus datos</Text>
+        {error ? <Text style={[styles.errorText, styles.paddiiings]}>{error}</Text> : null}
         <TextInput
           style={[styles.frameInner, styles.frameBorder]}
-          placeholder="Tu Nombrecito"
+
+          placeholder={name}
+          onChangeText={setName}
+
           placeholderTextColor="#000"
+          value={name}
+
         />
         <TextInput
           style={[styles.frameTextinput, styles.frameBorder]}
-          placeholder="tumail@uade.edu.io"
+
+
           placeholderTextColor="#6a6767"
+          ellipsizeMode='head' // Cambia 'tail' por 'head' aquí
+          editable={false}
+          value={email}
+          placeholder={email}
+          
         />
             
             <Button
@@ -109,7 +212,7 @@ const Perfil = () => {
               mode="contained"
               labelStyle={styles.formDefault6Btn2}
               contentStyle={styles.formDefault6Btn12}
-              onPress={handlerA}
+              onPress={handleGuardarCambios}
             >
               Guardar Cambios
             </Button>
@@ -132,6 +235,17 @@ const Perfil = () => {
 
             >
               Cerrar Sesión
+            </Button>
+
+            <Button
+              style={[styles.formDefault42, styles.formBorder2]}
+              mode="contained"
+              onPress={handlerDeleteAccount}
+              labelStyle={styles.formDefault6Btn2}
+              contentStyle={styles.formDefault6Btn12}
+
+            >
+              Eliminar cuenta
             </Button>
 
 
@@ -183,6 +297,7 @@ const styles = StyleSheet.create({
   frameChild: {
     width: 88,
     height: 86,
+    borderRadius:100,
   },
   image392: {
     borderRadius: 100,

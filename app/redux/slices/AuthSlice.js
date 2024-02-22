@@ -1,16 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import authWS from '../../networking/api/endpoints/authWS';
+import userWS from '../../networking/api/endpoints/userWS';
 
 export const fetchLogin = createAsyncThunk(
   'auth/fetchLogin',
-  async ({ idToken }, { rejectWithValue }) => {
+  async ({ idToken, user }, { rejectWithValue, dispatch }) => {
     try {
       const aux = await authWS.create(idToken);
-      updateJWT(aux.data.accessToken);
+      dispatch(updateJWT(aux.data.accessToken));
+      dispatch(updateUser(user));
+      const aux2 = await userWS.get(user.id);
+      dispatch(getFavs(aux2.data.favs));
       return aux.data;
       
     } catch (error) {
+      console.log(error);
       return rejectWithValue({
         error: error.response,
       });
@@ -23,6 +28,7 @@ export const fetchLogout = createAsyncThunk(
   async ({ googleId }, { rejectWithValue }) => {
     try {
       const aux = await authWS.delete(googleId);
+      logoutAction();
       return aux.data;
       
     } catch (error) {
@@ -46,6 +52,7 @@ const authReducer = createSlice({
       accessToken: null,
       refreshToken: null,
     },
+    favs: [],
     isFetching: false,
     succeed: false,
   },
@@ -61,21 +68,28 @@ const authReducer = createSlice({
     resetAccessToken: (state) => {
       state.session.accessToken = null;
     },
+    getFavs: (state, action) => {
+      state.favs = action.payload.map(receta => receta._id);
+    },
+    updateFavs: (state, action) => {
+      if (state.favs.includes(action.payload)) {
+        state.favs = state.favs.filter(id => id !== action.payload);
+      } else {
+        state.favs = [...state.favs, action.payload];
+      }
+    },
     updateJWT: (state,token) => {
       state.session.accessToken = token.payload;
       axios.defaults.headers.common.Authorization = 'Bearer ' + state.session.accessToken;
     },
     updateUser: (state, action) => {
-
         state.user.id = action.payload.id;
-
         state.user.email = action.payload.email; 
-
         state.user.name = action.payload.name; 
-
         state.user.photo = action.payload.photo; 
-
     },
+  
+    
   },
   extraReducers: (builder) => {
     builder.addCase(fetchLogin.pending, (state) => {
@@ -124,6 +138,6 @@ const authReducer = createSlice({
   
 });
 
-export const { logoutAction, updateJWT, updateUser, resetAccessToken } = authReducer.actions;
+export const { logoutAction, updateJWT, updateUser, resetAccessToken, getFavs, updateFavs } = authReducer.actions;
 
 export default authReducer.reducer;

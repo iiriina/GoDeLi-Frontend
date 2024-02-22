@@ -85,8 +85,8 @@ const Perfil = () => {
             </View>
           </View>
         </View>
-        <Text style={styles.carlitosBal}>Carlitos Balá</Text>
-        <Text style={styles.cbalauadeeduio}>cbala@uade.edu.io</Text>
+        <Text style={styles.carlitosBal}>Tu Nombre</Text>
+        <Text style={styles.cbalauadeeduio}>tumail@uade.edu.io</Text>
         <Image
           style={[styles.frameItem, styles.lineIconLayout]}
           resizeMode="cover"
@@ -95,12 +95,12 @@ const Perfil = () => {
         <Text style={styles.tusDatos}>Tus datos</Text>
         <TextInput
           style={[styles.frameInner, styles.frameBorder]}
-          placeholder="Carlitos Balá"
+          placeholder="Tu Nombrecito"
           placeholderTextColor="#000"
         />
         <TextInput
           style={[styles.frameTextinput, styles.frameBorder]}
-          placeholder="cbala@uade.edu.io"
+          placeholder="tumail@uade.edu.io"
           placeholderTextColor="#6a6767"
         />
             

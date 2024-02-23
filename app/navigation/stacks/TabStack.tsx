@@ -45,7 +45,7 @@ const TabNavigator = () => {
       }}>
         <Tab.Screen 
             name = {SCREENS.B} 
-            component={Perfilvfinal}
+            component={HomeStack}
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (

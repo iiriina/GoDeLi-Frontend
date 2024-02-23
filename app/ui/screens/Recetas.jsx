@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect, useNavigation } from "react";
-import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, ActivityIndicator, StatusBar } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
 import  NotificationComponent  from '../components/NotificationComponent';
@@ -20,7 +20,12 @@ const Recetas = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({});
   
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+
+
 
   const handlerHealth3 = async () => {
     try {
@@ -31,7 +36,7 @@ const Recetas = () => {
         .map((filter) => encodeURIComponent(filter.normalize("NFD").replace(/[\u0300-\u036f]/g, '')))
         .join(",");
         
-      let filtros = ""
+      let filtros = `page=${currentPage}&limit=4`
       if (filters){
         filtros += '&tags=' + filters
       }
@@ -40,9 +45,21 @@ const Recetas = () => {
         filtros += '&search=' + searchText
       }
 
-      const response = await recipeWS.getRecipes(filtros);
-      
-      setRecetas(response.data.data);
+      console.log(filtros)
+
+      setIsLoading(true);
+      recipeWS.getRecipes(filtros)
+      .then(response => {
+        if (response.data.data.length < 4) { // o el número de elementos que esperas por página
+          setHasMore(false);
+        }
+        setRecetas([...recetas, ...response.data.data]);
+        setIsLoading(false);
+        
+      });
+
+
+
     } catch (error) {
       console.log(error.response);
     }
@@ -50,7 +67,41 @@ const Recetas = () => {
 
   useEffect(() => {
     handlerHealth3();
-  }, []);
+  }, [currentPage]);
+
+
+  const renderLoader = () => {
+    return (
+      isLoading ?
+        <View style={styles.loaderStyle}>
+          <ActivityIndicator size="large" color="#aaa" />
+        </View> : null
+    );
+  };
+
+  const loadMoreItem = () => {
+    if (!isLoading && hasMore) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+
+
+
+  const renderItem = ({ item }) => { // Changed `receta` to `item`
+    return (
+      <View key={item._id} style={[styles.frameParent, styles.parentShadowBox]}>
+        <CardReceta data={item} index={item._id}/>
+      </View>
+    );
+  };
+  
+
+
+
+
+
+
 
   const handleKeyPress = (event) => {
     // Verifica si se presionó la tecla Enter
@@ -67,8 +118,10 @@ const Recetas = () => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: Color.white }}>
-      <View style={[styles.formDefaultWrapper, styles.formFlexBox]}>
+    <>
+
+      {/*
+      <View style={[styles.formDefaultWrapper, styles.formFlexBox,]}>
         <View style={[styles.formDefault, styles.formBorder]}>
           <View style={styles.placeholderParent}>
             <TextInput
@@ -81,7 +134,7 @@ const Recetas = () => {
               
             />
           
-            {/* Icono para abrir los filtros */}
+          
             <TouchableOpacity
               style={styles.emailDisabled}
               onPress={() => setModalVisible(true)} // Abre el modal cuando se presiona
@@ -99,16 +152,12 @@ const Recetas = () => {
           </View>
           <View></View>
         </View>
-      </View>
+      </View>    
     
-      {recetas.map((receta, index) => (
-        <View key={index} style={[styles.frameParent, styles.parentShadowBox]}>
-          <CardReceta data={receta} index={index} />
-        </View>
-      ))}
 
 
-      {/* ModalFiltros ahora se llama directamente aquí */}
+
+  
       <ModalFiltros
         isVisible={modalVisible}
         toggleModal={() => setModalVisible(!modalVisible)}
@@ -118,8 +167,33 @@ const Recetas = () => {
       />
 
 
+
+
+
+    */}
+    
+    
+
+
+
+      <StatusBar backgroundColor="#000" />
+
       
-    </ScrollView>
+
+      <FlatList
+        data={recetas}
+        renderItem={renderItem}
+        keyExtractor={item => item._id}
+        ListFooterComponent={renderLoader}
+        onEndReached={loadMoreItem}
+        onEndReachedThreshold={0}
+        />
+      
+    </>
+
+    
+
+
   );
 };
 

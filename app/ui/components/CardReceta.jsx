@@ -94,7 +94,7 @@ const Frame = ({ data, index }) => {
                     <View style={styles.textPosition}>
                       {data.rateAvg ?
                       <Text style={[styles.text, styles.textPosition]}>
-                        {data.rateAvg}
+                        {Math.round(Number(data.rateAvg) * 10) / 10}
                       </Text>
                       :
                       <Text style={[styles.text, styles.textPosition]}>

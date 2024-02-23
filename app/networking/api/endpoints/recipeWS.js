@@ -10,6 +10,7 @@ export default recipeWS = {
 
     getRecipes: async function (filtros) {
         const URL = urlApi.recipes.getRecipes;
+        console.log(URL+filtros)
         return await api.get(URL+filtros);
         
     }, 
@@ -43,10 +44,10 @@ export default recipeWS = {
         return await api.delete(URL);
     },
 
-    patchRating: async function (userId, _id) {
-        const URL = urlApi.recipes.patchFavs(_id);
+    patchRating: async function (rating, _id) {
+        const URL = urlApi.recipes.patchRating(_id);
         const requestBody = {
-            rate: rate,
+            rate: rating,
         };
         return await api.patch(URL, requestBody);
     },

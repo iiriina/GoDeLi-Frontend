@@ -17,6 +17,7 @@ const MisRecetas = () => {
 
 
     const [recetas, setRecetas] = useState([]);
+    
 
     const handlerHealth3 = async () => {
       try {

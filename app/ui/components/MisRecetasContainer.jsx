@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Image, StyleSheet, Text, View,TouchableOpacity } from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
@@ -6,8 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 
 const MisRecetasContainer = ({ data , index}) => {
 
-    const navigation = useNavigation();
-    
+  
+  const [recipeId, setRecipeId] = useState(data._id);
+  
+  const navigation = useNavigation();
+
+  const handleCardPress = (recipeId) => {
+    navigation.navigate('Receta Individual', { recipeId });
+  };
 
 
   return (
@@ -15,7 +21,7 @@ const MisRecetasContainer = ({ data , index}) => {
       <View style={[styles.image5Parent, styles.parentFlexBox]}>
 
       <TouchableOpacity
-          onPress={() => navigation.navigate('Receta Individual', { recetaId: data.id })}
+          onPress={() => handleCardPress(recipeId)}
         >
         <Image
           style={styles.image5Icon}

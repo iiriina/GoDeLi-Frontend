@@ -17,9 +17,13 @@ const LoginScreen = () => {
 
     const handlerHealth3 = async () => {
         try {
+          console.log("hola1")
           console.log(store.getState().auth.user.id)
+          console.log("hola2")
           const response = await userWS.getFavs(store.getState().auth.user.id);
+          console.log("hola3")
           console.log(response.data)
+          console.log("hola4")
           setRecetas(response.data);
         } catch (error) {
           console.log(error.response);

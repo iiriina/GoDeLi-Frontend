@@ -8,13 +8,14 @@ import FruitSection from "../components/FruitSection";
 import Ingrediente from "../components/Ingrediente";
 import TagInfoNutri from "../components/TagInfoNutri";
 import FormElementsAvatar from "../components/FormElementsAvatar";
-import Rating from "../components/Rating";
 import TypePrimarySmallTrueDisa from "../components/TypePrimarySmallTrueDisa";
 import { Border, Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import axios from 'axios'; 
 import recipeWS from '../../networking/api/endpoints/recipeWS';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+
 
 
 
@@ -75,6 +76,8 @@ const RecetaIndividual = () => {
   }, []);
 
   const [receta, setReceta] = useState<Receta | undefined>();
+
+  const [rating, setRating] = useState<Number>();
   
   
   if (!receta) {
@@ -83,6 +86,7 @@ const RecetaIndividual = () => {
 
   
   interface Receta {
+    _id: string,
     title: string;
     time: string,
     images: [
@@ -125,6 +129,29 @@ receta.images.forEach((image, index) => (
 } */
 
 const videoId = receta && receta.video ? obtenerIdVideoYoutube(receta.video) ?? '' : '';
+
+
+
+
+
+
+
+
+const STAR_IMAGE = require("../assets/star2.png")
+
+const ratingCompleted = (rating: number) => {
+  console.log("Rating is: " + rating);
+  setRating(rating);
+};
+
+const enviarRating = async ()  => {
+    try {
+        await recipeWS.patchRating(rating, receta._id);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 
 
   return (
@@ -208,33 +235,19 @@ const videoId = receta && receta.video ? obtenerIdVideoYoutube(receta.video) ?? 
       </View>
       <View style={[styles.ratingParent, styles.parentSpaceBlock1]}>
         <View style={styles.rating}>
-          <Image
-            style={styles.starIcon}
-            resizeMode="cover"
-            source={require("../assets/star.png")}
-          />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star.png")}
-          />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star.png")}
-          />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star.png")}
-          />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star1.png")}
+        <AirbnbRating
+            count={5}
+            reviews={[]}
+            defaultRating={receta && Number(receta.rateAvg)}
+            size={24}
+            onFinishRating={ratingCompleted}
+            showRating={false}
+            isDisabled={true}
+            selectedColor='#000'
+            starImage={STAR_IMAGE}
           />
         </View>
-        <Text style={styles.placeholder}>{receta && receta.rateAvg}</Text>
+        <Text style={styles.placeholder}>{receta && Math.round(Number(receta.rateAvg) * 10) / 10}</Text>
       </View>
       <View style={styles.frameContainer}>
         <View style={[styles.timerParent, styles.parentSpaceBlock]}>
@@ -357,36 +370,31 @@ const videoId = receta && receta.video ? obtenerIdVideoYoutube(receta.video) ?? 
         <Text style={styles.calificarReceta}>Calificar Receta</Text>
       </View>
       <View style={styles.ratingGroup}>
-        <View style={styles.rating1}>
-          <Image
-            style={styles.starIcon}
-            resizeMode="cover"
-            source={require("../assets/star2.png")}
+        <AirbnbRating
+            count={5}
+            reviews={[]}
+            defaultRating={0}
+            size={24}
+            onFinishRating={ratingCompleted}
+            showRating={false}
+            selectedColor='#000'
+            starImage={STAR_IMAGE}
           />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star2.png")}
-          />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star2.png")}
-          />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star2.png")}
-          />
-          <Image
-            style={styles.starIcon1}
-            resizeMode="cover"
-            source={require("../assets/star3.png")}
-          />
-        </View>
-        <View style={[styles.button, styles.ingredienteFrameFlexBox]}>
+          <TouchableOpacity style={[styles.button, styles.ingredienteFrameFlexBox]} onPress={enviarRating}>
           <Text style={[styles.label, styles.labelTypo]}>Enviar</Text>
-        </View>
+        </TouchableOpacity>
+      </View>
+
+
+      <View>
+
+     
+
+
+
+
+
+
       </View>
 
 
@@ -517,6 +525,7 @@ titleTypo: {
   color: Color.neutralGray1,
   //fontFamily: FontFamily.bodyNormalSemibold,
   fontWeight: "600",
+
 },
 title: {
   flex: 1,
@@ -591,15 +600,17 @@ rating: {
 },
 placeholder: {
   marginLeft: 10,
+  marginTop:"1%",
   color: Color.colorGray_100,
   fontFamily: FontFamily.poppinsRegular,
-  lineHeight: 24,
+  lineHeight: 25,
   fontSize: FontSize.bodyNormalSemibold_size,
   textAlign: "left",
 },
 ratingParent: {
-  marginTop: 15,
+  marginTop: 12,
   flexDirection: "row",
+  alignItems:"center"
 },
 timerIcon: {
   width: 21,
@@ -678,7 +689,6 @@ ingredienteFrame1: {
   width: 364,
 },
 wrapDeIngredientes: {
-  marginTop: 15,
   alignSelf: "stretch",
 },
 title2: {
@@ -772,13 +782,15 @@ bio: {
   flexDirection: "row",
 },
 calificarReceta: {
-  fontSize: 20,
+  fontSize: 16,
   lineHeight: 24,
   fontFamily: FontFamily.robotoBold,
   color: Color.icons,
   textAlign: "left",
   fontWeight: "600",
   alignSelf: "stretch",
+  marginTop: "4%",
+  marginBottom: "2%"
 },
 rating1: {
   alignItems: "center",
@@ -798,11 +810,9 @@ button: {
   borderRadius: Border.br_5xs,
 },
 ratingGroup: {
-  marginTop: 15,
   alignItems: "center",
   flexDirection: "row",
   marginBottom: "5%",
-
 },
 frameGeneral: {
   height: "auto",
@@ -811,6 +821,9 @@ frameGeneral: {
   paddingLeft: "5%",
   backgroundColor: "#FFFF",
   marginTop: "5%"
+},
+paddingVertical: {
+  paddingVertical: 10,
 },
 
 

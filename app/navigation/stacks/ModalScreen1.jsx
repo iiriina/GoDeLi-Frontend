@@ -156,6 +156,11 @@ const handleSiguientePress = () => {
           <View style={styles.headingLayout}>
             <Text style={[styles.heading1, styles.headingLayout]}>Fotos </Text>
           </View>
+
+
+
+
+          <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", margin: "3%", width: "100%" }}>
           {images.map((image, index) => (
             <View key={index} style={styles.imageContainer}>
               <Image source={{ uri: image }} style={styles.image} />
@@ -166,6 +171,14 @@ const handleSiguientePress = () => {
               </TouchableOpacity>
             </View>
           ))}
+          </View> 
+
+
+
+
+
+
+          
           <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
             <Text style={styles.panelButtonTitle}>Tomar foto</Text>
           </TouchableOpacity>
@@ -608,23 +621,24 @@ const handleSiguientePress = () => {
 
 
   imageContainer: {
-    position: 'relative',
-    marginBottom: 10, // Espacio entre imágenes
+    
+    margin: "1%", // Espacio entre imágenes
   },
   image: {
     width: 100,
     height: 100,
     resizeMode: 'cover',
     borderRadius: 5,
+    
+    
   },
   deleteIcon: {
     position: 'absolute',
-    top: 5,
-    right: 5,
+  
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 15,
-    width: 30,
-    height: 30,
+    width: "30%",
+    height: "30%",
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -376,7 +376,7 @@ const handlerEliminarReceta = async () => {
 
 
   return (
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+  <ScrollView contentContainerStyle={styles.scrollViewContent} style={{ backgroundColor: '#FFFFFF' }}>
       <View style={styles.frameParent}>
         <View style={styles.frameGroup}>
           <View>
@@ -397,6 +397,8 @@ const handlerEliminarReceta = async () => {
             />
           </View>
         </View>
+
+
 
         <View style={styles.parentSpaceBlock}>
           <View style={styles.headingLayout}>
@@ -444,6 +446,10 @@ const handlerEliminarReceta = async () => {
           />
         </View>
 
+
+    
+    <View style={styles.espacioEntreSecciones}>
+
         <Text style={[styles.heading2, styles.parentSpaceBlock]}>
           Descripción
         </Text>
@@ -463,19 +469,21 @@ const handlerEliminarReceta = async () => {
           />
         </View>
 
+    </View>
+
+
+
+
+
+
+
+
+
        
-
-
-
-
-
-
-
-
-       
+  <View style={styles.espacioEntreSecciones}>
 
   <View>
-    <Text style={styles.headingTypo}>Ingredientes</Text>
+    <Text style={[styles.headingTypo, styles.heading1SpaceBlock2]}>Ingredientes</Text>
   </View>
   <View style={styles.frameContainer2}>
     <View style={[styles.formDefaultWrapper2, styles.formFlexBox2]}>
@@ -529,6 +537,8 @@ const handlerEliminarReceta = async () => {
         </View>
       ))}
 
+</View>
+<View style={styles.espacioEntreSecciones}>
 
 <Text style={[styles.heading12, styles.heading1SpaceBlock2]}>Pasos</Text>
 <View style={[styles.formDefaultFrame2, styles.heading1SpaceBlock2]}>
@@ -549,6 +559,7 @@ const handlerEliminarReceta = async () => {
 </View>
 
   </View>
+  </View>
 
 
 
@@ -566,10 +577,11 @@ const handlerEliminarReceta = async () => {
 
 
 
+  <View style={styles.espacioEntreSecciones}>
 
   <View style={styles.frameWrapper3}>
         <View>
-          <Text style={styles.heading3}>Tags</Text>
+          <Text style={[styles.headingTypo, styles.heading1SpaceBlock2, styles.agregadodePaddingBottom]}>Tags</Text>
         </View>
       </View>
       <View style={styles.emailDisabled3}>
@@ -586,6 +598,9 @@ const handlerEliminarReceta = async () => {
               </View>
 
       </View>
+      </View>
+
+      <View style={styles.espacioEntreSecciones}>
 
       <View style={styles.frameContainer3}>
         <View>
@@ -628,6 +643,11 @@ const handlerEliminarReceta = async () => {
 
         </View>
       </View>
+
+      </View>
+
+    <View style={styles.espacioEntreSecciones}>
+
       <Text style={[styles.heading33, styles.headingTypo3]}>
         Información Nutricional
       </Text>
@@ -637,19 +657,17 @@ const handlerEliminarReceta = async () => {
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi.png")}
           nutritionInfo="Calorías"
+          labelText="default"
           caloriesAndProteins={calories}
           onTextChange={handleCalories} // Pasa el manejador como una prop
           isFieldEmpty={isCaloriesEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
-          labelText={calories}
         />
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi1.png")}
           nutritionInfo="Proteínas"
           labelText="default"
           caloriesAndProteins={proteins}
-          propMarginLeft={14}
-          propWidth={57}
           onTextChange={handleProteins} // Pasa el manejador como una prop
           isFieldEmpty={isProteinsEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
@@ -659,8 +677,6 @@ const handlerEliminarReceta = async () => {
           iconImageUrl={require("../../ui/assets/wifi2.png")}
           nutritionInfo="Grasas"
           caloriesAndProteins={fats}
-          propMarginLeft={14}
-          propWidth={57}
           onTextChange={handleFats} // Pasa el manejador como una prop
           isFieldEmpty={isFatsEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
@@ -672,7 +688,7 @@ const handlerEliminarReceta = async () => {
 
         
       </View>
-
+      </View>
       {error ? <Text style={[styles.errorText3, styles.paddiiings3]}>{error}</Text> : null}
 
 
@@ -686,15 +702,25 @@ const handlerEliminarReceta = async () => {
     >
       Guardar Cambios
     </Button>
+   
+   <View style={styles.containerDivisor}>
+     <View style={styles.divisor} />
+   </View>
+
+
+
+   <Text style={[styles.heading2, styles.parentSpaceBlock]}>
+          Eliminar Receta
+        </Text>
 
     <Button
-      style={styles.formDefault43}
+      style={styles.formDefault44}
       mode="contained"
 
-      labelStyle={{ color: '#FFF',fontFamily: FontFamily.poppinsBold}} // Aquí estableces el color del texto en rojo
+      labelStyle={{ color: '#E84443',fontFamily: FontFamily.poppinsBold}} // Aquí estableces el color del texto en rojo
       onPress={handlerEliminarReceta}
     >
-      Eliminar Receta
+      Eliminar
     </Button>
 
 
@@ -713,10 +739,27 @@ const handlerEliminarReceta = async () => {
   };
 
   const styles = StyleSheet.create({
-    
-    formDefault43: {
+    agregadodePaddingBottom: {
+      paddingBottom: "2%"
+
+    },
+    espacioEntreSecciones: {
+      paddingTop: "4%",
+    },
+    containerDivisor: {
+      alignItems: 'center', // Alinea los elementos hijos en el centro horizontalmente
+      marginTop: "8%", // Ajusta según sea necesario
+      marginBottom: "8%", // Ajusta según sea necesario
+    },
+    divisor: {
+      width: '90%', // Ancho del divisor
+      height: 1, // Altura del divisor
+      backgroundColor: '#969696', // Color del divisor
+    },
+
+      formDefault43: {
       borderColor: Color.button1Text,
-      marginTop:"10%",
+      marginTop:"15%",
       overflow: "hidden",
       borderWidth: 2,
       borderStyle: "solid",
@@ -726,7 +769,17 @@ const handlerEliminarReceta = async () => {
       width: "99%",
     },
   
-
+    formDefault44: {
+      borderColor: Color.button1Text,
+      marginTop:"10%",
+      overflow: "hidden",
+      borderWidth: 2,
+      borderStyle: "solid",
+      paddingVertical: "2%",
+      backgroundColor: "#FFF",
+      borderRadius: 10 ,
+      width: "99%",
+    },
 
     buttonCTANormalBtn4: {
       color: "#fff",
@@ -909,7 +962,8 @@ const handlerEliminarReceta = async () => {
     formDefault: {
       width: "346%",
       alignItems: "center",
-      paddingVertical: Padding.p_base,
+      paddingVertical: Padding.p_xs,
+      paddingHorizontal: "2%",
     },
     emailDisabled: {
       marginTop: 10,
@@ -1588,6 +1642,7 @@ const handlerEliminarReceta = async () => {
     fontWeight: "600",
     lineHeight: 25,
     fontSize: FontSize.headingH2_size,
+    
   },
   frameParent1FlexBox3: {
     justifyContent: "center",
@@ -1696,14 +1751,15 @@ const handlerEliminarReceta = async () => {
   },
   emailDisabled13: {
     marginTop: 5,
+    
   },
   headingGroup3: {
-    marginLeft: 15,
+    marginLeft: "2%",
   },
   frameContainer3: {
     marginTop: 12,
     flexDirection: "row",
-    widht: "100%"
+    width: "100%"
   },
   heading33: {
     width: 236,

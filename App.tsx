@@ -40,7 +40,51 @@ import {store} from './app/redux/store';
 import interceptor from './app/networking/api/interceptor'
 import NetInfo from '@react-native-community/netinfo';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
+import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import { FontFamily } from './app/ui/GlobalStyles';
 
+const toastConfig = {
+  /*
+    Overwrite 'success' type,
+    by modifying the existing `BaseToast` component
+  */
+  success: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: 'green' }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 15,
+        fontFamily: FontFamily.poppinsMedium
+      }}
+      text2Style={{
+        fontSize: 13,
+        fontFamily: FontFamily.poppinsMedium
+      }}
+
+    />
+  ),
+  /*
+    Overwrite 'error' type,
+    by modifying the existing `ErrorToast` component
+  */
+  error: (props: any) => (
+    <ErrorToast
+      {...props}
+      style={{ borderLeftColor: 'red' }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 15,
+        fontFamily: FontFamily.poppinsMedium
+      }}
+      text2Style={{
+        fontSize: 13,
+        fontFamily: FontFamily.poppinsMedium
+      }}
+  />
+  ),
+
+};
 
 
 type SectionProps = PropsWithChildren<{
@@ -108,6 +152,7 @@ function App(): React.JSX.Element {
   };
 
   return (
+    <>
     <AlertNotificationRoot>
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistStore(store)}>
@@ -117,6 +162,8 @@ function App(): React.JSX.Element {
     </PersistGate>
   </Provider>
   </AlertNotificationRoot>
+  <Toast config={toastConfig} />
+  </>
   );
 }
 

@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import { Image, StyleSheet, View, Text, TextInput,TouchableOpacity, ScrollView } from "react-native";
 import { Padding, Color, Border, FontSize, FontFamily } from "../GlobalStyles";
-import { Button } from "react-native-paper";
+import { Button, Headline } from "react-native-paper";
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
 import {store} from '../../redux/store'
 import userWS from '../../networking/api/endpoints/userWS';
@@ -12,7 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogout, logoutAction, updateUser  } from '../../redux/slices/AuthSlice';
 import ImagePicker from 'react-native-image-crop-picker';
 import RNFetchBlob from 'rn-fetch-blob';
-import { AlertNotificationRoot, Dialog, Toast, ALERT_TYPE } from 'react-native-alert-notification';
+import Toast from 'react-native-toast-message';
+import { AlertNotificationRoot, Dialog, ALERT_TYPE } from 'react-native-alert-notification';
+
+
 const Perfil = () => {
     
     const [user, setUser] = useState('');
@@ -53,7 +56,7 @@ const Perfil = () => {
           } else {
             setError('');
             setSubmitted(true); 
-            const response = await userWS.modify(store.getState().auth.user.id, name, email, image);
+            const response = await userWS.modify(store.getState().auth.user.id, name, email, image, store.getState().auth.favs);
             
 
 
@@ -68,28 +71,46 @@ const Perfil = () => {
             
             
               Toast.show({
-              type: ALERT_TYPE.SUCCESS,
-              title: 'Exito',
-              textBody: 'Los datos se han actualizado con éxito',
-            })
+                type: 'success',
+                text1: 'Exito',
+                text2: 'Se han guardado los cambios',
+                visibilityTime: 2000,
+                onPress: () =>{
+                  Toast.hide()
+                }
+
+              })
+          
+
             
             ;} else {
+
               Toast.show({
-                type: ALERT_TYPE.DANGER,
-                title: 'Lo sentimos',
-                textBody: 'Ocurrió un error al intentar actualizar tus datos',
+                type: 'error',
+                text1: 'Lo sentimos',
+                text2: 'Ocurrió un error al actualizar',
+                visibilityTime: 2000,
+                onPress: () =>{
+                  Toast.hide()
+                }
+
               })
+
             }
 
       }
       } catch (error) {
         Toast.show({
-          type: ALERT_TYPE.DANGER,
-          title: 'Algo salió mal',
-          textBody: 'No pudimos actualizar tus datos.',
-          
+          type: 'error',
+          text1: 'Lo sentimos',
+          text2: 'Ocurrió un error al actualizar',
+          visibilityTime: 2000,
+          onPress: () =>{
+            Toast.hide()
+          }
+
         });
-      }
+}
       
         
       
@@ -138,6 +159,21 @@ const Perfil = () => {
     
   }
 
+  const handlerQuiereBorrarSuCuenta = async () => {
+
+    Dialog.show({
+      type: ALERT_TYPE.DANGER,
+      title: '¿Deseas eliminar tu cuenta?',
+      textBody: 'Toca fuera para Cancelar',
+      button: 'Eliminar',
+      onPressButton: () => {
+        handlerDeleteAccount();
+      }
+    });
+
+
+    
+  }
 
 
 
@@ -253,7 +289,7 @@ const Perfil = () => {
             <Button
               style={[styles.formDefault42, styles.formBorder2]}
               mode="contained"
-              onPress={handlerDeleteAccount}
+              onPress={handlerQuiereBorrarSuCuenta}
               labelStyle={styles.formDefault6Btn2}
               contentStyle={styles.formDefault6Btn12}
 

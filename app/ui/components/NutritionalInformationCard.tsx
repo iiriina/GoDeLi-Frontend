@@ -53,8 +53,11 @@ const NutritionalInformationCard = ({
     };
   }, [propWidth]);
 
+  
+
   return (
     <View style={[styles.parentFlexBox, frameView1Style]}>
+      
       <LinearGradient
         style={[styles.wifiParent, styles.parentFlexBox]}
         locations={[0, 1]}
@@ -73,7 +76,7 @@ const NutritionalInformationCard = ({
         <TextInput
           style={[
             styles.formDefault,
-            styles.parentFlexBox,
+            styles.formBorder,
             isFieldEmpty && submitted && styles.redBorder, // Nuevo
           ]}
           placeholder={caloriesAndProteins}
@@ -90,11 +93,13 @@ const styles = StyleSheet.create({
   parentFlexBox: {
     justifyContent: "center",
     alignItems: "center",
+    marginRight: "1.9%"
   },
   wifiIcon: {
     width: 32,
     height: 32,
     overflow: "hidden",
+
   },
   caloras: {
     fontSize: FontSize.size_3xs,
@@ -103,12 +108,16 @@ const styles = StyleSheet.create({
     color: Color.lines,
     textAlign: "left",
     marginTop: 6,
+    
   },
   wifiParent: {
     borderRadius: Border.br_base,
-    paddingHorizontal: Padding.p_xl,
     paddingVertical: Padding.p_xs,
+    paddingHorizontal: "2%",
     backgroundColor: "transparent",
+    width: "100%",
+
+
   },
   formDefault: {
     position: "absolute",
@@ -125,15 +134,36 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.bodyNormalRegular,
     fontSize: FontSize.bodyNormalRegular_size,
     overflow: "hidden",
+    paddingTop: 18,
+    paddingBottom: 16,
+    
+    width: "100%",
+    justifyContent: "center",
+    
   },
   emailDisabled: {
-    width: 71,
     height: 44,
     marginTop: 10,
+    width: 90,
+
   },
   redBorder: { // Nuevo
     borderColor: 'red', // Nuevo
   }, // Nuevo
+  formBorder: {
+    fontSize: FontSize.size_base,
+    fontFamily: FontFamily.poppinsRegular,
+    paddingHorizontal: Padding.p_smi,
+    overflow: "hidden",
+    borderColor: Color.colorDarkgray,
+    backgroundColor: Color.colorWhite,
+    borderRadius: Border.br_7xs,
+    flex: 1,
+    borderWidth: 1,
+    borderStyle: "solid",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
 });
 
 export default NutritionalInformationCard;

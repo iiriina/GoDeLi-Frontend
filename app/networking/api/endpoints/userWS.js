@@ -3,7 +3,7 @@ import {urlApi} from '../ApiConfig';
 
 export default userWS = {
     
-modify: async function (userId, name, email, image, favs) {
+modify: async function (userId, name, email, image) {
     // Construye la URL para modificar un usuario utilizando la función definida en urlApi
     const URL = urlApi.users.modify(userId);
 
@@ -12,7 +12,6 @@ modify: async function (userId, name, email, image, favs) {
         name: name,
         email: email,
         image: image,
-        favs: favs
     };
 
     // Realiza una solicitud PUT al servidor con la URL y el cuerpo de la solicitud
@@ -43,9 +42,9 @@ getFavs: async function (userId,filtros) {
     return await api.get(URL+filtros);
 },
 
-getMyRec: async function (userId) {
+getMyRec: async function (userId,filtros) {
     const URL = urlApi.users.getMyRec(userId);
-    return await api.get(URL);
+    return await api.get(URL+filtros);
 },
 
 }

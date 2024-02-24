@@ -72,8 +72,9 @@ const LoginScreen = () => {
 
 
       return (
-        <>
-        <StatusBar backgroundColor="#000" />
+        <View style={{    backgroundColor: Color.white, height:"100%"
+      }}>
+          <StatusBar backgroundColor="#000" />
 
         <FlatList
           data={recetas}
@@ -85,7 +86,7 @@ const LoginScreen = () => {
           onEndReachedThreshold={0}
           
           /> 
-          </>
+          </View>
       );
     };
 
@@ -121,7 +122,11 @@ const LoginScreen = () => {
         width: "95%",
 
       },
-    
+      loaderStyle:{
+        height:"100%",
+        width:"100%"
+
+      },
       formFlexBox: {
         flexDirection: "row",
         flexWrap: "wrap",

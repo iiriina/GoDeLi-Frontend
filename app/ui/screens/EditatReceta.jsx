@@ -11,7 +11,7 @@ import {
 import { FontSize, FontFamily, Padding, Color, Border } from "../../ui/GlobalStyles";
 import { Button } from "react-native-paper";
 import ImagePicker from 'react-native-image-crop-picker';
-import React, { useState, useEffect, useRoute} from "react";
+import React, { useState, useEffect} from "react";
 import { useSelector,useDispatch } from 'react-redux'; // Importa useDispatch
 import { updateParteUno } from '../../redux/slices/CrearRecetaSlice';
 import {store} from '../../redux/store'
@@ -20,22 +20,80 @@ import { updateParteTres } from '../../redux/slices/CrearRecetaSlice';
 import { fetchCreateRecipe } from '../../redux/slices/CrearRecetaSlice';
 import { AlertNotificationRoot, Dialog, Toast, ALERT_TYPE } from 'react-native-alert-notification';
 import NutritionalInformationCard from '../components/NutritionalInformationCard';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import recipeWS from '../../networking/api/endpoints/recipeWS';
 
 import RNFetchBlob from 'rn-fetch-blob';
 
 const ModalScreen = ({ navigation }) => {
 
+
+  
   const route = useRoute();
-  const { recipeId } = route.params;
+  const { recipeId } = route.params ;
+
+  const [images, setImages] = React.useState([]);
+
+  const [title, setTitle] = useState('');
+
+  const [description, setDescription] = useState('');
+
+  const [video, setVideo] = useState('');
+
+  const [pasos, setPasos] = useState('');
+  const [ingredientes, setIngredientes] = useState([]);
+  const [nuevoIngrediente, setNuevoIngrediente] = useState('');
+  
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [time, setTime] = useState('');
+  const [dishes, setDishes] = useState();
+  
+  const [proteins, setProteins] = useState('');
+  const [calories, setCalories] = useState('');
+  const [fats, setFats] = useState('');
+  
+  const [triggerFetch, setTriggerFetch] = useState(false);
+
+  const handleProteins = (newValue) => {
+    setProteins(newValue);
+  };
+  
+  const handleCalories = (newValue) => {
+    setCalories(newValue); 
+  };
+  
+  const handleFats = (newValue) => {
+    setFats(newValue); 
+  };
   
   const handlerHealth3 = async () => {
     try {
-    
-      const response = await recipeWS.getRecipeInd(recipeId); 
+      console.log("Hola!!!")
 
+      const response = await recipeWS.getRecipeInd(recipeId); 
       setReceta(response.data.data)
-      console.log(receta);
-  
+      setTitle(response.data.data.title);
+      setDescription(response.data.data.description);
+      setVideo(response.data.data.video);
+      const images = response.data.data.images.map(image => image.secure_url);
+      setImages(images);
+      setIngredientes(response.data.data.ingredients);
+      setPasos(response.data.data.steps);
+      setSelectedTags(response.data.data.tags);
+      console.log(selectedTags);
+      setDishes(response.data.data.dishes);
+      setTime(response.data.data.time);
+      handleCalories(response.data.data.nutritionalInfo.calories);
+      handleProteins(response.data.data.nutritionalInfo.proteins);
+      handleFats(response.data.data.nutritionalInfo.fats);
+
+      setTriggerFetch(prev => !prev);
+
+      
+      
+
+      console.log(response.data.data)
+
     }catch(e){
       console.log(e)
     }
@@ -44,6 +102,14 @@ const ModalScreen = ({ navigation }) => {
   useEffect(() => {
     handlerHealth3();
   }, []);
+
+  useEffect(() => {
+    const updatedButtonStates = { ...buttonStates };
+    for (const tag of selectedTags) {
+      updatedButtonStates[tag] = true; // Establecer el estado a true
+    }
+    setButtonStates(updatedButtonStates);
+  }, [triggerFetch]);
 
   const [receta, setReceta] = useState();
 
@@ -55,7 +121,6 @@ const ModalScreen = ({ navigation }) => {
   const [error, setError] = useState('');
 
 
-  const [images, setImages] = React.useState([]);
   // ENTRAR A LA GALERÍA Y SUBIR FOTOS - CAMARA
   
   const takePhotoFromCamera = () => {
@@ -101,35 +166,6 @@ const ModalScreen = ({ navigation }) => {
     setImages(updatedImages);
   };
   
-  const [title, setTitle] = useState('');
-
-  const [description, setDescription] = useState('');
-
-  const [video, setVideo] = useState('');
-
-
-
-
-
-
-
-
-  // Restablecer los estados del componente a su valor inicial
-  const resetComponentState = () => {
-    setImages([]);
-    setTitle('');
-    setDescription('');
-    setVideo('');
-  };
-
-
-  
-  // Restablecer los estados cuando creacionFinalizada es true
-  useEffect(() => {
-    if (creacionFinalizada) {
-      resetComponentState();
-    }
-  }, [creacionFinalizada]);
 
 
 
@@ -137,9 +173,6 @@ const ModalScreen = ({ navigation }) => {
 const [submitted, setSubmitted] = useState(false); // Estado para rastrear si se ha enviado el formulario
 
 
-const [pasos, setPasos] = useState('');
-const [ingredientes, setIngredientes] = useState([]);
-const [nuevoIngrediente, setNuevoIngrediente] = useState('');
 
 // Función para agregar un nuevo ingrediente a la lista
 const agregarIngrediente = () => {
@@ -167,25 +200,6 @@ const handleDeleteIngrediente = (index) => {
 
 
 
-const [selectedTags, setSelectedTags] = useState([]);
-const [time, setTime] = useState('');
-const [dishes, setDishes] = useState('');
-
-const [proteins, setProteins] = useState('');
-const [calories, setCalories] = useState('');
-const [fats, setFats] = useState('');
-
-const handleProteins = (newValue) => {
-  setProteins(newValue);
-};
-
-const handleCalories = (newValue) => {
-  setCalories(newValue); 
-};
-
-const handleFats = (newValue) => {
-  setFats(newValue); 
-};
     
 
 
@@ -229,11 +243,11 @@ setButtonStates((prevButtonStates) => ({
 
 
 
-const handleSiguientePress = async () => {
+const handleGuardarCambios = async () => {
 
   try {
     // Actualiza la parte tres de la receta en el estado de Redux
-    if (!time || !dishes || !proteins || !calories || !fats) {
+    if (!time || !dishes || !proteins || !calories || !fats || !title || !video || !description || images.length === 0 ) {
       setError(' * Todos los campos son obligatorios');
       setSubmitted(true); // Marca el formulario como enviado
 
@@ -242,37 +256,41 @@ const handleSiguientePress = async () => {
 
 
 
-      
-      const owner = {
-        googleId: store.getState().auth.user.id,
-        name: store.getState().auth.user.name,
-        email: store.getState().auth.user.email,
-        photo: store.getState().auth.user.photo,
-
-      }
 
       setDishes(Number(dishes));
-      dispatch(updateParteTres({ selectedTags, time, dishes, calories, proteins, fats,owner }));
-  
-
-      // Obtiene el estado actual del store
-      const recipeData = store.getState().recipe.recipe;
-
-      // Realiza la llamada para crear la receta en el backend
-      const response = dispatch(fetchCreateRecipe(recipeData));
-      //habria que mostrar que se creo o no se creo la receta
-        Dialog.show({
-          type: ALERT_TYPE.SUCCESS,
-          title: 'Exito',
-          textBody: 'Felicitaciones! Se ha creado correctamente una receta.',
-          button: 'Cerrar',
-        });
+      
+      const nutritionalInfo = {
+        calories: calories,
+        fats: fats,
+        proteins: proteins
+      }
+      const aux = await recipeWS.modifyRecipe(recipeId,title, description, images, video, dishes, time, selectedTags, pasos, ingredientes, calories,fats,proteins);
+      console.log(aux)
+      
+      if (aux.status === 200 || aux.status === 201) {
+    
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Exito',
+        textBody: 'Felicitaciones! Se ha creado correctamente una receta.',
+        button: 'Cerrar',
+      });
 
       navigation.navigate('GoDeLi');
       navigation.reset({
         index: 0,
         routes: [{ name: 'MainApp' }],
-      });  
+      });  }
+      else {
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'ERROR',
+          textBody: 'Ocurrió un error al intentar actualizar la receta',
+          button: 'Cerrar',
+        });
+
+
+      }
   }
     } catch (error) {
       // Maneja errores
@@ -280,18 +298,15 @@ const handleSiguientePress = async () => {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
         title: 'Algo salió mal',
-        textBody: 'No hemos podido subir la receta :(.',
+        textBody: 'No hemos podido actualizar la receta :(.',
         button: 'Cerrar',
       });
 
-      console.error('Error al crear la receta:', error);
+      console.error('Error al actualizar la receta:', error);
     }
 
 };
 
-const handleAtrasPress = () => {
-  navigation.navigate("ModalScreen2");
-}
 
 
 const isFatsEmpty = !fats;
@@ -304,6 +319,55 @@ const isProteinsEmpty = !proteins;
 
 
 
+const handlerEliminarReceta = async () => {
+
+  try {
+
+      setSubmitted(true); 
+
+      const aux = await recipeWS.deleteRecipe(recipeId);
+      console.log(aux)
+      
+      if (aux.status === 200 || aux.status === 201) {
+    
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Exito',
+        textBody: 'La receta se eliminó correctamente',
+        button: 'Cerrar',
+      });
+
+      navigation.navigate('GoDeLi');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MainApp' }],
+      });  }
+      else {
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'ERROR',
+          textBody: 'Ocurrió un error al intentar eliminar la receta',
+          button: 'Cerrar',
+        });
+      
+  }
+    } catch (error) {
+      // Maneja errores
+
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: 'Algo salió mal',
+        textBody: 'No hemos podido eliminar la receta :(.',
+        button: 'Cerrar',
+      });
+
+      console.error('Error al eliminar la receta:', error);
+    }
+
+
+
+
+}
 
 
 
@@ -325,7 +389,6 @@ const isProteinsEmpty = !proteins;
                 styles.formBorder,
                 (!title && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
               ]}
-                            placeholder="Titulo de la receta"
               multiline={false}
               placeholderTextColor="#4c4c4c"
               onChangeText={setTitle}
@@ -339,6 +402,9 @@ const isProteinsEmpty = !proteins;
           <View style={styles.headingLayout}>
             <Text style={[styles.heading1, styles.headingLayout]}>Fotos </Text>
           </View>
+
+
+          <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", margin: "3%", width: "100%" }}>
           {images.map((image, index) => (
             <View key={index} style={styles.imageContainer}>
               <Image source={{ uri: image }} style={styles.image} />
@@ -349,6 +415,10 @@ const isProteinsEmpty = !proteins;
               </TouchableOpacity>
             </View>
           ))}
+          </View> 
+
+
+
           <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
             <Text style={styles.panelButtonTitle}>Tomar foto</Text>
           </TouchableOpacity>
@@ -365,7 +435,7 @@ const isProteinsEmpty = !proteins;
               styles.formBorder,
               (!video && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
             ]}            
-            placeholder="Link de Youtube"
+            
             multiline={false}
             placeholderTextColor="#4c4c4c"
             scrollEnabled
@@ -383,7 +453,7 @@ const isProteinsEmpty = !proteins;
                 styles.formDefault,
                 styles.formBorder,
                 (!description && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
-              ]}            placeholder="Descripción de la receta"
+              ]}            
             multiline={true}
             placeholderTextColor="#4c4c4c"
             scrollEnabled
@@ -413,7 +483,7 @@ const isProteinsEmpty = !proteins;
         <View style={styles.placeholderParent2}>
           <TextInput
             style={styles.placeholderTypo12}
-            placeholder="Nuevo Ingrediente..."
+            placeholder='Nuevo ingrediente...'
             placeholderTextColor="#737373"
             onChangeText={setNuevoIngrediente}
             value={nuevoIngrediente} // Valor del campo de entrada
@@ -468,13 +538,13 @@ const isProteinsEmpty = !proteins;
       styles.placeholderTypo12,
       (!pasos && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
     ]}            
-    placeholder="1- Paso 1, 2- Paso 2, 3- Paso 3 ..."
+    
     multiline={true}
     placeholderTextColor="#4c4c4c"
     scrollEnabled
     textAlignVertical="top" // Establecer textAlignVertical en top
     onChangeText={setPasos}
-
+    value={pasos}
   />
 </View>
 
@@ -527,13 +597,13 @@ const isProteinsEmpty = !proteins;
             styles.formBorder,
             (!time && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
           ]} 
-            placeholder="Min."
+           
             multiline={false}
             placeholderTextColor="#4c4c4c"
             scrollEnabled
             keyboardType="numeric" // Establecer el teclado numérico
             onChangeText={setTime}
-
+            value={time}
           />
         </View>
         </View>
@@ -546,13 +616,13 @@ const isProteinsEmpty = !proteins;
             styles.formBorder,
             (!dishes && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
           ]} 
-            placeholder="Cant."
+            
             multiline={false}
             placeholderTextColor="#4c4c4c"
             scrollEnabled
             keyboardType="numeric" // Establecer el teclado numérico
             onChangeText={setDishes}
-
+            value={dishes?.toString()}
           />
         </View>
 
@@ -567,28 +637,28 @@ const isProteinsEmpty = !proteins;
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi.png")}
           nutritionInfo="Calorías"
-          caloriesAndProteins="Kcal"
+          caloriesAndProteins={calories}
           onTextChange={handleCalories} // Pasa el manejador como una prop
           isFieldEmpty={isCaloriesEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
-
+          labelText={calories}
         />
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi1.png")}
           nutritionInfo="Proteínas"
           labelText="default"
-          caloriesAndProteins="gr."
+          caloriesAndProteins={proteins}
           propMarginLeft={14}
           propWidth={57}
           onTextChange={handleProteins} // Pasa el manejador como una prop
           isFieldEmpty={isProteinsEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
-
+          
         />
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi2.png")}
           nutritionInfo="Grasas"
-          caloriesAndProteins="gr."
+          caloriesAndProteins={fats}
           propMarginLeft={14}
           propWidth={57}
           onTextChange={handleFats} // Pasa el manejador como una prop
@@ -606,51 +676,26 @@ const isProteinsEmpty = !proteins;
       {error ? <Text style={[styles.errorText3, styles.paddiiings3]}>{error}</Text> : null}
 
 
-      <View style={[styles.emailDisabledParent23, styles.emailSpaceBlock23]}>
-        <View style={styles.emailDisabled223}>
-          <Pressable style={[styles.formDefault323, styles.formFlexBox23]}>
-            <Text style={styles.placeholder123}>Paso 3/3</Text>
-          </Pressable>
-        </View>
 
-        <View style={[styles.emailDisabledGroup3, styles.emailFlexBox3]}>
-
-          <Button
-            style={[styles.formDefault423, styles.formBorder23]}
-            mode="contained"
-            labelStyle={styles.formDefault6Btn23}
-            contentStyle={styles.formDefault6Btn123}
-            onPress = {handleAtrasPress}
-          >
-            Anterior
-          </Button>
-          <Button
-            style={[styles.formDefault423, styles.formBorder23]}
-            mode="contained"
-            labelStyle={styles.formDefault6Btn23}
-            contentStyle={styles.formDefault6Btn123}
-            onPress = {handleSiguientePress}
-          >
-            Siguiente
-          </Button>
-        </View>
-        </View>
-
-
-
-
-
-
-
-
-        <Button
-      style={styles.buttonCtaNormal4}
+    <Button
+      style={styles.formDefault43}
       mode="contained"
-      labelStyle={styles.buttonCTANormalBtn4}
-      contentStyle={styles.buttonCTANormalBtn14}
-    >Guardar cambios</Button>
 
+      labelStyle={{ color: '#FFF',  fontFamily: FontFamily.poppinsBold }} // Aquí estableces el color del texto en rojo
+      onPress={handleGuardarCambios}
+    >
+      Guardar Cambios
+    </Button>
 
+    <Button
+      style={styles.formDefault43}
+      mode="contained"
+
+      labelStyle={{ color: '#FFF',fontFamily: FontFamily.poppinsBold}} // Aquí estableces el color del texto en rojo
+      onPress={handlerEliminarReceta}
+    >
+      Eliminar Receta
+    </Button>
 
 
 
@@ -669,11 +714,25 @@ const isProteinsEmpty = !proteins;
 
   const styles = StyleSheet.create({
     
+    formDefault43: {
+      borderColor: Color.button1Text,
+      marginTop:"10%",
+      overflow: "hidden",
+      borderWidth: 2,
+      borderStyle: "solid",
+      paddingVertical: "2%",
+      backgroundColor: "#E84443",
+      borderRadius: 10 ,
+      width: "99%",
+    },
+  
+
+
     buttonCTANormalBtn4: {
       color: "#fff",
       fontSize: 16,
       fontWeight: "700",
-      fontFamily: "Poppins-Bold",
+      fontFamily: FontFamily.poppinsRegular,
     },
     buttonCTANormalBtn14: {
       borderRadius: 40,
@@ -681,6 +740,7 @@ const isProteinsEmpty = !proteins;
       width: 350,
     },
     buttonCtaNormal4: {
+      marginTop: "10%",
       shadowColor: "rgba(236, 95, 95, 0.25)",
       shadowOffset: {
         width: 0,
@@ -1058,23 +1118,24 @@ const isProteinsEmpty = !proteins;
 
 
   imageContainer: {
-    position: 'relative',
-    marginBottom: 10, // Espacio entre imágenes
+    
+    margin: "1%", // Espacio entre imágenes
   },
   image: {
     width: 100,
     height: 100,
     resizeMode: 'cover',
     borderRadius: 5,
+    
+    
   },
   deleteIcon: {
     position: 'absolute',
-    top: 5,
-    right: 5,
+  
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 15,
-    width: 30,
-    height: 30,
+    width: "30%",
+    height: "30%",
     alignItems: 'center',
     justifyContent: 'center',
   },

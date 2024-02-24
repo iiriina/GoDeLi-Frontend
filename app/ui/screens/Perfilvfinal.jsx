@@ -53,28 +53,41 @@ const Perfil = () => {
           } else {
             setError('');
             setSubmitted(true); 
-            const response = await userWS.modify(store.getState().auth.user.id, name, email, image, store.getState().auth.favs);
-            aux = {
-              id: store.getState().auth.user.id,
-              name: name,
-              email: email,
-              photo: image,
-            }
-            store.dispatch(updateUser(aux));
-            Dialog.show({
+            const response = await userWS.modify(store.getState().auth.user.id, name, email, image);
+            
+
+
+            if (response.status === 200 || response.status === 201) {
+              aux = {
+                id: store.getState().auth.user.id,
+                name: name,
+                email: email,
+                photo: image,
+              }
+              store.dispatch(updateUser(aux));
+            
+            
+              Toast.show({
               type: ALERT_TYPE.SUCCESS,
               title: 'Exito',
               textBody: 'Los datos se han actualizado con éxito',
-              button: 'Cerrar',
-            });
+            })
+            
+            ;} else {
+              Toast.show({
+                type: ALERT_TYPE.DANGER,
+                title: 'Lo sentimos',
+                textBody: 'Ocurrió un error al intentar actualizar tus datos',
+              })
+            }
 
       }
       } catch (error) {
-        Dialog.show({
+        Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Algo salió mal',
           textBody: 'No pudimos actualizar tus datos.',
-          button: 'Cerrar',
+          
         });
       }
       

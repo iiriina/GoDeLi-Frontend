@@ -27,6 +27,8 @@ const StackNavigator = () => {
         headerStyle: {
           backgroundColor: '#FFF', 
         },
+        cardStyle: { backgroundColor: 'transparent' },
+
         headerTintColor: '#303030', 
         headerTitle: '¡Bienvenido a GoDeLi!',
         headerTitleAlign: 'center', 

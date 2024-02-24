@@ -100,7 +100,7 @@ const MisRecetasContainer = ({ data , index}) => {
           </View>
         </View>
 
-      <TouchableOpacity style={styles.frameChild} onPress ={handleCardEdit}>
+      <TouchableOpacity style={styles.frameChild} onPress ={() => handleCardEdit(recipeId)}>
         <Image
           style={styles.frameChild}
           resizeMode="cover"

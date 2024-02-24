@@ -146,7 +146,7 @@ const Recetas = () => {
 
 
   return (
-    <View styles={{    backgroundColor: Color.white,
+    <View style={{    backgroundColor: Color.white, height:"100%"
     }}>
 
       <StatusBar backgroundColor="#000" />

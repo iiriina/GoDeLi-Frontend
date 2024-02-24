@@ -12,6 +12,7 @@ import Header from '../ui/components/Header';
 import { useSelector } from 'react-redux';
 import {store} from '../redux/store'
 import {setInicialToken} from '../networking/api/Api'
+import { SafeAreaView, View } from 'react-native'; // Importa SafeAreaView
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const RootNavigator = () => {
     return (
         <NavigationContainer>
         <Stack.Navigator screenOptions={{
+        cardStyle: { backgroundColor: '#fff' },
         headerShown: false,
       }}>
         {isLoggedIn ? (

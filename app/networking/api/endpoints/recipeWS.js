@@ -21,8 +21,8 @@ export default recipeWS = {
         return await api.get(URL);
     },
 
-    modifyRecipe: async function(_id, title, description, images, video, dishes, time, owner, tags, steps, ingredients, nutritionalInfo) {
-        const URL = urlApi.recipes.modifyRecipe(_id);
+    modifyRecipe: async function(recipeId, title, description, images, video, dishes, time, tags, steps, ingredients, calories, fats, proteins) {
+        const URL = urlApi.recipes.modifyRecipe(recipeId);
         const requestBody = {
             title: title, 
             description: description, 
@@ -30,17 +30,21 @@ export default recipeWS = {
             video: video, 
             dishes: dishes, 
             time: time, 
-            owner: owner, 
             tags: tags, 
             steps: steps, 
             ingredients: ingredients, 
-            nutritionalInfo: nutritionalInfo,
+            nutritionalInfo: {
+                calories: calories,
+                fats: fats,
+                proteins: proteins
+            }
         }
+        console.log("El body es:" + requestBody)
         return await api.put(URL, requestBody); 
     },
     
     deleteRecipe: async function (_id) {
-        const URL = urlApi.recipes.delete(_id);
+        const URL = urlApi.recipes.deleteRecipe(_id);
         return await api.delete(URL);
     },
 

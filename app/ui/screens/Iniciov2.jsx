@@ -94,28 +94,9 @@ const Frame = ({ navigation }) => {
                 <Image
                   style={[styles.vectorIcon, styles.vectorIconLayout1]}
                   resizeMode="cover"
-                  source={require("../assets/vector.png")}
+                  source={require("../assets/reserva.png")}
                 />
-                <Image
-                  style={[styles.vectorIcon1, styles.vectorIconLayout1]}
-                  resizeMode="cover"
-                  source={require("../assets/vector1.png")}
-                />
-                <Image
-                  style={[styles.vectorIcon2, styles.vectorIconLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/vector2.png")}
-                />
-                <Image
-                  style={[styles.vectorIcon3, styles.vectorIconLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/vector3.png")}
-                />
-                <Image
-                  style={[styles.vectorIcon4, styles.vectorIconLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/vector4.png")}
-                />
+              
               </View>
             </View>
             <View style={styles.frameTodoElTexto}>

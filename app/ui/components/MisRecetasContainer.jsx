@@ -15,19 +15,25 @@ const MisRecetasContainer = ({ data , index}) => {
     navigation.navigate('Receta Individual', { recipeId });
   };
 
+  const handleCardEdit = (recipeId) => {
+    navigation.navigate('Editar Receta', {recipeId})
+    console.log('yendo')
+  };
+
 
   return (
     <View style={[styles.frameWrapper]}>
-      <View style={[styles.image5Parent, styles.parentFlexBox]}>
-
       <TouchableOpacity
           onPress={() => handleCardPress(recipeId)}
         >
+      <View style={[styles.image5Parent, styles.parentFlexBox]}>
+
+      
         <Image
           style={styles.image5Icon}
           resizeMode="cover"
           src={data.images[0].secure_url}
-        /></TouchableOpacity>
+        />
         <View style={[styles.groupParent, styles.parentFlexBox]}>
           <View style={styles.frameContainer}>
             <View style={styles.polloConArrozWrapper}>
@@ -93,12 +99,23 @@ const MisRecetasContainer = ({ data , index}) => {
             </View>
           </View>
         </View>
+
+      <TouchableOpacity style={styles.frameChild} onPress ={handleCardEdit}>
         <Image
           style={styles.frameChild}
           resizeMode="cover"
-          source={require("../assets/group-18.png")}
+          source={require("../assets/lapicito.png")}
         />
+        </TouchableOpacity>
+        
+      
+
+        
+
+
+
       </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -293,8 +310,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   frameChild: {
-    top: 15,
-    right: 16,
+    top: 5,
+    right: 7,
     width: 31,
     height: 31,
     zIndex: 2,

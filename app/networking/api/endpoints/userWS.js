@@ -37,9 +37,10 @@ patchFavs: async function (userId, recipeId) {
     return await api.patch(URL, requestBody);
 },
 
-getFavs: async function (userId) {
+getFavs: async function (userId,filtros) {
     const URL = urlApi.users.getFavs(userId);
-    return await api.get(URL);
+    console.log(URL+filtros); 
+    return await api.get(URL+filtros);
 },
 
 getMyRec: async function (userId) {

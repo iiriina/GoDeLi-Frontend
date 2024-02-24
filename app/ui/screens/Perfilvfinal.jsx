@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import { Image, StyleSheet, View, Text, TextInput,TouchableOpacity } from "react-native";
+import { Image, StyleSheet, View, Text, TextInput,TouchableOpacity, ScrollView } from "react-native";
 import { Padding, Color, Border, FontSize, FontFamily } from "../GlobalStyles";
 import { Button } from "react-native-paper";
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
@@ -13,7 +13,6 @@ import { fetchLogout, logoutAction, updateUser  } from '../../redux/slices/AuthS
 import ImagePicker from 'react-native-image-crop-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import { AlertNotificationRoot, Dialog, Toast, ALERT_TYPE } from 'react-native-alert-notification';
-
 const Perfil = () => {
     
     const [user, setUser] = useState('');
@@ -153,7 +152,8 @@ const Perfil = () => {
 
 
   return (
-    <View style={styles.perfil}>
+    <ScrollView style={{backgroundColor: "#fff"}} >
+    <View style={[styles.perfil, { flex: 1, widht: "100%", justifyContent:"center", alignContent:"center" }]}>
       <View style={styles.groupParent}>
         <View style={styles.frameWrapper}>
           <View style={[styles.frameContainer, styles.frameContainerPosition]}>
@@ -208,9 +208,9 @@ const Perfil = () => {
         />
             
             <Button
-              style={[styles.formDefault42, styles.formBorder2]}
+              style={[styles.formDefault43, styles.formBorder2]}
               mode="contained"
-              labelStyle={styles.formDefault6Btn2}
+              labelStyle={{ color: '#E84443' }} // Aquí estableces el color del texto en rojo
               contentStyle={styles.formDefault6Btn12}
               onPress={handleGuardarCambios}
             >
@@ -227,10 +227,10 @@ const Perfil = () => {
         <Text style={styles.tusDatos}>Cuenta</Text>
           
         <Button
-              style={[styles.formDefault42, styles.formBorder2]}
+              style={[styles.formDefault43, styles.formBorder2]}
               mode="contained"
               onPress={handlerLogout}
-              labelStyle={styles.formDefault6Btn2}
+              labelStyle={{ color: '#E84443' }} // Aquí estableces el color del texto en rojo
               contentStyle={styles.formDefault6Btn12}
 
             >
@@ -251,6 +251,7 @@ const Perfil = () => {
 
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   frameContainer: {
-    width: 298,
+    width: "100%",
     paddingLeft: 154,
     paddingRight: 139,
     justifyContent: "center",
@@ -416,11 +417,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "stretch",
+    paddingTop: "10%"
   },
   perfil: {
-    width: 410,
-    height: 684,
-    paddingHorizontal: 56,
+    paddingHorizontal: "10%",
     paddingVertical: 0,
     flexDirection: "row",
     overflow: "hidden",
@@ -430,12 +430,26 @@ const styles = StyleSheet.create({
     borderColor: Color.button1Text,
     marginTop:"10%",
     overflow: "hidden",
-    borderWidth: 1,
+    borderWidth: 2,
     borderStyle: "solid",
     margin: "1%",
     backgroundColor: "#E84443",
+    borderRadius: 8,
+    width: "55%"
   },
-  
+  formDefault43: {
+    borderColor: Color.button1Text,
+    marginTop:"10%",
+    overflow: "hidden",
+    borderWidth: 2,
+    borderStyle: "solid",
+    margin: "1%",
+    backgroundColor: "#FFF",
+    borderRadius: 8 ,
+    width: "55%"
+
+  },
+
   
 });
 

@@ -23,6 +23,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPress, isPressed, b
           backgroundColor: isPressed ? "rgba(232,68,67,1)" : "#FFFFFF", // Fondo rojo si está presionado, blanco si no
           borderWidth: 1, // Grosor del borde
           borderColor: isPressed ? "rgba(232,68,67,1)" : "rgba(175, 175, 175, 1)", // Borde rojo si está presionado, gris si no
+          margin:"1%",
         },
         isPressed ? styles.pressedButton : null, // Aplicar estilos cuando está presionado
       ]}

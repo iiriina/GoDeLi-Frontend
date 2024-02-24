@@ -84,14 +84,15 @@ const ModalTester: React.FC<{
                   />
                 ))}
               </View>
-              <Button
-                  mode="contained"
-                  onPress={onPress}
-                  >   
-                  <Text>
-                    Buscar
-                  </Text>
-                </Button>
+            <Button
+              style={styles.formDefault43}
+                  
+              labelStyle={{ color: '#FFF' }} // Aquí estableces el color del texto en rojo
+              onPress={onPress}
+            >
+              Buscar
+            </Button>
+
             </View>
           </View>
         </View>
@@ -202,10 +203,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: Border.br_21xl,
     borderTopRightRadius: Border.br_21xl,
     backgroundColor: Color.neutralWhite,
-    width: 412,
-    height: 582,
-    paddingHorizontal: 29,
-    paddingVertical: 22,
+    width: "100%",
+    height: "75%",
+    paddingHorizontal: "6%",
+    paddingVertical: "6%",
     maxWidth: "100%",
     maxHeight: "100%",
   },
@@ -218,6 +219,19 @@ const styles = StyleSheet.create({
     width: "100%",
     flexWrap: "wrap", // Agrega la propiedad flexWrap para permitir el envoltorio de elementos
   },
+  formDefault43: {
+    borderColor: Color.button1Text,
+    marginTop:"3%",
+    overflow: "hidden",
+    borderWidth: 2,
+    borderStyle: "solid",
+    paddingVertical: "2%",
+    backgroundColor: "#E84443",
+    borderRadius: 10 ,
+    width: "99%"
+
+  },
+
 });
 
 export default ModalTester;

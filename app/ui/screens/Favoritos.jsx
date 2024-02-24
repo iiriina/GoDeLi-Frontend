@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect,  } from "react";
-import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, ActivityIndicator, StatusBar } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
@@ -14,17 +14,27 @@ import userWS from '../../networking/api/endpoints/userWS';
 const LoginScreen = () => {
     const [recetas, setRecetas] = useState([]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+
 
     const handlerHealth3 = async () => {
         try {
-          console.log("hola1")
-          console.log(store.getState().auth.user.id)
-          console.log("hola2")
-          const response = await userWS.getFavs(store.getState().auth.user.id);
-          console.log("hola3")
-          console.log(response.data)
-          console.log("hola4")
-          setRecetas(response.data);
+
+          let filtros = `?page=${currentPage}&limit=4`
+          
+          setIsLoading(true);
+          userWS.getFavs(store.getState().auth.user.id, filtros)
+          .then(response => {
+            console.log(response.data);
+            if (response.data.length < 4) { // o el número de elementos que esperas por página
+              setHasMore(false);
+            }
+            setRecetas([...recetas, ...response.data]);
+            setIsLoading(false);
+          });
+
         } catch (error) {
           console.log(error.response);
         }
@@ -32,20 +42,50 @@ const LoginScreen = () => {
     
       useEffect(() => {
         handlerHealth3();
-      }, []);
+      }, [currentPage]);
 
+
+      const renderLoader = () => {
+        return (
+          isLoading ?
+            <View style={styles.loaderStyle}>
+              <ActivityIndicator size="large" color="#aaa" />
+            </View> : null
+        );
+      };
+    
+      const loadMoreItem = () => {
+        if (!isLoading && hasMore) {
+          setCurrentPage(currentPage + 1);
+        }
+      };
+    
+
+    
+      const renderItem = ({ item }) => { // Changed `receta` to `item`
+        return (
+          <View key={item._id} style={[styles.frameParent, styles.parentShadowBox]}>
+            <CardReceta data={item} index={item._id}/>
+          </View>
+        );
+      };
 
 
       return (
-        <ScrollView style={{ backgroundColor: Color.white }}>
+        <>
+        <StatusBar backgroundColor="#000" />
+
+        <FlatList
+          data={recetas}
+          renderItem={renderItem}
+          keyExtractor={item => item._id}
+          contentContainerStyle={{ backgroundColor: Color.white }}
+          ListFooterComponent={renderLoader}
+          onEndReached={loadMoreItem}
+          onEndReachedThreshold={0}
           
-          {recetas.map((receta, index) => (
-            <View key={index} style={[styles.frameParent, styles.parentShadowBox]}>
-              <CardReceta data={receta} index={index} />
-            </View>
-          ))}
-          
-        </ScrollView>
+          /> 
+          </>
       );
     };
 
@@ -58,6 +98,7 @@ const LoginScreen = () => {
           height: 4,
         },
         backgroundColor: Color.white,
+        
       },
       
       frameParent: {
@@ -77,6 +118,8 @@ const LoginScreen = () => {
           width: 0,
           height: 4,
         },
+        width: "95%",
+
       },
     
       formFlexBox: {

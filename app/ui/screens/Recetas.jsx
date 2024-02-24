@@ -13,7 +13,6 @@ import {store} from '../../redux/store';
 import recipeWS from '../../networking/api/endpoints/recipeWS';
 
 
-
 const Recetas = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [recetas, setRecetas] = useState([]);
@@ -23,6 +22,8 @@ const Recetas = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+
+  const [triggerFetch, setTriggerFetch] = useState(false);
 
 
 
@@ -35,17 +36,22 @@ const Recetas = () => {
         .filter((filter) => selectedFilters[filter])
         .map((filter) => encodeURIComponent(filter.normalize("NFD").replace(/[\u0300-\u036f]/g, '')))
         .join(",");
-        
-      let filtros = `page=${currentPage}&limit=4`
-      if (filters){
-        filtros += '&tags=' + filters
-      }
       
-      if (searchText){
-        filtros += '&search=' + searchText
-      }
 
-      console.log(filtros)
+        let filtros = `&page=${currentPage}&limit=4`
+
+
+        if (filters){
+          filtros += '&tags=' + filters
+        }
+        
+        if (searchText){
+          filtros += '&search=' + searchText
+        }
+
+      
+
+      console.log("RECETAS: " + recetas)
 
       setIsLoading(true);
       recipeWS.getRecipes(filtros)
@@ -53,11 +59,13 @@ const Recetas = () => {
         if (response.data.data.length < 4) { // o el número de elementos que esperas por página
           setHasMore(false);
         }
-        setRecetas([...recetas, ...response.data.data]);
+        console.log("RESPUESTA: " + response.data.data)
+        setRecetas(recetasPrevias => [...recetasPrevias, ...response.data.data]);
         setIsLoading(false);
-        
+        console.log("RECETAS: " + recetas)
       });
 
+      console.log("RECETAS: " + recetas)
 
 
     } catch (error) {
@@ -65,9 +73,13 @@ const Recetas = () => {
     }
   };
 
-  useEffect(() => {
+  
+  useEffect(() => { 
     handlerHealth3();
-  }, [currentPage]);
+  }, [currentPage,triggerFetch]);
+
+
+
 
 
   const renderLoader = () => {
@@ -90,7 +102,7 @@ const Recetas = () => {
 
   const renderItem = ({ item }) => { // Changed `receta` to `item`
     return (
-      <View key={item._id} style={[styles.frameParent, styles.parentShadowBox]}>
+      <View key={item._id} style={[styles.frameParent, styles.parentShadowBox, { marginRight: "10%", marginLeft: "10%", backgroundColor: Color.white}]}>
         <CardReceta data={item} index={item._id}/>
       </View>
     );
@@ -105,94 +117,102 @@ const Recetas = () => {
 
   const handleKeyPress = (event) => {
     // Verifica si se presionó la tecla Enter
-    
     if (event.key === "Enter") {
       handlerHealth3();
     };
-
   };
 
-  const handleFilterSearch = () => {
-    handlerHealth3();
+
+
+  const handleFilterSearch = async () => {
+    setRecetas([]);
+    setCurrentPage(1);
+    setIsLoading(false);
+    setHasMore(true);
+    setTriggerFetch(prev => !prev); // Cambia el valor para disparar el useEffect
     setModalVisible(false);
+    
   };
+
+  const handleFilterSearch2 = async () => {
+    setRecetas([]);
+    setCurrentPage(1);
+    setIsLoading(false);
+    setHasMore(true);
+    setTriggerFetch(prev => !prev); // Cambia el valor para disparar el useEffect
+    setModalVisible(false);
+    
+  };
+
 
   return (
-    <>
-
-      {/*
-      <View style={[styles.formDefaultWrapper, styles.formFlexBox,]}>
-        <View style={[styles.formDefault, styles.formBorder]}>
-          <View style={styles.placeholderParent}>
-            <TextInput
-              style={styles.placeholderTypo1}
-              placeholder="Buscar comida o ingrediente..."
-              placeholderTextColor="#737373"
-              value={searchText}
-              onChangeText={setSearchText}
-              onSubmitEditing={handlerHealth3}
-              
-            />
-          
-          
-            <TouchableOpacity
-              style={styles.emailDisabled}
-              onPress={() => setModalVisible(true)} // Abre el modal cuando se presiona
-            >
-              <View style={styles.formDefaultContainer}>
-                <View style={[styles.formDefault1, styles.formPosition]}>
-                  <Image
-                    style={styles.plusMathIcon}
-                    resizeMode="cover"
-                    source={require("../assets/icons/filtro3.png")}
-                  />
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View></View>
-        </View>
-      </View>    
-    
-
-
-
-  
-      <ModalFiltros
-        isVisible={modalVisible}
-        toggleModal={() => setModalVisible(!modalVisible)}
-        setSelectedFilters={setSelectedFilters}
-        selectedFilters={selectedFilters}
-        onFilterSearch={handleFilterSearch}
-      />
-
-
-
-
-
-    */}
-    
-    
-
-
+    <View styles={{    backgroundColor: Color.white,
+    }}>
 
       <StatusBar backgroundColor="#000" />
 
       
-
       <FlatList
         data={recetas}
         renderItem={renderItem}
         keyExtractor={item => item._id}
+        contentContainerStyle={{ backgroundColor: Color.white }}
+        ListHeaderComponent={
+          <>
+          <View style={[styles.formDefaultWrapper, styles.formFlexBox,]}>
+          <View style={[styles.formDefault, styles.formBorder]}>
+            <View style={styles.placeholderParent}>
+              <TextInput
+                style={styles.placeholderTypo1}
+                placeholder="Buscar comida o ingrediente..."
+                placeholderTextColor="#737373"
+                value={searchText}
+                onChangeText={setSearchText}
+                onSubmitEditing={handleFilterSearch2}
+                
+              />
+            
+            
+              <TouchableOpacity
+                style={styles.emailDisabled}
+                onPress={() => setModalVisible(true)} // Abre el modal cuando se presiona
+              >
+                <View style={styles.formDefaultContainer}>
+                  <View style={[styles.formDefault1, styles.formPosition]}>
+                    <Image
+                      style={styles.plusMathIcon}
+                      resizeMode="cover"
+                      source={require("../assets/icons/filtro3.png")}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View></View>
+          </View>
+        </View>    
+      
+  
+  
+  
+    
+        <ModalFiltros
+          isVisible={modalVisible}
+          toggleModal={() => setModalVisible(!modalVisible)}
+          setSelectedFilters={setSelectedFilters}
+          selectedFilters={selectedFilters}
+          onFilterSearch={handleFilterSearch}
+        />
+       </> 
+      }
         ListFooterComponent={renderLoader}
         onEndReached={loadMoreItem}
         onEndReachedThreshold={0}
         />
-      
-    </>
+    </View>
 
     
-
+  
 
   );
 };
@@ -214,7 +234,8 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderColor: "#cfcfcf",
     borderWidth: 1,
-    width: 383,
+    width: "95%",
+    marginLeft: "10%",
     alignSelf: 'center',
     overflow: "hidden",
     borderRadius: Border.br_5xl,
@@ -224,6 +245,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4,
     },
+    backgroundColor: Color.white,
+
   },
 
   formFlexBox: {

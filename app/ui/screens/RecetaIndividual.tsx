@@ -25,6 +25,7 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 const RecetaIndividual = () => {
   const route = useRoute();
   const { recipeId } = route.params as { recipeId: any };
+
   const url = `https://godeli-production.up.railway.app/recipes/${recipeId}`; 
 
   const shareContent = async () => {

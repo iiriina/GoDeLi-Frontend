@@ -4,9 +4,10 @@ import ModalScreen1 from './ModalScreen1';
 import ModalScreen2 from './ModalScreen2';
 import ModalScreen3 from './ModalScreen3';
 import { NavigationContainer } from '@react-navigation/native';
-import { Button , TouchableOpacity,StyleSheet, Text} from 'react-native';
-import { useDispatch } from 'react-redux'; // Importa useDispatch
+import { Button , TouchableOpacity,StyleSheet, Text, Image} from 'react-native';
+import { useDispatch } from 'react-redux'; 
 import {eliminarDatosCreacion} from '../../redux/slices/CrearRecetaSlice'
+
 
 const ModalStack = createStackNavigator();
 
@@ -51,10 +52,14 @@ const CrearRecetaStack = ({ navigation }) => {
         component={ModalScreen1}
         options={{
           tabBarStyle: { display: "none" },
-          title: "Crear Receta",
+          headerTitle: 'Crear receta',
+          headerTitleAlign: 'center', 
           headerLeft: () => (
             <TouchableOpacity onPress={handleVolver3} style={styles.button}>
-              <Text style={styles.text}>X</Text>
+              <Image
+                  source={require('../../ui/assets/clear.png')} // Reemplaza con la ruta a tu imagen
+                  style={{ width: 25, height: 25 }} // Ajusta el tamaño según necesites
+                />
             </TouchableOpacity>
           ),
         }}

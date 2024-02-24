@@ -422,7 +422,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4,
     },
-    
+    width: "100%",
+    backgroundColor: Color.white,
     
   },
 

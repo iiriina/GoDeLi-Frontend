@@ -10,11 +10,11 @@ export const fetchCreateRecipe = createAsyncThunk(
        
 
         const aux = await recipeWS.create(recipeData);
-       
+        console.log(aux.status);
         eliminarDatosCreacion();
-       
+        const aux2 = aux.status;
         
-        return aux;
+        return aux2;
         
       } catch (error) {
         console.log(error);
@@ -112,7 +112,8 @@ const recipeReducer = createSlice({
 
 
         state.recipe.owner = action.payload.owner;
-    },
+
+    }
   },
   
 });

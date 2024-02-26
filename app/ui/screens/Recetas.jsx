@@ -20,14 +20,17 @@ const Recetas = () => {
   const [selectedFilters, setSelectedFilters] = useState({});
   
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
 
   const [triggerFetch, setTriggerFetch] = useState(false);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  
+
   const onRefresh = () => {
+    setIsLoading(true)
     setIsRefreshing(true);
     setCurrentPage(1);
     setHasMore(true);
@@ -36,13 +39,14 @@ const Recetas = () => {
     // setSelectedFilters([]);
     setTriggerFetch(prev => !prev);
     setIsRefreshing(false);
+    setIsLoading(false)
   };
 
 
   const handlerHealth3 = async () => {
     try {
 
-
+      setIsLoading(true);
       let filters = Object.keys(selectedFilters)
         .filter((filter) => selectedFilters[filter])
         .map((filter) => encodeURIComponent(filter.normalize("NFD").replace(/[\u0300-\u036f]/g, '')))
@@ -64,7 +68,7 @@ const Recetas = () => {
 
       console.log("RECETAS: " + recetas)
 
-      setIsLoading(true);
+      
       recipeWS.getRecipes(filtros)
       .then(response => {
         if (response.data.data.length < 4) { // o el número de elementos que esperas por página
@@ -136,9 +140,9 @@ const Recetas = () => {
 
 
   const handleFilterSearch = async () => {
+    setIsLoading(true);
     setRecetas([]);
     setCurrentPage(1);
-    setIsLoading(false);
     setHasMore(true);
     setTriggerFetch(prev => !prev); // Cambia el valor para disparar el useEffect
     setModalVisible(false);
@@ -146,9 +150,9 @@ const Recetas = () => {
   };
 
   const handleFilterSearch2 = async () => {
+    setIsLoading(true);
     setRecetas([]);
     setCurrentPage(1);
-    setIsLoading(false);
     setHasMore(true);
     setTriggerFetch(prev => !prev); // Cambia el valor para disparar el useEffect
     setModalVisible(false);
@@ -161,6 +165,14 @@ const Recetas = () => {
     }}>
 
       <StatusBar backgroundColor="#000" />
+
+      
+
+
+
+      
+
+
 
       
       <FlatList
@@ -188,8 +200,6 @@ const Recetas = () => {
                 onSubmitEditing={handleFilterSearch2}
                 
               />
-            
-            
               <TouchableOpacity
                 style={styles.emailDisabled}
                 onPress={() => setModalVisible(true)} // Abre el modal cuando se presiona
@@ -211,7 +221,7 @@ const Recetas = () => {
       
   
   
-  
+
     
         <ModalFiltros
           isVisible={modalVisible}
@@ -220,12 +230,30 @@ const Recetas = () => {
           selectedFilters={selectedFilters}
           onFilterSearch={handleFilterSearch}
         />
-       </> 
-      }
+
+      {(!isLoading && recetas.length === 0 ) ? (
+        <>
+        <View styles={{marginRight: 15, marginLeft: 20, marginTop:25}}>
+            <Text styles={{fontFamily: FontFamily.poppinsRegular, fontSize: 13, marginRight: 15, marginLeft: 20}}>No hay resultados que coincidan con tu búsqueda.</Text>
+        </View>
+        </>
+      ) : (
+        <>
+        </>
+      )}
+       </> }
+
         ListFooterComponent={renderLoader}
         onEndReached={loadMoreItem}
         onEndReachedThreshold={0}
         />
+
+
+
+
+
+
+
     </View>
 
     

@@ -58,7 +58,7 @@ const Perfil = () => {
             setSubmitted(true); 
             const response = await userWS.modify(store.getState().auth.user.id, name, email, image, store.getState().auth.favs);
             
-
+            console.log(response)
 
             if (response.status === 200 || response.status === 201) {
               aux = {
@@ -161,7 +161,7 @@ const Perfil = () => {
     Dialog.show({
       type: ALERT_TYPE.DANGER,
       title: '¿Deseas eliminar tu cuenta?',
-      textBody: 'Toca fuera para Cancelar',
+      textBody: 'Se perderán todas las recetas creadas',
       button: 'Eliminar',
       onPressButton: () => {
         handlerDeleteAccount();

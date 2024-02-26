@@ -7,11 +7,34 @@ export const fetchLogin = createAsyncThunk(
   'auth/fetchLogin',
   async ({ idToken, user }, { rejectWithValue, dispatch }) => {
     try {
+      
+
       const aux = await authWS.create(idToken);
       dispatch(updateJWT(aux.data.accessToken));
-      dispatch(updateUser(user));
-      const aux2 = await userWS.get(user.id);
+      
+
+
+      const aux2 = await userWS.get(user.id); 
+      console.log("aux2: " + aux2)
+      console.log("aux2 status: " +aux2.status)
+      console.log("aux2 data: " +aux2.data)
+      if (aux2.status === 404) {
+        dispatch(updateUser(user));
+      } else {
+        const usuario = {
+          id: aux2.data.id,
+          name: aux2.data.name,
+          email: aux2.data.email,
+          photo: aux2.data.image
+        }
+        dispatch(updateUser(usuario));
+      }
+
+
+
       dispatch(getFavs(aux2.data.favs));
+
+
       return aux.data;
       
     } catch (error) {

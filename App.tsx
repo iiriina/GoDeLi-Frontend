@@ -99,7 +99,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         style={[
           styles.sectionTitle,
           {
-            color: isDarkMode ? Colors.white : Colors.black,
+            color: Colors.black,
           },
         ]}>
         {title}
@@ -108,7 +108,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         style={[
           styles.sectionDescription,
           {
-            color: isDarkMode ? Colors.light : Colors.dark,
+            color: Colors.dark,
           },
         ]}>
         {children}
@@ -148,7 +148,7 @@ function App(): React.JSX.Element {
   }, []);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: Colors.lighter,
   };
 
   return (

@@ -18,13 +18,12 @@ const Carrousel = () => {
     return (
         
             <Carousel
-                loop
                 width={width}
                 height={carouselHeight}
                 autoPlay={true}
                 data={images}
                 scrollAnimationDuration={1000}
-                onSnapToItem={(index) => index}
+                onSnapToItem={(index) => console.log('current index:', index)}
                 renderItem={({ item, index }) => (
                     <View style={styles.imageContainer}>
                         <Image

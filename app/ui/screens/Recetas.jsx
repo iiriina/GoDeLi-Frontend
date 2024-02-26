@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect, useNavigation } from "react";
-import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, ActivityIndicator, StatusBar } from "react-native";
+import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, ActivityIndicator, StatusBar, RefreshControl } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
 import  NotificationComponent  from '../components/NotificationComponent';
@@ -25,7 +25,18 @@ const Recetas = () => {
 
   const [triggerFetch, setTriggerFetch] = useState(false);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    setCurrentPage(1);
+    setHasMore(true);
+    setRecetas([]);
+    // setSearchText('');
+    // setSelectedFilters([]);
+    setTriggerFetch(prev => !prev);
+    setIsRefreshing(false);
+  };
 
 
   const handlerHealth3 = async () => {
@@ -157,6 +168,12 @@ const Recetas = () => {
         renderItem={renderItem}
         keyExtractor={item => item._id}
         contentContainerStyle={{ backgroundColor: Color.white }}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+          />
+        }
         ListHeaderComponent={
           <>
           <View style={[styles.formDefaultWrapper, styles.formFlexBox,]}>

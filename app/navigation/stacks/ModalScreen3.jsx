@@ -34,6 +34,8 @@ const ModalScreen = ({ navigation }) => {
   const [calories, setCalories] = useState('');
   const [fats, setFats] = useState('');
 
+  const [pressed, setPressed] = useState(false);
+
   const handleProteins = (newValue) => {
     setProteins(newValue);
   };
@@ -104,7 +106,7 @@ const handleButtonPress = (buttonText) => {
 
       } else {
         setSubmitted(true); // Marca el formulario como enviado
-
+        setPressed(true);
 
 
         
@@ -151,20 +153,13 @@ const handleButtonPress = (buttonText) => {
               textBody: 'No hemos podido subir la receta :(',
               button: 'Cerrar',
             });
+            setPressed(false);
           }
         }).catch(error => {
-          // Manejo de errores
+            setPressed(false);
         });
 
 
-
-
-
-
-        
-          
-        
-         
         
     }
       } catch (error) {
@@ -176,7 +171,7 @@ const handleButtonPress = (buttonText) => {
           textBody: 'No hemos podido subir la receta :(.',
           button: 'Cerrar',
         });
-
+        setPressed(false);
         console.error('Error al crear la receta:', error);
       }
  
@@ -215,47 +210,52 @@ const handleButtonPress = (buttonText) => {
 
       </View>
 
-      <View style={styles.frameContainer}>
+      <View style={styles.frameContainer3}>
         <View>
-          <Text style={[styles.heading1, styles.headingTypo]}>Tiempo</Text>
-          <View style={[styles.emailDisabled1, styles.emailDisabledFlexBox]}>
+          <Text style={[styles.heading13, styles.headingTypo3]}>Tiempo</Text>
+          <View style={[styles.emailDisabled13, styles.emailDisabledFlexBox3]}>
           <TextInput
             style={[
             styles.formDefault,
             styles.formBorder,
             (!time && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
           ]} 
-            placeholder="Min."
+           
             multiline={false}
             placeholderTextColor="#4c4c4c"
             scrollEnabled
             keyboardType="numeric" // Establecer el teclado numérico
             onChangeText={setTime}
-
+            placeholder='min.'
+            value={time}
           />
         </View>
         </View>
-        <View style={styles.headingGroup}>
-          <Text style={[styles.heading1, styles.headingTypo]}>Platos</Text>
-        <View style={[styles.emailDisabled1, styles.emailDisabledFlexBox]}>
+        <View style={styles.headingGroup3}>
+          <Text style={[styles.heading13, styles.headingTypo3]}>Platos</Text>
+        <View style={[styles.emailDisabled13, styles.emailDisabledFlexBox3]}>
           <TextInput
             style={[
             styles.formDefault,
             styles.formBorder,
             (!dishes && submitted) && styles.errorBorder // Aplica errorBorder solo si se ha enviado el formulario y el título está vacío
           ]} 
-            placeholder="Cant."
+            
             multiline={false}
             placeholderTextColor="#4c4c4c"
             scrollEnabled
+            placeholder='Cant.'
             keyboardType="numeric" // Establecer el teclado numérico
             onChangeText={setDishes}
-
+            value={dishes?.toString()}
           />
         </View>
 
         </View>
       </View>
+
+
+
       <Text style={[styles.heading3, styles.headingTypo]}>
         Información Nutricional
       </Text>
@@ -276,8 +276,6 @@ const handleButtonPress = (buttonText) => {
           nutritionInfo="Proteínas"
           labelText="default"
           caloriesAndProteins="gr."
-          propMarginLeft={14}
-          propWidth={57}
           onTextChange={handleProteins} // Pasa el manejador como una prop
           isFieldEmpty={isProteinsEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
@@ -287,8 +285,6 @@ const handleButtonPress = (buttonText) => {
           iconImageUrl={require("../../ui/assets/wifi2.png")}
           nutritionInfo="Grasas"
           caloriesAndProteins="gr."
-          propMarginLeft={14}
-          propWidth={57}
           onTextChange={handleFats} // Pasa el manejador como una prop
           isFieldEmpty={isFatsEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
@@ -328,8 +324,9 @@ const handleButtonPress = (buttonText) => {
             labelStyle={styles.formDefault6Btn2}
             contentStyle={styles.formDefault6Btn12}
             onPress = {handleSiguientePress}
+            disabled={pressed}
           >
-            Siguiente
+            Crear receta
           </Button>
         </View>
         </View>
@@ -347,6 +344,69 @@ const handleButtonPress = (buttonText) => {
   );
 };
 const styles = StyleSheet.create({
+  emailDisabledFlexBox3: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+  },
+
+  emailDisabled13: {
+    marginTop: 5,
+    
+  },
+
+  headingTypo3: {
+    height: 34,
+    textAlign: "left",
+    color: Color.gray1,
+    fontFamily: FontFamily.headingH2,
+    fontWeight: "600",
+    lineHeight: 25,
+    fontSize: FontSize.headingH2_size,
+    
+  },
+
+  heading13: {
+    width: 90,
+  },
+
+  headingGroup3: {
+    marginLeft: "2%",
+  },
+  frameContainer3: {
+    marginTop: 12,
+    flexDirection: "row",
+    width: "100%"
+  },
+  heading33: {
+    width: 236,
+    marginTop: 12,
+  },
+  wifiIcon3: {
+    width: 32,
+    height: 32,
+    overflow: "hidden",
+  },
+  caloras3: {
+    fontSize: FontSize.size_3xs,
+    fontWeight: "900",
+    fontFamily: FontFamily.poppinsBlack,
+    color: Color.lines,
+    marginTop: 6,
+    textAlign: "left",
+  },
+  emailDisabled23: {
+    marginTop: 10,
+  },
+  frameParent13: {
+    width: 92,
+  },
+  wifiContainer3: {
+    width: 88,
+  },
+  frameParent33: {
+    width: 92,
+  },
+
   scrollViewContent: {
     flexGrow: 1,
     paddingVertical: Padding.p_mini,
@@ -464,9 +524,11 @@ const styles = StyleSheet.create({
   },
   heading1: {
     width: 90,
+    marginTop: "10%",
+
   },
   formDefault: {
-    paddingHorizontal: Padding.p_lg,
+    paddingHorizontal: "2%",
     fontFamily: FontFamily.poppinsRegular,
     fontSize: FontSize.size_base,
     borderRadius: Border.br_7xs,
@@ -479,7 +541,8 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     backgroundColor: Color.colorWhite,
     flexDirection: "row",
-    
+    paddingVertical: 16,
+
   },
 
   emailDisabled: {
@@ -487,6 +550,7 @@ const styles = StyleSheet.create({
   },
   emailDisabled1: {
     marginTop: 5,
+
   },
   headingGroup: {
     marginLeft: 15,
@@ -497,8 +561,8 @@ const styles = StyleSheet.create({
     widht: "100%"
   },
   heading3: {
-    width: 236,
-    marginTop: 12,
+    width: "auto",
+    marginTop: "7%",
   },
   wifiIcon: {
     width: 32,
@@ -603,7 +667,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   emailDisabled22: {
-    width: 86,
+    width: "auto",
     height: 44,
   },
   formDefault42: {
@@ -621,6 +685,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: "15%",
     width: "83%",
+    paddingRight: "9%"
   },
 
   frameParent: {
@@ -666,7 +731,8 @@ const styles = StyleSheet.create({
 
   paddiiings:{
     paddingTop: "4%",
-  }
+  },
+  
 });
 
 export default ModalScreen;

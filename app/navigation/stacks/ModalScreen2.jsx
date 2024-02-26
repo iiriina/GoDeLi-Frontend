@@ -38,15 +38,7 @@ const ModalScreen = ({ navigation }) => {
     setIngredientes(nuevosIngredientes);
   };
   
-/*
-    // Función para manejar el botón de "Siguiente"
-    const handleSiguientePress = () => {
-      // Llama a la acción updateParteUno con los datos de la segunda pantalla
-      dispatch(updateParteDos({ ingredientes, pasos }));
-      // Navega a la siguiente pantalla
-      navigation.navigate("ModalScreen3");
-    };
-*/
+
 
 
     const [error, setError] = useState('');
@@ -463,7 +455,7 @@ const ModalScreen = ({ navigation }) => {
       justifyContent: "center",
     },
     emailDisabled22: {
-      width: 86,
+      width: "auto",
       height: 44,
     },
     formDefault42: {

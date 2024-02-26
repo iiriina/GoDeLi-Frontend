@@ -49,7 +49,10 @@ const TabNavigator = () => {
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.CUBIERTOS} />
+                    <Image source={ICONS.CUBIERTOS}
+                    style={{height: 24, width: 24}}
+                    
+                    />
                     ),
                 tabBarLabel: () => null,
             }}
@@ -62,7 +65,9 @@ const TabNavigator = () => {
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.CHEF} />
+                    <Image source={ICONS.CHEF}
+                    style={{height: 24, width: 24}}
+                    />
                     ),
                 tabBarLabel: () => null,
             }}
@@ -76,7 +81,9 @@ const TabNavigator = () => {
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.MAS} />
+                    <Image source={ICONS.MAS}
+                    style={{height: 24, width: 24}}
+                    />
                     ),
                 tabBarLabel: () => null,
                 tabBarStyle: { display: "none" },
@@ -93,7 +100,9 @@ const TabNavigator = () => {
             options = {{
                 title: '',
                 tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.CORAZON} />
+                    <Image source={ICONS.CORAZON}
+                    style={{height: 24, width: 24}}
+                    />
                     ),
                 tabBarLabel: () => null,
             }}
@@ -106,7 +115,9 @@ const TabNavigator = () => {
             options = {{
                 title: 'Perfil',
                 tabBarIcon: ({focused}) => (
-                    <Image source={ICONS.PERFIL} />
+                    <Image source={ICONS.PERFIL}
+                    style={{height: 24, width: 24}}
+                    />
                     ),
                 tabBarLabel: () => null,
                 headerShown: true,

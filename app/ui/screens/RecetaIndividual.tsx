@@ -15,7 +15,7 @@ import axios from 'axios';
 import recipeWS from '../../networking/api/endpoints/recipeWS';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-
+import Toast from 'react-native-toast-message';
 
 
 
@@ -26,12 +26,12 @@ const RecetaIndividual = () => {
   const route = useRoute();
   const { recipeId } = route.params as { recipeId: any };
 
-  const url = `https://godeli-production.up.railway.app/recipes/${recipeId}`; 
+  const url = `https://godeli.com.ar/${recipeId}`; 
 
   const shareContent = async () => {
     try {
       const result = await Share.share({
-        message: 'Echa un vistazo a este enlace:' + url,
+        message: 'Echa un vistazo a esta receta de ' + receta?.title + ' en ' + url,
     
       });
       
@@ -147,8 +147,52 @@ const ratingCompleted = (rating: number) => {
 
 const enviarRating = async ()  => {
     try {
-        await recipeWS.patchRating(rating, receta._id);
+
+
+
+        const response = await recipeWS.patchRating(rating, receta._id);
+        if (response.status === 200 || response.status === 201) {
+          
+          Toast.show({
+            type: 'success',
+            text1: 'Exito',
+            text2: 'La receta se calificó con éxito',
+            visibilityTime: 2000,
+            onPress: () =>{
+              Toast.hide()
+            }
+
+          })
+        
+        ;} else {
+
+          Toast.show({
+            type: 'error',
+            text1: 'Lo sentimos',
+            text2: 'Ocurrió un error al calificar',
+            visibilityTime: 2000,
+            onPress: () =>{
+              Toast.hide()
+            }
+
+          })
+
+        }
+
+        
     } catch (e) {
+
+      Toast.show({
+        type: 'error',
+        text1: 'Lo sentimos',
+        text2: 'Ocurrió un error al calificar',
+        visibilityTime: 2000,
+        onPress: () =>{
+          Toast.hide()
+        }
+
+      })
+      
         console.log(e);
     }
 }
@@ -156,15 +200,18 @@ const enviarRating = async ()  => {
 
 
   return (
-    <ScrollView>
+  <ScrollView style={{ backgroundColor: 'white' }}>
     <View style={styles.frameGeneral}>
 
-    <View>
-      <View
-        style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height/2.8 }}
+    
+         
+  <View style={[styles.frameParent, styles.parentSpaceBlock1,]}>
+
+    <View
+        style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height/3.3 }}
       >
       {urls.length === 1 ? (
-        <View style={{width: Dimensions.get('window').width/1.08, height: Dimensions.get('window').height/2.75  }}>
+        <View style={{width: Dimensions.get('window').width/1.1, height: Dimensions.get('window').height/2.75  }}>
         <Image
 
           style={[styles.carouselImage, ] }
@@ -174,7 +221,13 @@ const enviarRating = async ()  => {
         </View>
       ) : (
         <Carousel
-          width={Dimensions.get('window').width/1.08}
+          loop = {true}
+          panGestureHandlerProps={{
+            activeOffsetX: [-10, 10],
+          }}          
+          width={Dimensions.get('window').width/1.1}
+          autoPlay={true}
+          autoPlayInterval={3500}
           height={Dimensions.get('window').height/2.75}
           data={urls}
           renderItem={({ item }) => (
@@ -187,11 +240,13 @@ const enviarRating = async ()  => {
         />
       )}
   </View>
-  
-  </View>
-         
-  <View style={[styles.frameParent, styles.parentSpaceBlock1,]}>
+
         <View style={[styles.frameGroup, styles.groupFlexBox]}>
+
+
+
+
+          
           <View style={styles.titleWrapper}>
             <Text style={styles.title}>{receta && receta.title}</Text>
           </View>
@@ -217,10 +272,10 @@ const enviarRating = async ()  => {
             </TouchableOpacity>
           </View>
         </View>
+
+
+        {/*
         <View style={[styles.tag, styles.tagFlexBox]}>
-
-
-
           {receta.tags.map((tag, index) => (
             <View style={styles.wrapperSpaceBlock} key = {index}>
                 <Text style={[styles.vegetariana, styles.vegetarianaTypo]} >
@@ -228,12 +283,23 @@ const enviarRating = async ()  => {
                 </Text>
             </View>
           ))}
-
-
-
-
         </View>
       </View>
+          */}
+
+      <View style={styles.frameParent1}>
+            {receta.tags.map((tag, index) => (
+              <View style={[styles.wrapperSpaceBlock, styles.frameWrapper2]} key= {index}> 
+              <Text style={[styles.vegano, styles.veganoTypo]} key= {index}>
+                {tag}
+              </Text>
+            </View>
+          ))}
+            </View>
+
+
+
+
       <View style={[styles.ratingParent, styles.parentSpaceBlock1]}>
         <View style={styles.rating}>
         <AirbnbRating
@@ -278,7 +344,7 @@ const enviarRating = async ()  => {
       <View style={[styles.group, styles.titleLayout]}>
         <Text style={[styles.title1, styles.title1Position]}>Ingredientes</Text>
       </View>
-      <View style={styles.wrapDeIngredientes}>
+      <View style={[styles.wrapDeIngredientes, styles.ingredientesContainer]}>
         
 
 
@@ -346,13 +412,17 @@ const enviarRating = async ()  => {
           </View>
         </View>
       </View>
-      <View style={{marginBottom:-30, marginTop: 35}}>
-        
-      <YoutubePlayer
-        height={300}
-        play={true}
-        videoId= {videoId}
-      />
+      <View style={{marginBottom:-50, marginTop: 35}}>
+      
+     
+        <YoutubePlayer
+          height={300}
+          play={false}
+          videoId= {videoId}
+          
+        />
+     
+
 
     </View>
       <View style={styles.bio}>
@@ -387,7 +457,6 @@ const enviarRating = async ()  => {
       </View>
 
 
-      <View>
 
      
 
@@ -420,6 +489,7 @@ const styles = StyleSheet.create({
     height: '80%',
     resizeMode: 'cover',
     borderRadius: 20,
+    backgroundColor: "white"
 },
 parentSpaceBlock1: {
   paddingVertical: 0,
@@ -446,18 +516,17 @@ tagFlexBox: {
   flexDirection: "row",
 },
 vegetarianaTypo: {
-  fontFamily: FontFamily.bodyNormalRegular,
+  fontFamily: FontFamily.poppinsSemiBold,
   textAlign: "left",
 },
 wrapperSpaceBlock: {
   paddingVertical: Padding.p_11xs,
-  paddingHorizontal: Padding.p_9xs,
-  backgroundColor: Color.colorCrimson,
-  borderRadius: Border.br_9xs,
-  marginVertical: "1%",
+  paddingHorizontal: Padding.p_7xs,
+  backgroundColor: Color.button1Text,
+  borderRadius: Border.br_3xs,
   alignItems: "center",
   flexDirection: "row",
-  marginRight: "1%"
+  margin: 5
 },
 parentSpaceBlock: {
   paddingHorizontal: Padding.p_3xs,
@@ -539,11 +608,10 @@ title: {
 
 },
 titleWrapper: {
-  width: 323,
+  maxWidth: 323,
   justifyContent: "center",
   alignItems: "flex-end",
   flexDirection: "row",
-  marginTop:"-20%"
 },
 baseBackground: {
   backgroundColor: Color.neutralGray6,
@@ -556,8 +624,8 @@ vectorIcon: {
   top: 3,
   left: 2,
   right: 5,
-  width: 17,
-  height: 17,
+  width: 20,
+  height: 20,
   zIndex: 1,
   position: "absolute",
   
@@ -571,11 +639,10 @@ frameGroup: {
   alignSelf: "stretch",
 },
 vegetariana: {
-  fontSize: FontSize.bodyEkstraSmallMedium_size,
+  fontSize: 12,
   lineHeight: 15,
   color: Color.neutralWhite,
-  fontWeight: "500",
-  //fontFamily: FontFamily.bodyEkstraSmallMedium,
+
 },
 tag: {
   marginTop: 10,
@@ -615,7 +682,7 @@ ratingParent: {
 },
 timerIcon: {
   width: 21,
-  height: 24,
+  height: 25,
 },
 placeholder1: {
   marginLeft: 7,
@@ -649,13 +716,13 @@ laDescripcinDe: {
   alignSelf: "stretch",
 },
 title1: {
-  height: 23,
-  width: 104,
+  height: "auto",
+  width: "150%",
   lineHeight: 24,
   fontSize: FontSize.bodyNormalSemibold_size,
   textAlign: "left",
   color: Color.neutralGray1,
-  //fontFamily: FontFamily.bodyNormalSemibold,
+  fontFamily: FontFamily.poppinsMedium,
   fontWeight: "600",
 },
 group: {
@@ -666,11 +733,12 @@ manzanas200Gr: {
   lineHeight: 26,
   color: Color.colorDarkslategray_100,
   display: "flex",
-  width: 127,
+  width: "auto",
   height: 31,
-  //fontFamily: FontFamily.bodyEkstraSmallMedium,
+  fontFamily: FontFamily.poppinsRegular,
   textAlign: "left",
   alignItems: "center",
+  
 },
 ingredienteFrame: {
   paddingHorizontal: Padding.p_base,
@@ -681,13 +749,15 @@ ingredienteFrame: {
   width: 364,
 },
 ingredienteFrame1: {
-  marginTop: 7,
+  marginTop: "2%",
   paddingHorizontal: Padding.p_base,
   borderRadius: Border.br_4xs,
   paddingVertical: Padding.p_7xs,
   backgroundColor: Color.colorAliceblue,
   flexWrap: "wrap",
-  width: 364,
+  width: "100%",
+  alignContent: "center",
+  paddingTop: 10
 },
 wrapDeIngredientes: {
   alignSelf: "stretch",
@@ -697,11 +767,15 @@ title2: {
   fontSize: FontSize.bodyNormalSemibold_size,
   textAlign: "left",
   color: Color.neutralGray1,
-  //fontFamily: FontFamily.bodyNormalSemibold,
+  fontFamily: FontFamily.poppinsMedium,
   fontWeight: "600",
 },
 titleContainer: {
   marginTop: "6%",
+},
+ingredientesContainer: {
+  marginTop: "3%",
+
 },
 wifiIcon: {
   width: 32,
@@ -710,7 +784,7 @@ caloras: {
   color: Color.icons,
   fontSize: FontSize.bodyNormalSemibold_size,
   marginTop: 6,
-  //fontFamily: FontFamily.bodyEkstraSmallMedium,
+  fontFamily: FontFamily.poppinsMedium,
   fontWeight: "500",
 },
 placeholder3: {
@@ -769,7 +843,9 @@ formElementsAvatar: {
   height: 42,
 },
 title3: {
-  width: 179,
+  width: "auto",
+  fontFamily: FontFamily.poppinsMedium,
+
 },
 name: {
   marginLeft: 8,
@@ -785,7 +861,7 @@ bio: {
 calificarReceta: {
   fontSize: 16,
   lineHeight: 24,
-  fontFamily: FontFamily.robotoBold,
+  fontFamily: FontFamily.poppinsMedium,
   color: Color.icons,
   textAlign: "left",
   fontWeight: "600",
@@ -799,7 +875,7 @@ rating1: {
 },
 label: {
   lineHeight: 20,
-  fontFamily: FontFamily.robotoMedium,
+  fontFamily: FontFamily.poppinsMedium,
   textAlign: "center",
   color: Color.neutralWhite,
 },
@@ -825,6 +901,31 @@ frameGeneral: {
 },
 paddingVertical: {
   paddingVertical: 10,
+},
+frameParent1: {
+  marginTop: 6,
+  marginLeft: -5,
+  alignItems: "center",
+  flexWrap: "wrap",
+  flexDirection: "row",
+  alignSelf: "stretch",
+  paddingHorizontal: 8,
+},
+frameWrapper2: {
+  marginLeft: -1,
+  
+  
+},
+
+vegano: {
+  lineHeight: 17,
+  color: Color.white,
+  textAlign: "left",
+},
+veganoTypo: {
+  fontSize: FontSize.size_2xs,
+  fontFamily: FontFamily.poppinsMedium,
+  fontWeight: "500",
 },
 
 

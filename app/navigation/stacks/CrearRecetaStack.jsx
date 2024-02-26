@@ -70,10 +70,14 @@ const CrearRecetaStack = ({ navigation }) => {
         options={{
           tabBarStyle: { display: "none" },
           title: "Crear Receta",
+          headerTitleAlign: 'center', 
           headerLeft: () => (
             <TouchableOpacity onPress={handleVolver3} style={styles.button}>
-              <Text style={styles.text}>X</Text>
-            </TouchableOpacity>
+            <Image
+                source={require('../../ui/assets/clear.png')} // Reemplaza con la ruta a tu imagen
+                style={{ width: 25, height: 25 }} // Ajusta el tamaño según necesites
+              />
+          </TouchableOpacity>
           ),
         }}
       />
@@ -83,9 +87,13 @@ const CrearRecetaStack = ({ navigation }) => {
         options={{
           tabBarStyle: { display: "none" },
           title: "Crear Receta",
+          headerTitleAlign: 'center', 
           headerLeft: () => (
             <TouchableOpacity onPress={handleVolver3} style={styles.button}>
-              <Text style={styles.text}>X</Text>
+              <Image
+                  source={require('../../ui/assets/clear.png')} // Reemplaza con la ruta a tu imagen
+                  style={{ width: 25, height: 25 }} // Ajusta el tamaño según necesites
+                />
             </TouchableOpacity>
           ),
         }}

@@ -167,7 +167,7 @@ const Frame = ({ data, index }) => {
               resizeMode="cover"
               source={require("../assets/agriculture.png")}
             />
-            <Text style={[styles.mins, styles.minsLayout]}>{data.time + " Min"}</Text>
+            <Text style={[styles.mins, styles.minsLayout, styles.minStyleNuevo]}>{data.time + " min"}</Text>
           </View>
         </View>
       </View>
@@ -202,7 +202,11 @@ const styles = StyleSheet.create({
   },
   minsLayout: {
     height: 15,
-    position: "absolute",
+    position: "relative",
+    
+  },
+  minStyleNuevo: {
+    paddingRight: "5.8%"
   },
   veganoTypo: {
     fontSize: FontSize.size_2xs,
@@ -336,7 +340,7 @@ const styles = StyleSheet.create({
   },
   groupView: {
     height: 24,
-    width: 104,
+    width: 150,
     marginTop: -10,
   },
   frameGroup: {
@@ -370,12 +374,12 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: "600",
     fontFamily: FontFamily.poppinsSemiBold,
-    width: 36,
+    width: "auto",
     textAlign: "center",
     color: Color.text,
   },
   agricultureParent: {
-    width: 55,
+    width: "auto",
     height: 18,
   },
   groupContainer: {

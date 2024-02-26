@@ -92,7 +92,7 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = false;
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -118,7 +118,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 }
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = false;
 
   useEffect(() => {
     if(Platform.OS === 'android')SplashScreen.hide();

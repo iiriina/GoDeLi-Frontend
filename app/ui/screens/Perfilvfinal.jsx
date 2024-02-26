@@ -69,7 +69,6 @@ const Perfil = () => {
               }
               store.dispatch(updateUser(aux));
             
-            
               Toast.show({
                 type: 'success',
                 text1: 'Exito',
@@ -80,8 +79,6 @@ const Perfil = () => {
                 }
 
               })
-          
-
             
             ;} else {
 
@@ -180,10 +177,10 @@ const Perfil = () => {
 
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 300,
+      width: 3000,
+      height: 3000,
       cropping: true,
-      compressImageQuality: 0.7
+      compressImageQuality: 0.9
     }).then(image => {
       RNFetchBlob.fs.readFile(image.path, 'base64')
         .then(data => {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect,  } from "react";
-import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, ActivityIndicator, StatusBar } from "react-native";
+import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, StatusBar, ActivityIndicator, RefreshControl } from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { Badge } from 'react-native-paper';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
@@ -17,6 +17,22 @@ const LoginScreen = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
+
+
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [triggerFetch, setTriggerFetch] = useState(false);
+
+
+
+    const onRefresh = () => {
+      setIsRefreshing(true);
+      setCurrentPage(1);
+      setHasMore(true);
+      setRecetas([]);
+      setTriggerFetch(prev => !prev);
+      setIsRefreshing(false);
+    };
+    
 
 
     const handlerHealth3 = async () => {
@@ -42,7 +58,7 @@ const LoginScreen = () => {
     
       useEffect(() => {
         handlerHealth3();
-      }, [currentPage]);
+      }, [currentPage,triggerFetch]);
 
 
       const renderLoader = () => {
@@ -84,7 +100,12 @@ const LoginScreen = () => {
           ListFooterComponent={renderLoader}
           onEndReached={loadMoreItem}
           onEndReachedThreshold={0}
-          
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+            />
+          }
           /> 
           </View>
       );

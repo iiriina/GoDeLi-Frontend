@@ -205,7 +205,7 @@ const handleSiguientePress = () => {
         </View>
 
         <Text style={[styles.heading2, styles.parentSpaceBlock]}>
-          Descripción *
+          Descripción
         </Text>
         <View style={[styles.image28Parent, styles.parentSpaceBlock]}>
           <TextInput
@@ -313,7 +313,7 @@ const handleSiguientePress = () => {
 
     },
     emailDisabled22: {
-      width: 86,
+      width: "auto",
       height: 44,
     },
     formDefault42: {

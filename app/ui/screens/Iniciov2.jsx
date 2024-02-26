@@ -112,20 +112,16 @@ lo encontrás acá, en GoDeLi.`}</Text>
 
 
 
-                  <View style={styles.body}>
+                  
                 <View style={styles.sectionContainer}>
                   <GoogleSigninButton
-                    style={{width: 192, height: 48}}
                     size={GoogleSigninButton.Size.Wide}
                     color={GoogleSigninButton.Color.Dark}
                     onPress={this._signIn}
                   />
                 </View>
-                <View style={styles.buttonContainer}>
-                  {!loggedIn }
-                  {loggedIn }
-                </View>
-              </View>
+                
+              
 
 
 
@@ -182,6 +178,7 @@ const styles = StyleSheet.create({
   logInWithTypo: {
     fontFamily: FontFamily.bodyNormalMedium,
     fontWeight: "500",
+    
   },
   iniciarLayout: {
     borderRadius: Border.br_981xl,
@@ -260,7 +257,7 @@ const styles = StyleSheet.create({
   },
   bienvenido: {
     fontSize: 30,
-    width: 214,
+    width: 'auto',
     height: 61,
     textAlign: "left",
     fontFamily: FontFamily.bodyNormalMedium,
@@ -272,6 +269,7 @@ const styles = StyleSheet.create({
     height: 71,
     textAlign: "left",
     width: 354,
+    marginBottom: "3%"
   },
   iconFillFacebook: {
     display: "none",
@@ -330,6 +328,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "100%",
   },
+
 });
 
 export default Frame;

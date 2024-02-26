@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, ActivityIndicator, StatusBar } from "react-native";
+import { Image, StyleSheet, View, Text,ScrollView,TextInput,Pressable, TouchableOpacity,FlatList, RefreshControl, ActivityIndicator, StatusBar } from "react-native";
 import MisRecetasContainer from '../components/MisRecetasContainer';
 import axios from 'axios'; 
 import {store} from '../../redux/store'
@@ -21,6 +21,17 @@ const MisRecetas = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
 
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [triggerFetch, setTriggerFetch] = useState(false);
+
+    const onRefresh = () => {
+      setIsRefreshing(true);
+      setCurrentPage(1);
+      setHasMore(true);
+      setRecetas([]);
+      setTriggerFetch(prev => !prev);
+      setIsRefreshing(false);
+    };
 
 
     const handlerHealth3 = async () => {
@@ -50,7 +61,7 @@ const MisRecetas = () => {
   
     useEffect(() => {
       handlerHealth3();
-    }, [currentPage]);
+    }, [currentPage,triggerFetch]);
 
 
     const renderLoader = () => {
@@ -94,7 +105,12 @@ const MisRecetas = () => {
           onEndReached={loadMoreItem}
           onEndReachedThreshold={0}
           numColumns={2} // Aquí establece el número de columnas en 2
-
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+            />
+          }
           /> 
           </View>
     );

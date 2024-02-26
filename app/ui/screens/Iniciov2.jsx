@@ -108,18 +108,20 @@ const Frame = ({ navigation }) => {
                   style={[styles.loQueQuers, styles.bienvenidoClr]}
                 >{`Lo que querés cocinar, 
 lo encontrás acá, en GoDeLi.`}</Text>
+                <GoogleSigninButton
+                    style={[styles.googleButton]}
+                    color={GoogleSigninButton.Color.Light}
+                    size={GoogleSigninButton.Size.Wide}
+                    onPress={this._signIn}
+                  />
               </View>
 
 
 
                   
-                <View style={styles.sectionContainer}>
-                  <GoogleSigninButton
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Dark}
-                    onPress={this._signIn}
-                  />
-                </View>
+              
+                  
+               
                 
               
 
@@ -155,7 +157,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     
   },
-
   vectorIconLayout1: {
     width: 124,
     height: 124,
@@ -316,6 +317,12 @@ const styles = StyleSheet.create({
     top: "-28%",
     backgroundColor: Color.splashColor2,
   },
+  sectionContainer:{
+    flex:1,
+    flexDirection:"row",
+    width:"100%",
+    height:"100%"
+  },
   iniciarSesin: {
     flex: 1,
     backgroundColor: "#ffeed9",
@@ -328,7 +335,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "100%",
   },
-
+  googleButton: { 
+    border:0,
+    borderRadius: 50,
+    // Eliminar sombra en iOS
+    width: "93.5%",
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+    
+    marginTop:"2%",
+    // Eliminar sombra/elevación en Android
+    elevation: 0,
+  }
 });
 
 export default Frame;

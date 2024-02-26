@@ -36,6 +36,7 @@ const TabNavigator = ({navigation}) => {
 
     const photoUri = store.getState().auth.user.photo;
     const imageSource = photoUri ? { uri: photoUri } : undefined;
+
     const handlerHome = () => {
         navigation.navigate('GoDeLi');
         navigation.reset({
@@ -43,7 +44,7 @@ const TabNavigator = ({navigation}) => {
           routes: [{ name: 'MainApp' }],
         });
       }
-
+    
     return(
 
      <Tab.Navigator initialRouteName={SCREENS.B} screenOptions={{
@@ -141,10 +142,12 @@ const TabNavigator = ({navigation}) => {
                   ),
                   headerRight: () => (
                     
-                      <Image 
-                        source={require("../../ui/assets/icons/logo3.png")}
-                        style={{ width: 30, height: 30, marginRight: 15 }}
-                      />)
+                    <TouchableOpacity onPress={handlerHome}>
+                    <Image 
+                      source={require("../../ui/assets/icons/logo3.png")}
+                      style={{ width: 30, height: 30, marginRight: 15 }}
+                    />
+                  </TouchableOpacity>)
             }}
         />
 

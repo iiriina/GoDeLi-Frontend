@@ -10,16 +10,18 @@ import { Color, FontFamily, FontSize, Padding, Border } from '../../ui/GlobalSty
 
 const Stack = createStackNavigator();
 
-const StackNavigator = () => {
-
-
-
-
-
-
+const StackNavigator = ({ navigation }) => {
 
   const photoUri = store.getState().auth.user.photo;
   const imageSource = photoUri ? { uri: photoUri } : undefined;
+
+  const handlerHome = () => {
+    navigation.navigate('GoDeLi');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'MainApp' }],
+    });
+  }
 
     return (
       <Stack.Navigator>
@@ -39,10 +41,12 @@ const StackNavigator = () => {
             />
           ),
           headerRight: () => (
-              <Image 
-                source={require("../../ui/assets/icons/logo3.png")}
-                style={{ width: 30, height: 30, marginRight: 15 }}
-              />
+            <TouchableOpacity onPress={handlerHome}>
+            <Image 
+              source={require("../../ui/assets/icons/logo3.png")}
+              style={{ width: 30, height: 30, marginRight: 15 }}
+            />
+          </TouchableOpacity>
             
           ),
         }}
@@ -62,10 +66,12 @@ const StackNavigator = () => {
           headerTitle: 'Detalle de la Receta',
           headerTitleAlign: 'center', 
           headerRight: () => (
-              <Image 
-                source={require("../../ui/assets/icons/logo3.png")}
-                style={{ width: 30, height: 30, marginRight: 15 }}
-              />
+            <TouchableOpacity onPress={handlerHome}>
+            <Image 
+              source={require("../../ui/assets/icons/logo3.png")}
+              style={{ width: 30, height: 30, marginRight: 15 }}
+            />
+          </TouchableOpacity>
             
           ),
         }}

@@ -116,9 +116,9 @@ lo encontrás acá, en GoDeLi.`}</Text>
           <View style={styles.body}>
                 <View style={styles.sectionContainer}>
                   <GoogleSigninButton
-                    style={{width: 192, height: 48}}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Dark}
+                    
+                    size={GoogleSigninButton.Size.Wide} 
+                    color={GoogleSigninButton.Color.Light}
                     onPress={this._signIn}
                   />
                 </View>

@@ -54,7 +54,7 @@ const ModalTester: React.FC<{
         onSwipeComplete={toggleModal}
         onBackdropPress={toggleModal}
         propagateSwipe={true}
-        style={{ justifyContent: "flex-end", margin: 0 }}
+        style={{ flex: 1, justifyContent: "flex-end", margin: 0 }}
       >
         <View style={styles.frameParent}>
           <View style={styles.frameWrapper}>
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: Border.br_21xl,
     backgroundColor: Color.neutralWhite,
     width: "100%",
-    height: "75%",
+    height: "auto",
     paddingHorizontal: "6%",
     paddingVertical: "6%",
     maxWidth: "100%",

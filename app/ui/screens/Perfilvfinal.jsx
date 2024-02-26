@@ -177,10 +177,10 @@ const Perfil = () => {
 
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
-      width: 3000,
-      height: 3000,
+      width: 300,
+      height: 300,
       cropping: true,
-      compressImageQuality: 0.9
+      compressImageQuality: 0.8
     }).then(image => {
       RNFetchBlob.fs.readFile(image.path, 'base64')
         .then(data => {

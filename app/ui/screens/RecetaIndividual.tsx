@@ -25,6 +25,7 @@ import Toast from 'react-native-toast-message';
 const RecetaIndividual = () => {
   const route = useRoute();
   const { recipeId } = route.params as { recipeId: any };
+  const [pressed, setPressed] = useState(false);
 
   const url = `https://godeli.com.ar/${recipeId}`; 
 
@@ -147,7 +148,7 @@ const ratingCompleted = (rating: number) => {
 
 const enviarRating = async ()  => {
     try {
-
+        setPressed(true)
 
 
         const response = await recipeWS.patchRating(rating, receta._id);
@@ -177,6 +178,8 @@ const enviarRating = async ()  => {
 
           })
 
+          setPressed(false)
+
         }
 
         
@@ -192,7 +195,7 @@ const enviarRating = async ()  => {
         }
 
       })
-      
+        setPressed(false)
         console.log(e);
     }
 }
@@ -258,18 +261,27 @@ const enviarRating = async ()  => {
                     style={[
                       styles.baseBackground,
                       styles.groupContainerPosition,
-                    ]}
-                  />
+                    ]}>
+
+        <TouchableOpacity style={styles.containerImg} onPress={shareContent}>
+            <View style={styles.containerImage}>
+
+                <Image
+                  style={styles.imgStyle}
+                  resizeMode="cover"
+                  source={require("../assets/vector.png")}
+                />
+                            </View>
+
+            </TouchableOpacity>
+
+                    </View>
+
                 </View>
               </View>
             </View>
-            <TouchableOpacity style={styles.vectorIcon} onPress={shareContent}>
-            <Image
-              style={styles.vectorIcon}
-              resizeMode="cover"
-              source={require("../assets/vector.png")}
-            />
-            </TouchableOpacity>
+
+
           </View>
         </View>
 
@@ -365,6 +377,10 @@ const enviarRating = async ()  => {
       <Text
         style={[styles.laDescripcinDe, styles.placeholderTypo]}
       >{receta && receta.steps}</Text>
+
+
+
+      
       <View style={styles.amenties}>
         <View style={styles.calorias}>
           <View style={[styles.wifiParent, styles.wifiSpaceBlock]}>
@@ -451,7 +467,7 @@ const enviarRating = async ()  => {
             selectedColor='#000'
             starImage={STAR_IMAGE}
           />
-          <TouchableOpacity style={[styles.button, styles.ingredienteFrameFlexBox]} onPress={enviarRating}>
+          <TouchableOpacity style={[styles.button, styles.ingredienteFrameFlexBox]} onPress={enviarRating} disabled={pressed}>
           <Text style={[styles.label, styles.labelTypo]}>Enviar</Text>
         </TouchableOpacity>
       </View>
@@ -479,6 +495,12 @@ const enviarRating = async ()  => {
 };
 
 const styles = StyleSheet.create({
+  containerImg: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   fixedImage:{
     width:"93%",
     height:"100%"
@@ -496,6 +518,11 @@ parentSpaceBlock1: {
   paddingHorizontal: Padding.p_10xs,
   alignSelf: "stretch",
 },
+imgStyle:{
+  alignSelf: 'center',
+  width: 20,
+  height: 20
+},
 groupFlexBox: {
   justifyContent: "space-between",
   alignItems: "flex-end",
@@ -508,8 +535,8 @@ groupContainerPosition: {
   right: 0,
   top: 0,
   position: "absolute",
-  height: 27,
-  width: 27,
+  height: 40,
+  width: 40,
 },
 tagFlexBox: {
   flexWrap: "wrap",
@@ -620,14 +647,9 @@ baseBackground: {
 groupWrapper: {
   zIndex: 0,
 },
-vectorIcon: {
-  top: 3,
-  left: 2,
-  right: 5,
-  width: 20,
-  height: 20,
-  zIndex: 1,
-  position: "absolute",
+containerImage: {
+  justifyContent: 'center', // Centra verticalmente
+  alignItems: 'center', // Centra horizontalmente
   
 },
 groupParent: {
@@ -782,7 +804,7 @@ wifiIcon: {
 },
 caloras: {
   color: Color.icons,
-  fontSize: FontSize.bodyNormalSemibold_size,
+  fontSize: 13,
   marginTop: 6,
   fontFamily: FontFamily.poppinsMedium,
   fontWeight: "500",
@@ -795,6 +817,7 @@ placeholder3: {
 },
 wifiParent: {
   height: 108,
+  
 },
 calorias: {
   height: 116,
@@ -802,6 +825,7 @@ calorias: {
   borderRadius: Border.br_base,
   alignItems: "center",
   justifyContent: "center",
+
 },
 wifiIcon2: {
   width: 36,
@@ -812,7 +836,7 @@ grasas: {
 amenties: {
   marginTop: 15,
   flexDirection: "row",
-  alignSelf: "stretch",
+  alignSelf: "stretch"
 },
 surfaceIcon: {
   width: 96,

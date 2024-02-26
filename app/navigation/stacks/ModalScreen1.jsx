@@ -33,10 +33,10 @@ const ModalScreen = ({ navigation }) => {
   
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
-      compressImageMaxWidth: 300,
-      compressImageMaxHeight: 300,
+      width: 900,
+      height: 900,
       cropping: true,
-      compressImageQuality: 0.7
+      compressImageQuality: 0.8
     }).then(image => {
       RNFetchBlob.fs.readFile(image.path, 'base64')
         .then(data => {
@@ -49,10 +49,10 @@ const ModalScreen = ({ navigation }) => {
   
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 300,
+      width: 900,
+      height: 900,
       cropping: true,
-      compressImageQuality: 0.7
+      compressImageQuality: 0.8
     }).then(image => {
       RNFetchBlob.fs.readFile(image.path, 'base64')
         .then(data => {

@@ -44,7 +44,7 @@ Fuente: https://youtu.be/8ejuHsaXiwU
   6. Eliminar el Pixel_3a.
   7. Cerrar Android Studio.
 
-## 2. Correr el proyecto ya creado.
+## 2. Correr el proyecto.
   1. Reiniciar la PC para validar los paths que configuramos antes [IMPORTANTE]
   2. Clonamos el repositorio con el comando `git clone https://github.com/iiriina/GoDeLi-Frontend`
   3. `npm install --force`

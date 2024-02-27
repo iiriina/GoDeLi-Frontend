@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from "react";
 
-import { Image, StyleSheet, Text, View,TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, View,TouchableOpacity, Dimensions,  } from "react-native";
 import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
 import { useNavigation } from '@react-navigation/native';
 
 const MisRecetasContainer = ({ data , index}) => {
 
-  
+
   const [recipeId, setRecipeId] = useState(data._id);
   
   const navigation = useNavigation();
@@ -20,6 +20,8 @@ const MisRecetasContainer = ({ data , index}) => {
     console.log('yendo')
   };
 
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
 
   return (
     <View style={[styles.frameWrapper]}>
@@ -37,7 +39,7 @@ const MisRecetasContainer = ({ data , index}) => {
         <View style={[styles.groupParent, styles.parentFlexBox]}>
           <View style={styles.frameContainer}>
             <View style={styles.polloConArrozWrapper}>
-              <Text style={styles.polloConArroz}>{data.title}</Text>
+              <Text style={styles.polloConArroz} numberOfLines={1} ellipsizeMode="tail">{data.title}</Text>
 
             </View>
           </View>
@@ -158,7 +160,7 @@ const styles = StyleSheet.create({
   },
   polloConArroz: {
     textAlign: "left",
-    width: 194,
+    width: 174,
     height: 38,
     color: Color.text,
     fontFamily: FontFamily.poppinsMedium,
@@ -334,7 +336,7 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_5xl,
   },
   frameWrapper: {
-    width: 192,
+    width: Dimensions.get('window').width * 0.46,
     height: 207,
     minWidth: 150,
     margin:"0.5%"

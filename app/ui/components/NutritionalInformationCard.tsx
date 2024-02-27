@@ -17,6 +17,7 @@ export type NutritionalInformationCardType = {
   caloriesAndProteins?: string;
   isFieldEmpty?: boolean; // Nuevo
   submitted?: boolean; // Nuevo: Si el formulario se ha enviado
+  placeholder?: string; // Nueva propiedad para el marcador de posición
 
   /** Style props */
   propMarginLeft?: number | string;
@@ -39,7 +40,8 @@ const NutritionalInformationCard = ({
   propWidth,
   onTextChange, // Nuevo
   isFieldEmpty, // Nuevo
-  submitted
+  submitted,
+  placeholder
 }: NutritionalInformationCardType) => {
   const frameView1Style = useMemo(() => {
     return {
@@ -79,7 +81,9 @@ const NutritionalInformationCard = ({
             styles.formBorder,
             isFieldEmpty && submitted && styles.redBorder, // Nuevo
           ]}
-          placeholder={caloriesAndProteins}
+          value={caloriesAndProteins}
+          placeholder={placeholder} // Utiliza la propiedad placeholder
+
           placeholderTextColor="#4c4c4c"
           keyboardType="numeric"
           onChangeText={onTextChange} // Nuevo

@@ -265,7 +265,7 @@ const handleButtonPress = (buttonText) => {
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi.png")}
           nutritionInfo="Calorías"
-          caloriesAndProteins="Kcal"
+          placeholder="Kcal"
           onTextChange={handleCalories} // Pasa el manejador como una prop
           isFieldEmpty={isCaloriesEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
@@ -275,7 +275,7 @@ const handleButtonPress = (buttonText) => {
           iconImageUrl={require("../../ui/assets/wifi1.png")}
           nutritionInfo="Proteínas"
           labelText="default"
-          caloriesAndProteins="gr."
+          placeholder="gr."
           onTextChange={handleProteins} // Pasa el manejador como una prop
           isFieldEmpty={isProteinsEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado
@@ -284,7 +284,7 @@ const handleButtonPress = (buttonText) => {
         <NutritionalInformationCard
           iconImageUrl={require("../../ui/assets/wifi2.png")}
           nutritionInfo="Grasas"
-          caloriesAndProteins="gr."
+          placeholder="gr."
           onTextChange={handleFats} // Pasa el manejador como una prop
           isFieldEmpty={isFatsEmpty} // Pasa la información sobre si el campo está vacío
           submitted={submitted} // Pasa el estado del formulario enviado

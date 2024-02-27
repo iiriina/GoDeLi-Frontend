@@ -83,57 +83,43 @@ const MisRecetas = () => {
     
       const renderItem = ({ item }) => { 
         return (
-            <View style={{ flex: 1 }}>
-            <View key={item._id} style={{ flex: 1, flexWrap: "wrap", flexDirection: "row", margin: "3%",flexBasis: '50%',  }}>
-                    <MisRecetasContainer data={item} key={item._id} />        
-            </View>
-            </View>
+          <View key={item._id} style={{ flex: 1, flexDirection: "row", margin: "2%", maxWidth: "100%"}}>
+            <MisRecetasContainer data={item} key={item._id} />        
+          </View>
         );
       };
-
-    return (
-        <View style={{    backgroundColor: Color.white, height:"100%"
-    }}>
-        <StatusBar backgroundColor="#000" />
-
-        <FlatList
-          data={recetas}
-          renderItem={renderItem}
-          keyExtractor={item => item._id}
-          contentContainerStyle={{ backgroundColor: Color.white, }}
-          ListFooterComponent={renderLoader}
-          onEndReached={loadMoreItem}
-          onEndReachedThreshold={0}
-          numColumns={2} // Aquí establece el número de columnas en 2
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={onRefresh}
-            />
-          }
-          ListHeaderComponent={
-            <>
-            {(!isLoading && recetas.length === 0 ) ? (
-              <>
-              <View style={{marginRight: "13%", marginLeft: "10%", marginTop:"7%"}}>
-                  <Text style={{fontFamily: FontFamily.poppinsRegular}}>Todavía no tenés recetas cargadas.</Text>
-              </View>
-              </>
-            ) : (
-              <>
-              </>
-            )}
       
+      return (
+        <View style={{ flex: 1, backgroundColor: Color.white }}>
+          <StatusBar backgroundColor="#000" />
+      
+          <FlatList
+            data={recetas}
+            renderItem={renderItem}
+            keyExtractor={item => item._id}
+            contentContainerStyle={{ flexGrow: 1}}
+            ListFooterComponent={renderLoader}
+            onEndReached={loadMoreItem}
+            onEndReachedThreshold={0}
+            numColumns={2}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={onRefresh}
+              />
+            }
+            ListHeaderComponent={
+              <>
+                {!isLoading && recetas.length === 0 && (
+                  <View style={{ marginTop: "7%", flex: 1, alignItems: "center" }}>
+                    <Text style={{ fontFamily: FontFamily.poppinsRegular }}>Todavía no tenés recetas cargadas.</Text>
+                  </View>
+                )}
               </>
-
-          }
-
-
-
+            }
           /> 
-          </View>
-    );
-};
+        </View>
+      );};
 
 const styles = StyleSheet.create({
     parentShadowBox: {

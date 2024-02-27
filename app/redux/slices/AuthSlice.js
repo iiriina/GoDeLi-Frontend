@@ -28,11 +28,12 @@ export const fetchLogin = createAsyncThunk(
           photo: aux2.data.image
         }
         dispatch(updateUser(usuario));
+        dispatch(getFavs(aux2.data.favs));
       }
 
 
 
-      dispatch(getFavs(aux2.data.favs));
+      
 
 
       return aux.data;
@@ -87,6 +88,7 @@ const authReducer = createSlice({
       state.user.email = null;
       state.user.photo = null;
       state.user.name = null;
+      state.user.favs = [];
     },
     resetAccessToken: (state) => {
       state.session.accessToken = null;
@@ -95,9 +97,10 @@ const authReducer = createSlice({
       state.favs = action.payload.map(receta => receta._id);
     },
     updateFavs: (state, action) => {
-      if (state.favs.includes(action.payload)) {
-        state.favs = state.favs.filter(id => id !== action.payload);
-      } else {
+        const index = state.favs.findIndex(id => id === action.payload);
+        if (index != -1) {
+          state.favs.splice(index, 1)
+        } else {
         state.favs = [...state.favs, action.payload];
       }
     },

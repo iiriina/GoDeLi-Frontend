@@ -271,8 +271,8 @@ const handleGuardarCambios = async () => {
     
       Dialog.show({
         type: ALERT_TYPE.SUCCESS,
-        title: 'Exito',
-        textBody: 'Felicitaciones! Se ha creado correctamente una receta.',
+        title: 'Éxito',
+        textBody: '¡Felicitaciones! Se ha editado correctamente una receta.',
         button: 'Cerrar',
       });
 
@@ -332,8 +332,8 @@ const handlerEliminarReceta = async () => {
     
       Dialog.show({
         type: ALERT_TYPE.SUCCESS,
-        title: 'Exito',
-        textBody: 'La receta se eliminó correctamente',
+        title: 'Éxito',
+        textBody: 'La receta se eliminó correctamente.',
         button: 'Cerrar',
       });
 
@@ -357,7 +357,7 @@ const handlerEliminarReceta = async () => {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
         title: 'Algo salió mal',
-        textBody: 'No hemos podido eliminar la receta :(.',
+        textBody: 'No hemos podido eliminar la receta :(',
         button: 'Cerrar',
       });
 
@@ -375,7 +375,7 @@ const handlerQuiereBorrarSuReceta = async () => {
   Dialog.show({
     type: ALERT_TYPE.DANGER,
     title: '¿Desea eliminar su receta?',
-    textBody: 'Esta acción es irreversible',
+    textBody: 'Esta acción es irreversible.',
     button: 'Eliminar',
     onPressButton: () => {
       handlerEliminarReceta();

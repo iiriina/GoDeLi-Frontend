@@ -80,7 +80,7 @@ const Perfil = ({navigation}) => {
 
               Toast.show({
                 type: 'success',
-                text1: 'Exito',
+                text1: 'Éxito',
                 text2: 'Se han guardado los cambios',
                 visibilityTime: 2000,
                 onPress: () =>{
@@ -153,7 +153,7 @@ const Perfil = ({navigation}) => {
         store.dispatch(logoutAction());        
         Dialog.show({
           type: ALERT_TYPE.SUCCESS,
-          title: 'Exito',
+          title: 'Éxito',
           textBody: 'La cuenta fue eliminada con éxito. Esperamos volver a verte pronto!',
           button: 'Cerrar',
         });
@@ -170,7 +170,7 @@ const Perfil = ({navigation}) => {
     Dialog.show({
       type: ALERT_TYPE.DANGER,
       title: '¿Deseas eliminar tu cuenta?',
-      textBody: 'Se perderán todas las recetas creadas',
+      textBody: 'Se perderán todas las recetas creadas.',
       button: 'Eliminar',
       onPressButton: () => {
         handlerDeleteAccount();

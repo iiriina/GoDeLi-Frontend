@@ -137,8 +137,8 @@ const handleButtonPress = (buttonText) => {
           if (aux2.payload === 200 || aux2.payload === 201) {
             Dialog.show({
               type: ALERT_TYPE.SUCCESS,
-              title: 'Exito',
-              textBody: 'Felicitaciones! Se ha creado correctamente una receta.',
+              title: 'Éxito',
+              textBody: '¡Felicitaciones! Se ha creado correctamente una receta.',
               button: 'Cerrar',
             });
             navigation.navigate('GoDeLi');
@@ -168,7 +168,7 @@ const handleButtonPress = (buttonText) => {
         Dialog.show({
           type: ALERT_TYPE.DANGER,
           title: 'Algo salió mal',
-          textBody: 'No hemos podido subir la receta :(.',
+          textBody: 'No hemos podido subir la receta :(',
           button: 'Cerrar',
         });
         setPressed(false);

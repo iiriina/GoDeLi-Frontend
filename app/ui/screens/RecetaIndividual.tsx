@@ -170,7 +170,7 @@ const enviarRating = async ()  => {
           
           Toast.show({
             type: 'success',
-            text1: 'Exito',
+            text1: 'Éxito',
             text2: 'La receta se calificó con éxito',
             visibilityTime: 2000,
             onPress: () =>{

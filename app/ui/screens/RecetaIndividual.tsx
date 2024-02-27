@@ -546,7 +546,7 @@ groupLayout: {
 },
 groupContainerPosition: {
   right: 0,
-  top: 0,
+  top: "-11%",
   position: "absolute",
   height: 40,
   width: 40,
@@ -639,13 +639,13 @@ titleTypo: {
 },
 title: {
   flex: 1,
-  fontSize: FontSize.headingH1_size,
+  fontSize: 22,
   lineHeight: 34,
   textAlign: "left",
   color: Color.neutralGray1,
-  //fontFamily: FontFamily.bodyNormalSemibold,
+  fontFamily: FontFamily.poppinsBold,
   fontWeight: "600",
-
+  paddingTop: 10
 },
 titleWrapper: {
   maxWidth: 323,

@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     height: 16,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
+
   },
   groupChildLayout: {
     width: 73,
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: FontSize.size_smi,
     display: "flex",
-    width: 14,
+    width: 35,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   frameView: {
-    left: 134,
+    left: 124,
     width: 42,
     paddingHorizontal: Padding.p_9xs,
     paddingVertical: Padding.p_11xs,
@@ -242,16 +243,13 @@ const styles = StyleSheet.create({
   group: {
     height: 19,
     display: "none",
-    width: 34,
+    width: 70,
     left: 0,
     top: 0,
     position: "absolute",
   },
   groupWrapper: {
     top: 1,
-    left: 138,
-    width: 0,
-    height: 0,
     position: "absolute",
   },
   groupChild: {

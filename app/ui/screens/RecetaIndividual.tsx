@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useCallback} from "react";
 import Carousel from 'react-native-reanimated-carousel';
-import { Image, StyleSheet, Text, View, ImageBackground,ScrollView,Dimensions, Alert,Button, TouchableOpacity, Share } from "react-native";
+import { Image, StyleSheet, Text, View, ImageBackground,ScrollView,Dimensions, Alert,Button,Modal, TouchableOpacity, Share } from "react-native";
 import TagsComida from "../components/TagsComida";
 import BotoncitoInfo from "../components/BotoncitoInfo";
 import FruitSection from "../components/FruitSection";
@@ -23,6 +23,8 @@ import Toast from 'react-native-toast-message';
 
 
 const RecetaIndividual = () => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const route = useRoute();
   const { recipeId } = route.params as { recipeId: any };
   const [pressed, setPressed] = useState(false);
@@ -77,7 +79,7 @@ const RecetaIndividual = () => {
     handlerHealth3();
   }, []);
 
-  const [receta, setReceta] = useState<Receta | undefined>();
+  const [receta, setReceta] = useState<Receta>();
 
   const [rating, setRating] = useState<Number>();
   
@@ -121,7 +123,7 @@ const RecetaIndividual = () => {
   }
   
 
-const urls: String[]= []
+const urls: string[]= []
 receta.images.forEach((image, index) => (
   urls.push(image.secure_url)
 ))
@@ -134,6 +136,18 @@ const videoId = receta && receta.video ? obtenerIdVideoYoutube(receta.video) ?? 
 
 
 
+
+
+
+const handleImageTap = (imageUri: string): void => {
+  setSelectedImage(imageUri);
+  setModalVisible(true);
+};
+
+const handleImageTap2 = (): void => {
+  setSelectedImage(urls[0].toString())
+  setModalVisible(true);
+};
 
 
 
@@ -213,35 +227,46 @@ const enviarRating = async ()  => {
     <View
         style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height/3.3 }}
       >
-      {urls.length === 1 ? (
-        <View style={{width: Dimensions.get('window').width/1.1, height: Dimensions.get('window').height/2.75  }}>
-        <Image
-
-          style={[styles.carouselImage, ] }
-          resizeMode="cover"
-          source={{uri: urls[0].toString() }}
-        />
-        </View>
-      ) : (
+      
+      <>
         <Carousel
-          loop = {true}
-          panGestureHandlerProps={{
-            activeOffsetX: [-10, 10],
-          }}          
-          width={Dimensions.get('window').width/1.1}
-          autoPlay={true}
-          autoPlayInterval={3500}
-          height={Dimensions.get('window').height/2.75}
-          data={urls}
-          renderItem={({ item }) => (
-            <Image
-              style={[styles.carouselImage]}
-              resizeMode="cover"
-              source={{ uri: item.toString() }} 
-            />
-          )}
-        />
-      )}
+                  loop={urls.length > 1}
+                  panGestureHandlerProps={{
+                    activeOffsetX: [-10, 10],
+                  }}
+                  width={Dimensions.get('window').width / 1.1}
+                  autoPlay={true}
+                  autoPlayInterval={3500}
+                  height={Dimensions.get('window').height / 2.2}
+                  data={urls}
+                  renderItem={({ item }: { item: string }) => (
+                    <TouchableOpacity onPress={() => handleImageTap(item)}>
+                      <Image
+                        style={[styles.carouselImage]}
+                        resizeMode="cover"
+                        source={{ uri: item }}
+                      />
+                    </TouchableOpacity>
+                  )}
+                />
+                
+                <Modal
+                  visible={modalVisible}
+                  transparent = {false}
+                  animationType="fade"
+                  
+                  onRequestClose={() => setModalVisible(false)}
+                >
+                  
+                  
+                  <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => setModalVisible(false)}>
+                    <Image source={{ uri: selectedImage ||'' }} style={{ width: '100%', height: '100%', resizeMode: 'contain' }} />
+                  </TouchableOpacity>
+                  
+                </Modal>
+  </>
+        
+     
   </View>
 
         <View style={[styles.frameGroup, styles.groupFlexBox]}>
@@ -950,6 +975,27 @@ veganoTypo: {
   fontSize: FontSize.size_2xs,
   fontFamily: FontFamily.poppinsMedium,
   fontWeight: "500",
+},
+overlay: {
+  flex: 1,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)', // Ajusta la opacidad según necesites
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+modalView: {
+  margin: 20,
+  backgroundColor: 'white',
+  borderRadius: 20,
+  padding: 35,
+  alignItems: 'center',
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5,
 },
 
 

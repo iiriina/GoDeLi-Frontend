@@ -188,7 +188,9 @@ const Recetas = () => {
         }
         ListHeaderComponent={
           <>
+          
           <View style={[styles.formDefaultWrapper, styles.formFlexBox,]}>
+            
           <View style={[styles.formDefault, styles.formBorder]}>
             <View style={styles.placeholderParent}>
               <TextInput
@@ -216,7 +218,9 @@ const Recetas = () => {
               </TouchableOpacity>
             </View>
             <View></View>
+            
           </View>
+          
         </View>    
       
   
@@ -233,14 +237,15 @@ const Recetas = () => {
 
       {(!isLoading && recetas.length === 0 ) ? (
         <>
-        <View styles={{marginRight: 15, marginLeft: 20, marginTop:25}}>
-            <Text styles={{fontFamily: FontFamily.poppinsRegular, fontSize: 13, marginRight: 15, marginLeft: 20}}>No hay resultados que coincidan con tu búsqueda.</Text>
+        <View style={{marginRight: "13%", marginLeft: "10%", marginTop:"7%"}}>
+            <Text style={{fontFamily: FontFamily.poppinsRegular}}>No hay resultados que coincidan con tu búsqueda.</Text>
         </View>
         </>
       ) : (
         <>
         </>
       )}
+
        </> }
 
         ListFooterComponent={renderLoader}

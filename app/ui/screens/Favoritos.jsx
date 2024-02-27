@@ -106,6 +106,23 @@ const LoginScreen = () => {
               onRefresh={onRefresh}
             />
           }
+          ListHeaderComponent={
+            <>
+            {(!isLoading && recetas.length === 0 ) ? (
+              <>
+              <View style={{marginRight: "13%", marginLeft: "10%", marginTop:"7%"}}>
+                  <Text style={{fontFamily: FontFamily.poppinsRegular}}>Todavía no tenés ninguna receta en favoritos.</Text>
+              </View>
+              </>
+            ) : (
+              <>
+              </>
+            )}
+      
+              </>
+          }
+
+
           /> 
           </View>
       );

@@ -1,7 +1,7 @@
-# COMO CORRER UN PROGRAMA EN REACT NATIVE. 
-Hay dos formas de crear un proyecto en React Native, CLI y EXPO. En CLI vos tenés que preparar el emulador, instalar node, java, etc. EXPO ya lo trae todo pre-armado.
+# COMO CORRER EL PROGRAMA EN REACT NATIVE. 
+Hay dos formas de crear un proyecto en React Native, CLI y EXPO. Nosotros para este proyecto usamos CLI.
 Fuente: https://youtu.be/8ejuHsaXiwU
-## CLI - Prerequisitos
+## 1. CLI - Prerequisitos
 ### Instalar Chocolatey.
   1. Abrir el CMD como administrador.
   2. Pegar este comando:
@@ -44,31 +44,13 @@ Fuente: https://youtu.be/8ejuHsaXiwU
   6. Eliminar el Pixel_3a.
   7. Cerrar Android Studio.
 
-## 2A. Crear un proyecto de 0 con React Native (CLI).
+## 2. Correr el proyecto ya creado.
   1. Reiniciar la PC para validar los paths que configuramos antes [IMPORTANTE]
-  2. Abrir el CMD.
-  3. Ir desde los comandos a la carpeta donde queremos que esté LA CARPETA que contiene todo el proyecto (ojo con eso).
-  4. Ejecutamos `npx react-native init NOMBREDELPROYECTO`
-  5. Ejecutamos `cd NOMBREDELPROYECTO`
-  6. Ejecutamos `code .`
-  7. Ejecutamos `npm start` (desde el CMD)
-  8. En el VS Code, abrimos una nueva terminal (CTRL shift ñ)
-  9. Desde esa nueva terminal ejecutamos `npm run android`. Esta parte tarda bastante y consume mucha CPU.
-  10. Si queremos correr el programa en otro momento, solo hay que darle a `npm start` y `npm run android` desde el VS Code.
+  2. Clonamos el repositorio con el comando `git clone https://github.com/iiriina/GoDeLi-Frontend`
+  3. `npm install --force`
+  4. `npx react-native start`
+  5. En otra terminal, misma ruta: `npx react-native run-android`
 
-## 2B. Crear un proyecto de 0 con React Native (Expo).
-  1. Abrir el emulador de Android
-  2. En el CMD, en la carpeta donde queramos instalar el proyecto ejecutar `npx create-expo-app AwesomeProject`
 
-## 3. Correr un proyecto ya creado.
-  1. Abrimos el CMD
-  2. Ejecutamos `npx create-expo-app NOMBREDELPROYECTO` **[EXPO]** ó `npx react-native init NOMBREDELPROYECTO` **[CLI]** en la carpeta donde queramos instalar el proyecto.
-  3. `cd NOMBREDELPROYECTO`
-  4. `npm install --force`
-  5. `npx expo start` **[EXPO]** ó `npm start` **[CLI]**
-  6. `code .`
-  7. Desde la terminal de VS Code: `npm run android`
-    
-
-## 4. Probar la app en un celular real.
+## Probar la app en un celular real.
 https://reactnative.dev/docs/running-on-device

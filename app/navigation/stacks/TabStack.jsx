@@ -6,11 +6,9 @@ import ModalScreen1 from './ModalScreen1';
 import FavoritosStack from './FavoritosStack';
 import CrearReceta1 from '../../ui/screens/CrearReceta1';
 import CrearRecetaStack from './CrearRecetaStack';
-import Perfil from '../../ui/screens/Perfil';
 import SCREENS from '../../ui/screens/index';
 import ICONS from "../../ui/assets/icons";
 import Modal from '../../ui/components/Modal';
-import Prueba from '../../ui/screens/Prueba';
 import Perfilvfinal from '../../ui/screens/Perfilvfinal';
 import { CommonActions } from '@react-navigation/native';
 import {store} from '../../redux/store'

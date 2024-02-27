@@ -5,12 +5,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from '../../ui/screens/LoginScreen';
 import SignUpScreen from '../../ui/screens/SignUpScreen';
 import IniciarSesin from '../../ui/screens/IniciarSesin';
-import Perfil from '../../ui/screens/Perfil';
 import MisRecetasContainer from '../../ui/components/MisRecetasContainer';
 import Recetas from '../../ui/screens/Recetas';
 import RecetaIndividual from '../../ui/screens/RecetaIndividual';
 import FormDefault from '../../ui/screens/FormDefault';
-import Prueba from '../../ui/screens/Prueba';
 import ICONS from '../../ui/assets/icons/index';
 import SCREENS from '../../ui/screens/index';
 

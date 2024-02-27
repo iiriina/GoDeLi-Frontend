@@ -370,6 +370,21 @@ const handlerEliminarReceta = async () => {
 }
 
 
+const handlerQuiereBorrarSuReceta = async () => {
+
+  Dialog.show({
+    type: ALERT_TYPE.DANGER,
+    title: '¿Desea eliminar su receta?',
+    textBody: 'Esta acción es irreversible',
+    button: 'Eliminar',
+    onPressButton: () => {
+      handlerEliminarReceta();
+    }
+  });
+
+}
+
+
 
 
 
@@ -718,7 +733,7 @@ const handlerEliminarReceta = async () => {
       mode="contained"
 
       labelStyle={{ color: '#E84443',fontFamily: FontFamily.poppinsBold}} // Aquí estableces el color del texto en rojo
-      onPress={handlerEliminarReceta}
+      onPress={handlerQuiereBorrarSuReceta}
     >
       Eliminar
     </Button>

@@ -311,18 +311,6 @@ const enviarRating = async ()  => {
         </View>
 
 
-        {/*
-        <View style={[styles.tag, styles.tagFlexBox]}>
-          {receta.tags.map((tag, index) => (
-            <View style={styles.wrapperSpaceBlock} key = {index}>
-                <Text style={[styles.vegetariana, styles.vegetarianaTypo]} >
-                  {tag}
-                </Text>
-            </View>
-          ))}
-        </View>
-      </View>
-          */}
 
       <View style={styles.frameParent1}>
             {receta.tags.map((tag, index) => (

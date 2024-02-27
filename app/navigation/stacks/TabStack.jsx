@@ -38,7 +38,7 @@ const TabNavigator = ({navigation}) => {
     const imageSource = photoUri ? { uri: photoUri } : undefined;
 
     const handlerHome = () => {
-        navigation.navigate('GoDeLi');
+
         navigation.reset({
           index: 0,
           routes: [{ name: 'MainApp' }],

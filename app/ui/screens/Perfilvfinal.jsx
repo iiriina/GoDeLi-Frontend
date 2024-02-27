@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import { Image, StyleSheet, View, Text, TextInput,TouchableOpacity, ScrollView } from "react-native";
+import { Image, StyleSheet, View, Text, TextInput,TouchableOpacity, ScrollView,ActivityIndicator } from "react-native";
 import { Padding, Color, Border, FontSize, FontFamily } from "../GlobalStyles";
 import { Button, Headline } from "react-native-paper";
 import axios from 'axios'; // Asegúrate de importar axios si lo estás usando en la función
@@ -16,13 +16,13 @@ import Toast from 'react-native-toast-message';
 import { AlertNotificationRoot, Dialog, ALERT_TYPE } from 'react-native-alert-notification';
 
 
-const Perfil = () => {
+const Perfil = ({navigation}) => {
     
     const [user, setUser] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [image, setImage] = useState(null);
-
+    const [isLoading, setIsLoading] = useState(true);
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState('');
 
@@ -42,10 +42,12 @@ const Perfil = () => {
     };
   
     useEffect(() => {
+      setIsLoading(true);
       handlerHealth3();
+      setIsLoading(false);
     }, []);
 
-
+ 
 
     const handleGuardarCambios = async () => {
       try {
@@ -68,7 +70,14 @@ const Perfil = () => {
                 photo: image,
               }
               store.dispatch(updateUser(aux));
-            
+              
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Perfil' }],
+              }); 
+
+
+
               Toast.show({
                 type: 'success',
                 text1: 'Exito',
@@ -199,6 +208,10 @@ const Perfil = () => {
 
   return (
     <ScrollView style={{backgroundColor: "#fff"}} >
+      {isLoading ?
+          <View style={styles.loaderStyle}>
+            <ActivityIndicator size="large" color="#aaa" />
+          </View> : <>
     <View style={[styles.perfil, { flex: 1, widht: "100%", justifyContent:"center", alignContent:"center" }]}>
       <View style={styles.groupParent}>
         <View style={styles.frameWrapper}>
@@ -296,7 +309,7 @@ const Perfil = () => {
 
 
       </View>
-    </View>
+    </View></>}
     </ScrollView>
   );
 };

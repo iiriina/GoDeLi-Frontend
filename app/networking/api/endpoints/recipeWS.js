@@ -10,7 +10,6 @@ export default recipeWS = {
 
     getRecipes: async function (filtros) {
         const URL = urlApi.recipes.getRecipes;
-        console.log(URL+filtros)
         return await api.get(URL+filtros);
         
     }, 
@@ -39,7 +38,6 @@ export default recipeWS = {
                 proteins: proteins
             }
         }
-        console.log("El body es:" + requestBody)
         return await api.put(URL, requestBody); 
     },
     

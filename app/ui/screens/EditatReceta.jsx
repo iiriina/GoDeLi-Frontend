@@ -68,8 +68,6 @@ const ModalScreen = ({ navigation }) => {
   
   const handlerHealth3 = async () => {
     try {
-      console.log("Hola!!!")
-
       const response = await recipeWS.getRecipeInd(recipeId); 
       setReceta(response.data.data)
       setTitle(response.data.data.title);
@@ -80,7 +78,6 @@ const ModalScreen = ({ navigation }) => {
       setIngredientes(response.data.data.ingredients);
       setPasos(response.data.data.steps);
       setSelectedTags(response.data.data.tags);
-      console.log(selectedTags);
       setDishes(response.data.data.dishes);
       setTime(response.data.data.time);
       handleCalories(response.data.data.nutritionalInfo.calories);
@@ -90,9 +87,6 @@ const ModalScreen = ({ navigation }) => {
       setTriggerFetch(prev => !prev);
 
       
-      
-
-      console.log(response.data.data)
 
     }catch(e){
       console.log(e)
@@ -265,7 +259,6 @@ const handleGuardarCambios = async () => {
         proteins: proteins
       }
       const aux = await recipeWS.modifyRecipe(recipeId,title, description, images, video, dishes, time, selectedTags, pasos, ingredientes, calories,fats,proteins);
-      console.log(aux)
       
       if (aux.status === 200 || aux.status === 201) {
     
@@ -326,7 +319,6 @@ const handlerEliminarReceta = async () => {
       setSubmitted(true); 
 
       const aux = await recipeWS.deleteRecipe(recipeId);
-      console.log(aux)
       
       if (aux.status === 200 || aux.status === 201) {
     

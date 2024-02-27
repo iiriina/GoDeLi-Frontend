@@ -132,7 +132,6 @@ const handleButtonPress = (buttonText) => {
       
 
         response.then(aux2 => {
-          console.log(aux2)
          
           if (aux2.payload === 200 || aux2.payload === 201) {
             Dialog.show({

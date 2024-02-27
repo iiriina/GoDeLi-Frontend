@@ -45,7 +45,6 @@ const MisRecetas = () => {
         
         userWS.getMyRec(store.getState().auth.user.id, filtros)
           .then(response => {
-            console.log(response.data);
             if (response.data.length < 8) { // o el número de elementos que esperas por página
               setHasMore(false);
             }

@@ -17,7 +17,6 @@ const MisRecetasContainer = ({ data , index}) => {
 
   const handleCardEdit = (recipeId) => {
     navigation.navigate('Editar Receta', {recipeId})
-    console.log('yendo')
   };
 
   const windowWidth = Dimensions.get('window').width;

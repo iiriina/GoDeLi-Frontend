@@ -43,7 +43,6 @@ const LoginScreen = () => {
           setIsLoading(true);
           userWS.getFavs(store.getState().auth.user.id, filtros)
           .then(response => {
-            console.log(response.data);
             if (response.data.length < 4) { // o el número de elementos que esperas por página
               setHasMore(false);
             }

@@ -66,7 +66,7 @@ const Recetas = () => {
 
       
 
-      console.log("RECETAS: " + recetas)
+  
 
       
       recipeWS.getRecipes(filtros)
@@ -74,13 +74,13 @@ const Recetas = () => {
         if (response.data.data.length < 4) { // o el número de elementos que esperas por página
           setHasMore(false);
         }
-        console.log("RESPUESTA: " + response.data.data)
+        
         setRecetas(recetasPrevias => [...recetasPrevias, ...response.data.data]);
         setIsLoading(false);
-        console.log("RECETAS: " + recetas)
+        
       });
 
-      console.log("RECETAS: " + recetas)
+
 
 
     } catch (error) {

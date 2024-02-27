@@ -15,9 +15,6 @@ export const fetchLogin = createAsyncThunk(
 
 
       const aux2 = await userWS.get(user.id); 
-      console.log("aux2: " + aux2)
-      console.log("aux2 status: " +aux2.status)
-      console.log("aux2 data: " +aux2.data)
       if (aux2.status === 404) {
         dispatch(updateUser(user));
       } else {

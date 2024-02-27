@@ -30,7 +30,6 @@ const Perfil = ({navigation}) => {
       try {
         const response = await userWS.get(store.getState().auth.user.id);
         setUser(response.data)
-        console.log(response.data)
         setName(response.data.name);
         setEmail(response.data.email);
         setImage(response.data.image);

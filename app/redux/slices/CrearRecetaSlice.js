@@ -10,7 +10,6 @@ export const fetchCreateRecipe = createAsyncThunk(
        
 
         const aux = await recipeWS.create(recipeData);
-        console.log(aux.status);
         eliminarDatosCreacion();
         const aux2 = aux.status;
         
